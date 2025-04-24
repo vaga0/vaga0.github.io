@@ -104,6 +104,7 @@ body {
 .skills h2 {
   font-size: 2em;
   margin-bottom: 20px;
+  text-shadow: 0 0 5px rgba(118, 75, 162, 0.5);
 }
 
 .skill-list {
@@ -120,6 +121,32 @@ body {
   padding: 10px 20px;
   border-radius: 20px;
   font-size: 1em;
+}
+
+div.skill-legend{
+  margin-bottom: 40px;
+}
+
+.skill-legend span {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 1em;
+}
+
+.skill-legend span.proficient, .skill-list li.proficient {
+  /* background: #7b68ee; */
+  background: hsl(260, 60%, 50%); /* 熟練：深紫 */
+}
+
+.skill-legend span.intermediate, .skill-list li.intermediate {
+  /* background: #9370db; */
+  background: hsl(260, 60%, 65%); /* 一般：中紫 */
+}
+
+.skill-legend span.beginner, .skill-list li.beginner {
+  /* background: #b0c4de; */
+  background: hsl(260, 60%, 80%); /* 略懂：淺紫 */
 }
 
 /* 聯繫區 */
