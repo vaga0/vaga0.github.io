@@ -7,7 +7,7 @@ body {
   background: linear-gradient(135deg, #667eea, #764ba2);
   font-family: Arial, sans-serif;
   margin: 0;
-  color: #fff;
+  color: #ffffff; /* 改為純白 */
 }
 
 /* 容器 */
@@ -16,26 +16,29 @@ body {
   width: 90%;
   padding: 40px 20px;
   text-align: center;
+  background: rgba(255, 255, 255, 0.05); /* 新增微透明背景 */
+  border-radius: 10px;
 }
 
 /* 頭部 */
 .header h1 {
   font-size: 2.5em;
   margin-bottom: 10px;
+  text-shadow: 0 0 5px rgba(118, 75, 162, 0.5); /* 紫色光暈 */
 }
 
 .header p {
   font-size: 1.2em;
   margin-bottom: 20px;
-  color: #e0e0e0;
+  color: #e8e8e8; /* 更亮灰色 */
 }
 
 /* 按鈕 */
 .btn {
   display: inline-block;
   padding: 10px 20px;
-  background: #fff;
-  color: #764ba2;
+  background: #9370db; /* 亮紫色 */
+  color: #ffffff; /* 純白文字 */
   text-decoration: none;
   border-radius: 5px;
   font-weight: bold;
@@ -43,17 +46,18 @@ body {
 }
 
 .btn:hover {
-  background: #e0e0e0;
+  background: #7b68ee; /* 略深紫色 */
   transform: translateY(-2px);
 }
 
 .btn.disabled {
-  background: #ccc;
+  background: #999;
+  color: #ffffff;
   cursor: not-allowed;
 }
 
 .btn.disabled:hover {
-  background: #ccc;
+  background: #999;
   transform: none;
 }
 
@@ -65,6 +69,7 @@ body {
 .projects h2 {
   font-size: 2em;
   margin-bottom: 20px;
+  text-shadow: 0 0 5px rgba(118, 75, 162, 0.5);
 }
 
 .project-grid {
@@ -74,7 +79,7 @@ body {
 }
 
 .project-card {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.2); /* 更深玻璃擬態 */
   padding: 20px;
   border-radius: 10px;
   backdrop-filter: blur(5px);
@@ -92,7 +97,7 @@ body {
 
 .project-card p {
   font-size: 1em;
-  color: #e0e0e0;
+  color: #e8e8e8; /* 更亮灰色 */
   margin-bottom: 15px;
 }
 
@@ -104,6 +109,7 @@ body {
 .skills h2 {
   font-size: 2em;
   margin-bottom: 20px;
+  text-shadow: 0 0 5px rgba(118, 75, 162, 0.5);
 }
 
 .skill-list {
@@ -116,10 +122,11 @@ body {
 }
 
 .skill-list li {
-  background: rgba(255, 255, 255, 0.2);
+  background: #9370db; /* 亮紫色，與按鈕一致 */
   padding: 10px 20px;
   border-radius: 20px;
   font-size: 1em;
+  color: #ffffff;
 }
 
 /* 聯繫區 */
@@ -130,11 +137,12 @@ body {
 .contact h2 {
   font-size: 2em;
   margin-bottom: 20px;
+  text-shadow: 0 0 5px rgba(118, 75, 162, 0.5);
 }
 
 .contact p {
   font-size: 1.2em;
-  color: #e0e0e0;
+  color: #e8e8e8; /* 更亮灰色 */
   margin-bottom: 20px;
 }
 
@@ -149,7 +157,7 @@ body {
 .footer {
   margin-top: 40px;
   font-size: 0.9em;
-  color: #e0e0e0;
+  color: #e8e8e8; /* 更亮灰色 */
 }
 
 /* 響應式設計 */
