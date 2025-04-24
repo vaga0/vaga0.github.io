@@ -96,6 +96,160 @@ body {
   margin-bottom: 15px;
 }
 
+/* 精選作品區 */
+.featured-works {
+  margin: 40px 0;
+}
+
+.featured-works h2 {
+  font-size: 2em;
+  margin-bottom: 20px;
+  text-shadow: 0 0 5px rgba(118, 75, 162, 0.5);
+}
+
+.featured-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.featured-card {
+  position: relative;
+  height: 200px; /* 固定高度，確保卡片一致 */
+  background-size: cover;
+  background-position: center;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: transform 0.3s;
+}
+
+.featured-card:hover {
+  transform: translateY(-5px);
+}
+
+.featured-card .card-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  /* width: 100%; */
+  /* height: 100%; */
+  background: rgba(0, 0, 0, 0.5); /* 半透明遮罩 */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  text-align: center;
+}
+
+.featured-card h3 {
+  font-size: 1.5em;
+  margin-bottom: 10px;
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+.featured-card p {
+  font-size: 1em;
+  color: #e8e8e8;
+  margin-bottom: 15px;
+  text-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+}
+
+/* 工作經歷區（時間軸） */
+.experience {
+  margin: 40px 0;
+}
+
+.experience h2 {
+  font-size: 2em;
+  margin-bottom: 20px;
+  text-shadow: 0 0 5px rgba(118, 75, 162, 0.5);
+}
+
+.timeline {
+  position: relative;
+  max-width: 800px;
+  margin: 0 auto;
+  /* padding: 20px 0; */
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 20px;
+  width: 4px;
+  background: hsl(200, 60%, 70%); /* 時間軸線：淺藍 */
+}
+
+.timeline-item {
+  position: relative;
+  margin: 30px 0;
+  display: flex;
+  align-items: flex-start;
+}
+
+.timeline-dot {
+  position: absolute;
+  left: 22px;
+  top: 0;
+  width: 12px;
+  height: 12px;
+  background: hsl(200, 60%, 55%); /* 節點：中藍 */
+  border-radius: 50%;
+  transform: translateX(-50%);
+  transition: transform 0.3s;
+}
+
+.timeline-dot:hover {
+  transform: translateX(-50%) scale(1.2);
+}
+
+.timeline-content {
+  margin-left: 40px;
+  width: calc(100% - 60px);
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  backdrop-filter: blur(5px);
+  text-align: left;
+}
+
+.timeline-date {
+  display: block;
+  font-size: 0.9em;
+  color: #e8e8e8;
+  text-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+  margin-bottom: 10px;
+}
+
+.timeline-content h3 {
+  font-size: 1.5em;
+  margin-bottom: 10px;
+  text-shadow: 0 0 5px rgba(118, 75, 162, 0.5);
+}
+
+.timeline-content p {
+  font-size: 1em;
+  color: #e8e8e8;
+  margin-bottom: 10px;
+  text-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+}
+
+.timeline-content ul {
+  list-style: disc;
+  padding-left: 20px;
+  margin: 0;
+}
+
+.timeline-content li {
+  font-size: 0.9em;
+  color: #e8e8e8;
+  margin-bottom: 5px;
+  text-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+}
+
 /* 技能區 */
 .skills {
   margin: 40px 0;
@@ -189,18 +343,55 @@ div.skill-legend{
     font-size: 1em;
   }
 
+
   .projects h2,
+  .featured-works h2,
   .skills h2,
   .contact h2 {
     font-size: 1.5em;
   }
 
-  .project-card {
+  .project-card,
+  .featured-card {
     padding: 15px;
+  }
+
+  .featured-card {
+    height: 180px; /* 手機上略縮小 */
+  }
+
+  .featured-card h3 {
+    font-size: 1.3em;
+  }
+
+  .featured-card p {
+    font-size: 0.9em;
   }
 
   .btn {
     padding: 8px 16px;
     font-size: 0.9em;
+  }
+
+  .skill-legend span {
+    padding: 6px 12px;
+    font-size: 0.8em;
+  }
+
+  .timeline::before {
+    left: 20px;
+  }
+
+  .timeline-item {
+    margin: 20px 0;
+  }
+
+  .timeline-dot {
+    left: 20px;
+  }
+
+  .timeline-content {
+    margin-left: 40px;
+    width: calc(100% - 60px);
   }
 }
