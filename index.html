@@ -8,7 +8,9 @@
 </head>
 <body>
 
-    <nav>
+    <!-- 手機版漢堡選單 -->
+    <button class="hamburger" id="hamburger">&#9776;</button>
+    <nav id="navMenu">
         <ul>
           <li><a href="#">首頁</a></li>
           <li><a href="#projects">我的專案</a></li>
@@ -17,7 +19,7 @@
           <li><a href="#skills">我的技能</a></li>
           <li><a href="#contact">聯繫我</a></li>
         </ul>
-      </nav>
+    </nav>
 
     <div class="container">
         <!-- 頭部：自我介紹 -->
@@ -195,10 +197,29 @@
             </div>
         </section>
 
+        <script>
+            const hamburger = document.getElementById('hamburger');
+            const navMenu = document.getElementById('navMenu');
+            const menuItems = document.querySelectorAll('#navMenu ul li a'); // 所有選單項目
+            
+            // 點擊漢堡圖示時切換選單顯示
+            hamburger.addEventListener('click', () => {
+                navMenu.classList.toggle('open');
+            });
+
+            // 點擊選單項目後隱藏選單並隱藏漢堡圖示
+            menuItems.forEach(item => {
+            item.addEventListener('click', () => {
+                navMenu.classList.remove('open');  // 隱藏選單
+            });
+            });
+        </script>
+
         <!-- 頁腳 -->
         <footer class="footer">
             <p>© 2025 Vaga Tsai. All rights reserved.</p>
         </footer>
     </div>
+
 </body>
 </html>
