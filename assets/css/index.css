@@ -10,6 +10,19 @@ body {
   color: #fff;
 }
 
+.hamburger {
+  display: none;
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  font-size: 28px;
+  background: none;
+  border: none;
+  color: white;
+  z-index: 1100;
+  cursor: pointer;
+}
+
 nav {
   background-color: #333;
   position: fixed;
@@ -165,14 +178,14 @@ section {
   position: absolute;
   top: 0;
   left: 0;
-  /* width: 100%; */
-  /* height: 100%; */
+  width: 100%;
+  height: 100%;
   background: rgba(0, 0, 0, 0.5); /* 半透明遮罩 */
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 10px;
+  /* padding: 10px; */
   text-align: center;
 }
 
@@ -369,6 +382,9 @@ div.skill-legend{
 
 /* 響應式設計 */
 @media (max-width: 600px) {
+  body {
+    padding-top: 50px; /* 根據漢堡選單的高度調整，避免內容被擋住 */
+  }
   .header h1 {
     font-size: 2em;
   }
@@ -377,7 +393,43 @@ div.skill-legend{
     font-size: 1em;
   }
 
+  .hamburger {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #333; /* 設定底色，這裡使用黑色作為範例 */
+    z-index: 1100; /* 保證它在最上層 */
+    width: 100%;
+    padding: 10px 20px; /* 可根據需要調整 */
+    text-align: right;
+  }
 
+  nav {
+    display: none;
+    flex-direction: column;
+    background-color: #333;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding-top: 60px;
+    height: 100vh;
+    text-align: center;
+  }
+
+  nav.open {
+    display: flex;
+  }
+
+  nav ul {
+    flex-direction: column;
+  }
+
+  nav ul li {
+    margin: 20px 0;
+  }
+  
   .projects h2,
   .featured-works h2,
   .skills h2,
