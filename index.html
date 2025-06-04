@@ -66,8 +66,8 @@
         <!-- 近期文章 -->
         <section id="recent_post" class="recent_post">
             <h2>近期文章</h2>
-            <rssapp-imageboard id="yofKXI6CdWkRvAkb"></rssapp-imageboard><script src="https://widget.rss.app/v1/imageboard.js" type="text/javascript" async></script>
-
+            
+            <div class="grid-container" id="latest-posts"></div>
 
             <div>
                 <a href="https://kqlet.online" class="btn" target="_blank">所有文章</a>
@@ -247,6 +247,28 @@
             <p>© 2025 Vaga Tsai. All rights reserved.</p>
         </footer>
     </div>
-
+    <script>
+      const siteUrl = 'https://kqlet.online'; // 替換為目標 WordPress 網站
+      const postCount = 6;
+    
+      fetch(`${siteUrl}/wp-json/wp/v2/posts?per_page=${postCount}&_embed`)
+        .then(res => res.json())
+        .then(posts => {
+          const container = document.getElementById('latest-posts');
+          posts.forEach(post => {
+            const img = post._embedded['wp:featuredmedia']?.[0]?.source_url || 'https://via.placeholder.com/400x300';
+            const div = document.createElement('div');
+            div.className = 'post';
+            div.innerHTML = `
+              <a href="${post.link}" target="_blank">
+                <img src="${img}" alt="${post.title.rendered}">
+                <div class="post-title">${post.title.rendered}</div>
+              </a>
+            `;
+            container.appendChild(div);
+          });
+        })
+        .catch(err => console.error('Error fetching posts:', err));
+    </script>
 </body>
 </html>
