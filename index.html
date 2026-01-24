@@ -1,287 +1,589 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="msvalidate.01" content="BACACF55CBB5B0E13CCC3CD5AE1BAA89" />
-    <title>Vaga's Portfolio</title>
-    <link rel="stylesheet" href="assets/css/index.css">
+    <title>Vaga Tsai - 資深軟體工程師</title>
+    <meta name="description" content="Vaga Tsai 的個人作品集。資深軟體工程師，專精於網頁應用開發、後端系統設計與 AWS 架構。">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Inter:wght@400;600;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/design-system.css">
+
     <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YK328955PY"></script>  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YK328955PY"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-    
-      gtag('config', 'G-YK328955PY');
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-YK328955PY');
     </script>
+    <style>
+        /* Light Theme Overrides */
+        :root {
+            --bg-primary: #f8f9fa;
+            --bg-secondary: #ffffff;
+            --bg-card: rgba(255, 255, 255, 0.8);
+            --text-primary: #1f2937;
+            --text-secondary: #4b5563;
+            --accent-blue: #2563eb;
+            --accent-purple: #7c3aed;
+            --accent-cyan: #0891b2;
+            --border-color: #e5e7eb;
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(0, 0, 0, 0.05);
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --font-main: 'Noto Sans TC', sans-serif;
+            --font-display: 'Inter', sans-serif;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+        }
+
+        /* Override design-system.css specifics for Light Theme */
+        .glass {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--shadow-sm);
+        }
+
+        h1,
+        h2,
+        h3 {
+            color: #111827;
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+            display: inline-block;
+            background: none;
+            -webkit-text-fill-color: initial;
+        }
+
+        h2::after {
+            content: '';
+            display: block;
+            width: 40px;
+            height: 4px;
+            background: var(--accent-blue);
+            margin-top: 8px;
+            border-radius: 2px;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 8rem 0 6rem;
+            max-width: 900px;
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            color: #111827;
+        }
+
+        .hero-desc {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 2.5rem;
+            max-width: 700px;
+        }
+
+        /* Card Styles */
+        .card-light {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: 0.3s ease;
+            box-shadow: var(--shadow-sm);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-light:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--accent-blue);
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .status-live {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .status-dev {
+            background: #f3e8ff;
+            color: #6b21a8;
+        }
+
+        /* Timeline */
+        .timeline {
+            border-left: 2px solid #e5e7eb;
+            margin-left: 10px;
+            padding-left: 30px;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 3rem;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: -37px;
+            top: 6px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--bg-secondary);
+            border: 3px solid var(--accent-blue);
+        }
+
+        .role-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .company-name {
+            font-size: 1.1rem;
+            color: var(--accent-blue);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Accordion for Details */
+        details summary {
+            cursor: pointer;
+            color: var(--accent-blue);
+            font-weight: 500;
+            padding: 0.5rem 0;
+            user-select: none;
+            outline: none;
+            list-style: none;
+            /* Remove default marker */
+        }
+
+        details summary::-webkit-details-marker {
+            display: none;
+        }
+
+        details summary::after {
+            content: '+';
+            display: inline-block;
+            margin-left: 8px;
+            transition: 0.2s;
+        }
+
+        details[open] summary::after {
+            transform: rotate(45deg);
+        }
+
+        .exp-details {
+            margin-top: 0.5rem;
+            padding-left: 1rem;
+            border-left: 2px solid #f3f4f6;
+            color: var(--text-secondary);
+        }
+
+        .exp-details ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Skills */
+        .skill-section {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .skill-tag {
+            background: #f3f4f6;
+            color: #374151;
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            display: inline-block;
+            margin: 4px;
+            border: 1px solid transparent;
+        }
+
+        .skill-tag.highlight {
+            background: #eff6ff;
+            color: #1d4ed8;
+            border-color: #bfdbfe;
+            font-weight: 500;
+        }
+
+        /* Blog Layout Redesign */
+        .blog-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .blog-item {
+            display: flex;
+            gap: 20px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            transition: 0.3s;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .blog-item:hover {
+            box-shadow: var(--shadow-md);
+            border-color: var(--accent-blue);
+        }
+
+        .blog-thumb {
+            width: 180px;
+            height: 120px;
+            flex-shrink: 0;
+            border-radius: 8px;
+            object-fit: cover;
+            background: #eee;
+        }
+
+        .blog-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .blog-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: #111827;
+        }
+
+        .blog-date {
+            font-size: 0.9rem;
+            color: #6b7280;
+        }
+
+        @media (max-width: 640px) {
+            .blog-item {
+                flex-direction: column;
+            }
+
+            .blog-thumb {
+                width: 100%;
+                height: 200px;
+            }
+        }
+
+        /* Nav */
+        .nav-link {
+            color: var(--text-secondary);
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            transition: 0.2s;
+        }
+
+        .nav-link:hover {
+            background: #f3f4f6;
+            color: #111827;
+        }
+    </style>
 </head>
+
 <body>
 
-    <!-- 手機版漢堡選單 -->
-    <button class="hamburger" id="hamburger">&#9776;</button>
-    <nav id="navMenu">
-        <ul>
-          <li><a href="#">首頁</a></li>
-          <li><a href="#projects">我的專案</a></li>
-<!--           <li><a href="#featured">精選作品</a></li> -->
-          <li><a href="#recent_post">近期文章</a></li>
-          <li><a href="#experience">工作經歷</a></li>
-          <li><a href="#skills">我的技能</a></li>
-          <li><a href="#contact">聯繫我</a></li>
-        </ul>
+    <nav class="glass"
+        style="position: sticky; top: 0; z-index: 100; border-bottom: 1px solid var(--border-color); background: rgba(255,255,255,0.9);">
+        <div class="container"
+            style="display: flex; justify-content: space-between; align-items: center; height: 70px;">
+            <a href="#" style="font-weight: 700; font-size: 1.3rem; color: #111827;">Vaga Tsai</a>
+            <div style="display: flex; gap: 8px;">
+                <a href="#projects" class="nav-link">作品</a>
+                <a href="#experience" class="nav-link">經歷</a>
+                <a href="#skills" class="nav-link">技能</a>
+                <a href="#blog" class="nav-link">文章</a>
+            </div>
+        </div>
     </nav>
-    
+
     <div class="container">
-        <!-- 頭部：自我介紹 -->
-        <header class="header">
-            <h1>嗨，我是 Vaga</h1>
-            <p>一位網路服務的開發者，熱衷於打造各種網頁應用系統。正在尋找新的挑戰！</p>
-            <p><a href="https://kql.at">KQL.at</a> 是我線上服務的第一環－短網址服務，目前以ＭＶＰ的形式維運，未來將以其為基礎擴充應用</p>
+        <!-- Hero -->
+        <header class="hero">
+            <h1 class="hero-title">
+                運用系統思維，<br>
+                結合AI打造高效率的網頁應用
+            </h1>
+            <p class="hero-desc">
+                我是 Vaga，一名資深軟體工程師。<br>
+                專注於後端架構與系統設計，擅長將複雜的業務邏輯轉化為簡潔、可擴充的程式碼。
+                目前致力於開發可擴展的網頁應用與自動化工具。
+            </p>
+            <div style="display: flex; gap: 16px;">
+                <a href="#projects" class="btn btn-primary" style="background: #111827; box-shadow: none;">查看精選作品</a>
+                <a href="mailto:kqletonline@gmail.com" class="btn btn-outline" style="border-color: #d1d5db;">聯繫我</a>
+            </div>
         </header>
-        
-        <!-- 專案區 -->
-        <section id="projects" class="projects">
-            <h2>近期 GitHub 專案</h2>
-            <div class="project-grid">
-                <div class="project-card">
-                    <h3>NotifySystem</h3>
-                    <p>提供 Server Side 接收與發送訊息，並藉由 Client Side 接收後於桌面彈出訊息</p>
-                    <a href="https://github.com/vaga0/NotifySystem" class="btn" target="_blank">查看專案</a>
-                </div>
-                <div class="project-card">
-                    <h3>Markdown Indexer</h3>
-                    <p>一款跨平台 (Windows/macOS) 的桌面應用，讓你快速整理與查詢本機的 Markdown (.md) 檔案。</p>
-                    <a href="https://github.com/vaga0/markdownFileIndex" class="btn" target="_blank">查看專案</a>
-                </div>
-            </div>
-            <div class="project-grid">
-                <div class="project-card">
-                    <h3>WorkTrace</h3>
-                    <p>WorkTrace 是一個輕量的工作日誌管理工具，幫助個人與團隊記錄、檢視與追蹤工作進度。</p>
-                    <a href="https://github.com/vaga0/worktrace" class="btn" target="_blank">查看專案</a>
-                </div>
-                <!-- 可添加更多專案卡片 -->
-                <div class="project-card">
-                    <h3>CoreForge</h3>
-                    <p>自行開發的 TypeScript 輕量型 framework</p>
-                    <a href="https://github.com/vaga0/CoreForge" class="btn" target="_blank">查看專案</a>
-                    <!-- <a href="#" class="btn disabled" target="_blank">即將推出</a> -->
-                </div>
-            </div>
-            <div>
-                <a href="https://github.com/vaga0" class="btn" target="_blank">查看所有 GitHub 專案</a>
-            </div>
-        </section>
 
-        <!-- 近期文章 -->
-        <section id="recent_post" class="recent_post">
-            <h2>近期文章</h2>
-            
-            <div class="grid-container" id="latest-posts"></div>
-
-            <div>
-                <a href="https://kqlet.online" class="btn" target="_blank">所有文章</a>
-            </div>
-        </section>
-        
-        <!-- 精選作品區 -->
-<!--         <section id="featured" class="featured-works">
+        <!-- Projects -->
+        <section id="projects" style="margin-bottom: 6rem;">
             <h2>精選作品</h2>
-            <div class="featured-grid">
-                <div class="featured-card" style="background-image: url('assets/images/docker_building2.jpeg');">
-                    <div class="card-overlay">
-                        <h3>Docker應用</h3>
-                        <p>利用 docker compose 建立出客製化的 wordpress 網站。</p>
-                        <a href="#" class="btn disabled">文件製作中</a>
-                    </div>
-                </div>
-                <div class="featured-card" style="background-image: url('assets/images/front_back_end.jpeg');">
-                    <div class="card-overlay">
-                        <h3>前後端分離</h3>
-                        <p>使用 Nuxt3 + WordPress 實現前後端分離。</p>
-                        <a href="#" class="btn disabled">文件製作中</a>
-                    </div>
-                </div>
-                <div class="featured-card" style="background-image: url('assets/images/project3.jpeg');">
-                    <div class="card-overlay">
-                        <h3>自動化腳本</h3>
-                        <p>使用Jekins 配合 ShellScript 腳本實現自動化部署流程，補足CI/CD的最後一哩路。</p>
-                        <a href="#" class="btn disabled">文件製作中</a>
-                    </div>
-                </div>
-            </div>
-        </section> -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem;">
 
-        <!-- 工作經歷區（時間軸） -->
-        <section id="experience" class="experience">
+                <article class="card-light">
+                    <div style="margin-bottom: 1rem;"><span class="status-badge status-live">已上線</span></div>
+                    <h3 style="margin-bottom: 0.5rem;">KQL.at</h3>
+                    <p style="color: var(--text-secondary); margin-bottom: 1.5rem; flex-grow: 1;">
+                        極簡高效的短網址服務。專注於快速跳轉與高乘載量，免登入即可維護短網址。
+                    </p>
+                    <a href="https://kql.at" target="_blank" style="color: var(--accent-blue); font-weight: 600;">前往網站
+                        &rarr;</a>
+                </article>
+
+                <article class="card-light">
+                    <div style="margin-bottom: 1rem;"><span class="status-badge status-live">已上線</span></div>
+                    <h3 style="margin-bottom: 0.5rem;">ShopYo</h3>
+                    <p style="color: var(--text-secondary); margin-bottom: 1.5rem; flex-grow: 1;">
+                        高度客製化的電商代購輔助平台。無須個資的註冊與登入機制，根據代購實際運作狀況，提供完整上架商品、訂購流程管理等功能。
+                    </p>
+                    <a href="https://shopyo.kql.at/" target="_blank"
+                        style="color: var(--accent-blue); font-weight: 600;">前往網站 &rarr;</a>
+                </article>
+
+                <article class="card-light">
+                    <div style="margin-bottom: 1rem;"><span class="status-badge status-dev">開發中</span></div>
+                    <h3 style="margin-bottom: 0.5rem;">Booking System</h3>
+                    <p style="color: var(--text-secondary); margin-bottom: 1.5rem; flex-grow: 1;">
+                        適合個人工作室的預約系統。提供快速開店的流程，簡易且足夠的管理功能，適用於微小規模的服務業者。
+                    </p>
+                    <a href="https://booking.kqlet.online/" target="_blank"
+                        style="color: var(--accent-blue); font-weight: 600;">預覽測試 &rarr;</a>
+                </article>
+
+            </div>
+
+            <div
+                style="margin-top: 2rem; padding: 1.5rem; background: #f9fafb; border-radius: 8px; text-align: center;">
+                <span style="color: #4b5563; font-size: 0.9rem; margin-right: 12px;">更多開源專案：</span>
+                <a href="https://github.com/vaga0/NotifySystem" target="_blank" class="skill-tag">NotifySystem</a>
+                <a href="https://github.com/vaga0/markdownFileIndex" target="_blank" class="skill-tag">Markdown
+                    Indexer</a>
+                <a href="https://github.com/vaga0/worktrace" target="_blank" class="skill-tag">WorkTrace</a>
+            </div>
+        </section>
+
+        <!-- Experience -->
+        <section id="experience" style="margin-bottom: 6rem;">
             <h2>工作經歷</h2>
             <div class="timeline">
+
                 <div class="timeline-item">
                     <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <span class="timeline-date">2023.04 - Now</span>
-                        <h3>Hannstar</h3>
-                        <p>副主任工程師</p>
-                        <ul>
-                            <li>網路應用服務的設計、開發、測試、部署</li>
-                            <li>AWS環境建置與開發</li>
-                            <li>導入CI/CD</li>
-                            <li>Docker compose部署</li>
-                        </ul>
+                    <div class="date" style="color: #6b7280; font-size: 0.9rem; margin-bottom: 0.5rem;">2023.04 - 現在
+                    </div>
+                    <div class="company-name">HannStar</div>
+                    <div class="role-title">副主任工程師</div>
+                    <details>
+                        <summary>工作內容詳情</summary>
+                        <div class="exp-details">
+                            <ul>
+                                <li>設計與開發企業級網路應用服務，確保系統高可用性。</li>
+                                <li>負責 AWS 雲端環境建置 (EC2, S3, RDS) 與架構優化。</li>
+                                <li>導入 Jenkins/GitLab CI 自動化部署流程，縮短上線時間。</li>
+                                <li>使用 Docker Compose 進行服務容器化管理。</li>
+                            </ul>
+                        </div>
+                    </details>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="date" style="color: #6b7280; font-size: 0.9rem; margin-bottom: 0.5rem;">2020.10 -
+                        2022.08</div>
+                    <div class="company-name">Toppath</div>
+                    <div class="role-title">資深工程師</div>
+                    <details>
+                        <summary>工作內容詳情</summary>
+                        <div class="exp-details">
+                            <ul>
+                                <li>使用 TypeScript 重構後端服務，大幅提升高並發請求的處理能力。</li>
+                                <li>優化資料庫查詢邏輯，解決報表生成效能瓶頸。</li>
+                                <li>建立資料驗證標準與單元測試，降低系統錯誤率。</li>
+                            </ul>
+                        </div>
+                    </details>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="date" style="color: #6b7280; font-size: 0.9rem; margin-bottom: 0.5rem;">2015.06 -
+                        2020.09</div>
+                    <div class="company-name">Cmedia</div>
+                    <div class="role-title">Server 軟體工程師</div>
+                    <details>
+                        <summary>工作內容詳情</summary>
+                        <div class="exp-details">
+                            <ul>
+                                <li>全端開發後台管理系統。</li>
+                                <li>設計與實作 APP 所需之 RESTful API。</li>
+                                <li>界接 Youtube Data API 進行影音數據分析。</li>
+                                <li>撰寫 Shell Script 自動化 AWS 部署程序。</li>
+                            </ul>
+                        </div>
+                    </details>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="date" style="color: #6b7280; font-size: 0.9rem; margin-bottom: 0.5rem;">2014.05 -
+                        2015.03</div>
+                    <div class="company-name">UITOX</div>
+                    <div class="role-title">SA & Release Manager</div>
+                    <details>
+                        <summary>工作內容詳情</summary>
+                        <div class="exp-details">
+                            <ul>
+                                <li>導入 Git 版本控制流程。</li>
+                                <li>負責系統分析 (SA) 與需求規格制定。</li>
+                                <li>管理產品測試與上線發布流程。</li>
+                            </ul>
+                        </div>
+                    </details>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="date" style="color: #6b7280; font-size: 0.9rem; margin-bottom: 0.5rem;">2009.03 -
+                        2014.05</div>
+                    <div class="company-name">III (資策會)</div>
+                    <div class="role-title">Engineer</div>
+                    <details>
+                        <summary>工作內容詳情</summary>
+                        <div class="exp-details">
+                            <ul>
+                                <li>電子公文 G2B2C 核心系統開發。</li>
+                                <li>分散式系統監控機制設計。</li>
+                                <li>專案進度管理與自動部署機制開發。</li>
+                            </ul>
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills -->
+        <section id="skills" style="margin-bottom: 6rem;">
+            <h2>專業技能</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
+                <div class="skill-section">
+                    <h3 style="font-size: 1.1rem; margin-bottom: 1rem; color: #111827;">後端開發</h3>
+                    <div>
+                        <span class="skill-tag highlight">PHP</span>
+                        <span class="skill-tag highlight">Node.js</span>
+                        <span class="skill-tag highlight">TypeScript</span>
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">Golang</span>
+                        <span class="skill-tag">ShellScript</span>
                     </div>
                 </div>
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <span class="timeline-date">2020.10 - 2022.08(1y10m)</span>
-                        <h3>Toppath</h3>
-                        <p>資深工程師</p>
-                        <ul>
-                            <li>使用 TypeScript 開發後端服務，支援高並發請求。</li>
-                            <li>改善程序處理邏輯提升後台查詢性能</li>
-                            <li>設計資料驗證機制，降低程式設計錯機率。</li>
-                        </ul>
+                <div class="skill-section">
+                    <h3 style="font-size: 1.1rem; margin-bottom: 1rem; color: #111827;">基礎架構 & DevOps</h3>
+                    <div>
+                        <span class="skill-tag highlight">AWS</span>
+                        <span class="skill-tag highlight">Docker</span>
+                        <span class="skill-tag">Nginx</span>
+                        <span class="skill-tag">Apache</span>
+                        <span class="skill-tag">Jenkins</span>
+                        <span class="skill-tag">Git</span>
                     </div>
                 </div>
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <span class="timeline-date">2015.06 - 2020.09(5y3m)</span>
-                        <h3>Cmedia</h3>
-                        <p>Server軟體工程師</p>
-                        <ul>
-                            <li>後台管理系統開發</li>
-                            <li>開發APP產品所需API</li>
-                            <li>界接 Youtube Data API</li>
-                            <li>AWS 建置及自行開發程式部署程序</li>
-                            <li>開發環境維護</li>
-                            <li>技術文件產出</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <span class="timeline-date">2014.05 - 2015.03(0y10m)</span>
-                        <h3>UITOX</h3>
-                        <p>SA & Release Manager</p>
-                        <ul>
-                            <li>導入 Git 版控流程及相關程序開發</li>
-                            <li>系統分析</li>
-                            <li>產品測試安排與上線管理</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <span class="timeline-date">2009.03 - 2014.05(5y2m)</span>
-                        <h3>III</h3>
-                        <p>Engineer</p>
-                        <ul>
-                            <li>電子公文G2B2C主要開發人員</li>
-                            <li>相關分散式系統的監控設計與開發</li>
-                            <li>專案進度控管</li>
-                            <li>開發版控自動部署機制</li>
-                        </ul>
+                <div class="skill-section">
+                    <h3 style="font-size: 1.1rem; margin-bottom: 1rem; color: #111827;">前端 & 其他</h3>
+                    <div>
+                        <span class="skill-tag highlight">Nuxt3</span>
+                        <span class="skill-tag highlight">MySQL</span>
+                        <span class="skill-tag highlight">Redis</span>
+                        <span class="skill-tag">Vue</span>
+                        <span class="skill-tag">HTML/CSS</span>
+                        <span class="skill-tag">JMeter</span>
                     </div>
                 </div>
             </div>
         </section>
-        
-        <!-- 技能區 -->
-        <section id="skills" class="skills">
-            <h2>我的技能</h2>
-            <div class="skill-legend">
-                <h3>熟練程度</h3>
-                <span class="proficient">熟練</span>
-                <span class="intermediate">一般</span>
-                <span class="beginner">涉略</span>
-            </div>
-            <ul class="skill-list">
-                <li class="proficient">Php</li>
-                <li class="intermediate">TypeScript</li>
-                <li class="intermediate">NodeJs</li>
-                <li class="beginner">Python</li>
-                <li class="proficient">ShellScript</li>
-                <li class="proficient">HTML & CSS</li>
-                <li class="proficient">JavaScript</li>
-                <li class="proficient">JQuery</li>
-                <li class="proficient">MySQL</li>
-                <li class="intermediate">MongoDB</li>
-                <li class="proficient">Redis</li>
-                <li class="proficient">Nuxt3</li>
-                <li class="intermediate">Vue</li>
-                <li class="beginner">React</li>
-                <li class="proficient">Apache</li>
-                <li class="proficient">Nginx</li>
-                <li class="proficient">AWS</li>
-                <li class="proficient">Git</li>
-                <li class="intermediate">Jekins</li>
-                <li class="proficient">Jmeter</li>
-                <li class="proficient">VM</li>
-                <li class="intermediate">docker</li>
-                <li class="beginner">Golang</li>
-                <li class="beginner">Ollama</li>
-            </ul>
-        </section>
 
-        <!-- 聯繫區 -->
-        <section id="contact" class="contact">
-            <h2>聯繫我</h2>
-            <p>有興趣合作或想聊聊？隨時聯繫我！</p>
-            <div class="contact-links">
-                <a href="mailto:kqletonline@gmail.com" class="btn">電子郵件</a>
-                <a href="https://kqlet.online" class="btn" target="_blank">WebSite</a>
+        <!-- Blog -->
+        <section id="blog" style="margin-bottom: 6rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <h2 style="margin-bottom: 0;">近期文章</h2>
+                <a href="https://kqlet.online" target="_blank" class="btn btn-outline"
+                    style="padding: 0.5rem 1rem; font-size: 0.9rem;">所有文章 &rarr;</a>
+            </div>
+
+            <div id="blog-list" class="blog-list">
+                <!-- Posts injected here -->
             </div>
         </section>
 
-        <script>
-            const hamburger = document.getElementById('hamburger');
-            const navMenu = document.getElementById('navMenu');
-            const menuItems = document.querySelectorAll('#navMenu ul li a'); // 所有選單項目
-            
-            // 點擊漢堡圖示時切換選單顯示
-            hamburger.addEventListener('click', () => {
-                navMenu.classList.toggle('open');
-            });
-
-            // 點擊選單項目後隱藏選單並隱藏漢堡圖示
-            menuItems.forEach(item => {
-            item.addEventListener('click', () => {
-                navMenu.classList.remove('open');  // 隱藏選單
-            });
-            });
-        </script>
-
-        <!-- 頁腳 -->
-        <footer class="footer">
-            <p>© 2025 Vaga Tsai. All rights reserved.</p>
+        <footer style="border-top: 1px solid #e5e7eb; padding: 3rem 0; text-align: center; color: #6b7280;">
+            <p>&copy; 2026 Vaga Tsai. All rights reserved.</p>
         </footer>
+
     </div>
+
     <script>
-      const siteUrl = 'https://kqlet.online'; // 替換為目標 WordPress 網站
-      const postCount = 4;
-    
-      fetch(`${siteUrl}/wp-json/wp/v2/posts?per_page=${postCount}&_embed`)
-        .then(res => res.json())
-        .then(posts => {
-          const container = document.getElementById('latest-posts');
-          posts.forEach(post => {
-            const img = post._embedded['wp:featuredmedia']?.[0]?.source_url || 'https://via.placeholder.com/400x300';
-            const div = document.createElement('div');
-            div.className = 'post';
-            div.innerHTML = `
-              <a href="${post.link}" target="_blank">
-                <img src="${img}" alt="${post.title.rendered}">
-                <div class="post-title">${post.title.rendered}</div>
-              </a>
-            `;
-            container.appendChild(div);
-          });
-        })
-        .catch(err => console.error('Error fetching posts:', err));
+        const siteUrl = 'https://kqlet.online';
+        const postCount = 3;
+
+        fetch(`${siteUrl}/wp-json/wp/v2/posts?per_page=${postCount}&_embed`)
+            .then(res => res.json())
+            .then(posts => {
+                const container = document.getElementById('blog-list');
+                posts.forEach(post => {
+                    const img = post._embedded['wp:featuredmedia']?.[0]?.source_url || 'https://via.placeholder.com/200';
+                    const date = new Date(post.date).toLocaleDateString();
+
+                    container.innerHTML += `
+                        <a href="${post.link}" target="_blank" class="blog-item">
+                            <img src="${img}" alt="${post.title.rendered}" class="blog-thumb">
+                            <div class="blog-content">
+                                <div class="blog-title">${post.title.rendered}</div>
+                                <div class="blog-date">${date}</div>
+                            </div>
+                        </a>
+                    `;
+                });
+            })
+            .catch(err => console.error('Error fetching posts:', err));
     </script>
 </body>
+
 </html>
