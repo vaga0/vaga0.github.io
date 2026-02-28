@@ -7,6 +7,27 @@
     <meta name="msvalidate.01" content="BACACF55CBB5B0E13CCC3CD5AE1BAA89" />
     <title>Vaga Tsai - 資深軟體工程師</title>
     <meta name="description" content="Vaga Tsai 的個人作品集。資深軟體工程師，專精於網頁應用開發、後端系統設計與 AWS 架構。">
+    <meta name="keywords"
+        content="Vaga Tsai, 軟體工程師, 後端工程師, PHP, Node.js, TypeScript, AWS, Docker, Nuxt3, Prompt Engineering, AI 協作開發, 個人作品集, 履歷">
+    <meta name="author" content="Vaga Tsai">
+    <link rel="canonical" href="https://vaga0.github.io/">
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Vaga Tsai",
+        "url": "https://vaga0.github.io",
+        "jobTitle": "資深軟體工程師",
+        "description": "專精於後端架構、系統設計與 AWS 雲端環境，擅長 AI 協作開發與 Prompt Engineering。",
+        "email": "kqletonline@gmail.com",
+        "sameAs": [
+            "https://github.com/vaga0",
+            "https://kqlet.online"
+        ],
+        "knowsAbout": ["PHP", "Node.js", "TypeScript", "AWS", "Docker", "Nuxt3", "MySQL", "Redis", "Prompt Engineering", "AI 協作開發"]
+    }
+    </script>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -140,6 +161,12 @@
         .status-dev {
             background: #f3e8ff;
             color: #6b21a8;
+        }
+
+        .status-ai {
+            background: linear-gradient(135deg, #e0f2fe, #ede9fe);
+            color: #4338ca;
+            border: 1px solid #c7d2fe;
         }
 
         /* Timeline */
@@ -317,6 +344,64 @@
             background: #f3f4f6;
             color: #111827;
         }
+
+        /* Tool List Item */
+        .tool-list-item {
+            display: flex;
+            align-items: center;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            transition: 0.2s ease;
+            text-decoration: none;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .tool-list-item:hover {
+            transform: translateX(4px);
+            border-color: var(--accent-blue);
+            box-shadow: var(--shadow-md);
+        }
+
+        .version-badge {
+            background: #e0f2fe;
+            color: #0369a1;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-left: 6px;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        @media (max-width: 640px) {
+            .tool-list-item>div {
+                flex-direction: column;
+                align-items: flex-start !important;
+                gap: 6px !important;
+            }
+
+            .tool-list-item>div>div:nth-child(1) {
+                /* 標題 */
+                width: 100%;
+                display: flex;
+                align-items: center;
+            }
+
+            .tool-list-item>div>div:nth-child(2) {
+                /* 描述 */
+                white-space: normal !important;
+                margin-bottom: 4px;
+            }
+
+            .tool-list-item>div>div:nth-child(3) {
+                /* 連結 */
+                align-self: flex-end;
+                margin-top: 0px;
+            }
+        }
     </style>
 </head>
 
@@ -332,6 +417,7 @@
                 <a href="#experience" class="nav-link">經歷</a>
                 <a href="#skills" class="nav-link">技能</a>
                 <a href="#blog" class="nav-link">文章</a>
+                <a href="#tools" class="nav-link">工具</a>
             </div>
         </div>
     </nav>
@@ -348,6 +434,11 @@
                 專注於後端架構與系統設計，擅長將複雜的業務邏輯轉化為簡潔、可擴充的程式碼。
                 目前致力於開發可擴展的網頁應用與自動化工具。
             </p>
+            <div
+                style="margin-bottom: 2rem; padding: 1rem 1.25rem; background: #f0f9ff; border-left: 3px solid var(--accent-blue); border-radius: 6px; font-size: 0.95rem; color: var(--text-secondary); line-height: 1.7;">
+                🤖 長期使用 Agentic AI 進行全端開發，擅長將複雜需求拆解為精準指令，並持續優化 AI 協作流程。
+                目前作品皆藉助 AI 協作完成多個完整專案，從架構設計、功能實作、測試到 UI 調整均能高效交付。
+            </div>
             <div style="display: flex; gap: 16px;">
                 <a href="#projects" class="btn btn-primary" style="background: #111827; box-shadow: none;">查看精選作品</a>
                 <a href="mailto:kqletonline@gmail.com" class="btn btn-outline" style="border-color: #d1d5db;">聯繫我</a>
@@ -360,7 +451,8 @@
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem;">
 
                 <article class="card-light">
-                    <div style="margin-bottom: 1rem;"><span class="status-badge status-live">已上線</span></div>
+                    <div style="margin-bottom: 1rem;"><span class="status-badge status-live">已上線</span> <span
+                            class="status-badge status-ai">AI 協作</span></div>
                     <h3 style="margin-bottom: 0.5rem;">KQL.at</h3>
                     <p style="color: var(--text-secondary); margin-bottom: 1.5rem; flex-grow: 1;">
                         極簡高效的短網址服務。專注於快速跳轉與高乘載量，免登入即可維護短網址。
@@ -370,7 +462,8 @@
                 </article>
 
                 <article class="card-light">
-                    <div style="margin-bottom: 1rem;"><span class="status-badge status-live">已上線</span></div>
+                    <div style="margin-bottom: 1rem;"><span class="status-badge status-live">已上線</span> <span
+                            class="status-badge status-ai">AI 協作</span></div>
                     <h3 style="margin-bottom: 0.5rem;">ShopYo</h3>
                     <p style="color: var(--text-secondary); margin-bottom: 1.5rem; flex-grow: 1;">
                         高度客製化的電商代購輔助平台。無須個資的註冊與登入機制，根據代購實際運作狀況，提供完整上架商品、訂購流程管理等功能。
@@ -380,7 +473,8 @@
                 </article>
 
                 <article class="card-light">
-                    <div style="margin-bottom: 1rem;"><span class="status-badge status-dev">開發中</span></div>
+                    <div style="margin-bottom: 1rem;"><span class="status-badge status-dev">開發中</span> <span
+                            class="status-badge status-ai">AI 協作</span></div>
                     <h3 style="margin-bottom: 0.5rem;">Booking System</h3>
                     <p style="color: var(--text-secondary); margin-bottom: 1.5rem; flex-grow: 1;">
                         適合個人工作室的預約系統。提供快速開店的流程，簡易且足夠的管理功能，適用於微小規模的服務業者。
@@ -527,7 +621,7 @@
                     </div>
                 </div>
                 <div class="skill-section">
-                    <h3 style="font-size: 1.1rem; margin-bottom: 1rem; color: #111827;">前端 & 其他</h3>
+                    <h3 style="font-size: 1.1rem; margin-bottom: 1rem; color: #111827;">前端 &amp; 其他</h3>
                     <div>
                         <span class="skill-tag highlight">Nuxt3</span>
                         <span class="skill-tag highlight">MySQL</span>
@@ -535,6 +629,15 @@
                         <span class="skill-tag">Vue</span>
                         <span class="skill-tag">HTML/CSS</span>
                         <span class="skill-tag">JMeter</span>
+                    </div>
+                </div>
+                <div class="skill-section">
+                    <h3 style="font-size: 1.1rem; margin-bottom: 1rem; color: #111827;">AI 工具與協作</h3>
+                    <div>
+                        <span class="skill-tag highlight">AI 協作開發</span>
+                        <span class="skill-tag highlight">Prompt Engineering</span>
+                        <span class="skill-tag">Agentic Workflow</span>
+                        <span class="skill-tag">AI 輔助架構設計</span>
                     </div>
                 </div>
             </div>
@@ -550,6 +653,30 @@
 
             <div id="blog-list" class="blog-list">
                 <!-- Posts injected here -->
+            </div>
+        </section>
+
+        <!-- Tools -->
+        <section id="tools" style="margin-bottom: 6rem;">
+            <h2>常用工具</h2>
+            <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+
+                <a href="tools/car-cost-calculator/" class="tool-list-item">
+                    <div style="display: flex; align-items: center; gap: 12px; width: 100%;">
+                        <div
+                            style="font-weight: 600; color: #111827; flex-shrink: 0; min-width: 160px; display: flex; align-items: center;">
+                            養車成本計算器
+                            <span class="version-badge">v2</span>
+                        </div>
+                        <div
+                            style="color: var(--text-secondary); font-size: 0.9rem; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; flex-grow: 1;">
+                            買車/長租/訂閱/叫車 30 年真實總成本精算比較</div>
+                        <div
+                            style="color: var(--accent-blue); font-weight: 600; font-size: 0.9rem; flex-shrink: 0; margin-left: auto;">
+                            前往 &rarr;</div>
+                    </div>
+                </a>
+
             </div>
         </section>
 
