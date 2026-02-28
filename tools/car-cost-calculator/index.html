@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>養車成本計算器 v2 — 買車、租車、還是叫車？先算清楚</title>
+    <meta name="description" content="比較買燃油車、買電動車、長期租車、汽車訂閱、以 Uber 為主，哪種用車方式最划算？精算 30 年真實總成本。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+TC:wght@300;400;500;600;700;900&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" id="themeToggle" aria-label="切換色系">
+        <span class="toggle-emoji">☀️</span>
+        <span class="toggle-label">淺色模式</span>
+    </button>
+
+    <!-- Hero -->
+    <header class="hero">
+        <div class="hero-bg"></div>
+        <div class="container">
+            <h1><span class="icon">🚗</span> 用車成本比較器</h1>
+            <p class="subtitle">買車、租車、還是叫車？30 年財務全貌，讓數字說話</p>
+        </div>
+    </header>
+
+    <main class="container">
+
+        <!-- Step Navigator -->
+        <nav class="step-nav" aria-label="步驟導覽">
+            <div class="step-item active" id="nav-step1">
+                <div class="step-circle">1</div>
+                <span class="step-label">選擇情境</span>
+            </div>
+            <div class="step-connector"></div>
+            <div class="step-item" id="nav-step2">
+                <div class="step-circle">2</div>
+                <span class="step-label">填入數字</span>
+            </div>
+            <div class="step-connector"></div>
+            <div class="step-item" id="nav-step3">
+                <div class="step-circle">3</div>
+                <span class="step-label">比較結果</span>
+            </div>
+        </nav>
+
+        <!-- ===== STEP 1: 情境選擇 ===== -->
+        <section id="step1" class="step-section active">
+            <div class="step-card glow-card">
+                <h2 class="step-title">🎯 你打算怎麼用車？</h2>
+                <p class="step-desc">選擇你的「主要用車方式」，以及想對比的其他方案</p>
+
+                <!-- 主方案 -->
+                <div class="selector-group">
+                    <h3 class="selector-label">我的主要方式</h3>
+                    <div class="mode-grid">
+                        <label class="mode-card" id="mc-ice">
+                            <input type="radio" name="mainMode" value="ice" checked>
+                            <div class="mode-card-inner">
+                                <div class="mode-icon">⛽</div>
+                                <div class="mode-name">燃油車</div>
+                                <div class="mode-desc">自行購買汽油車</div>
+                            </div>
+                        </label>
+                        <label class="mode-card" id="mc-ev">
+                            <input type="radio" name="mainMode" value="ev">
+                            <div class="mode-card-inner">
+                                <div class="mode-icon">⚡</div>
+                                <div class="mode-name">純電車 (EV)</div>
+                                <div class="mode-desc">自行購買電動車</div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- 比較方案 -->
+                <div class="selector-group">
+                    <h3 class="selector-label">我想對比的方案（可多選）</h3>
+                    <div class="compare-grid">
+                        <label class="compare-card" id="cc-rental">
+                            <input type="checkbox" name="compareMode" value="rental">
+                            <div class="compare-card-inner">
+                                <div class="compare-icon">📋</div>
+                                <div class="compare-name">長期租車</div>
+                                <div class="compare-desc">月租，含保險稅金</div>
+                            </div>
+                            <div class="check-mark">✓</div>
+                        </label>
+                        <label class="compare-card" id="cc-subscription">
+                            <input type="checkbox" name="compareMode" value="subscription">
+                            <div class="compare-card-inner">
+                                <div class="compare-icon">🔄</div>
+                                <div class="compare-name">汽車訂閱制</div>
+                                <div class="compare-desc">彈性換車，短期合約</div>
+                            </div>
+                            <div class="check-mark">✓</div>
+                        </label>
+                        <label class="compare-card" id="cc-uber">
+                            <input type="checkbox" name="compareMode" value="uber">
+                            <div class="compare-card-inner">
+                                <div class="compare-icon">🚕</div>
+                                <div class="compare-name">叫車為主</div>
+                                <div class="compare-desc">Uber + 大眾運輸</div>
+                            </div>
+                            <div class="check-mark">✓</div>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="action-row">
+                    <button type="button" class="btn-primary" id="toStep2Btn">
+                        <span class="btn-icon">▶</span> 下一步：填入你的數字
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== STEP 2: 費用填寫 ===== -->
+        <section id="step2" class="step-section">
+            <form id="calcForm" autocomplete="off">
+
+                <!-- ── 燃油車區塊 ── -->
+                <div id="block-ice" class="mode-block">
+                    <div class="mode-block-title"><span class="icon">⛽</span> 燃油車設定</div>
+
+                    <section class="card">
+                        <div class="card-header" data-toggle="purchase">
+                            <h2><span class="icon">💰</span> 購車基本</h2><span class="toggle-icon">▼</span>
+                        </div>
+                        <div class="card-body open" id="body-purchase">
+                            <div class="grid-3">
+                                <div class="field">
+                                    <label for="carPrice">車輛總價（含選配）</label>
+                                    <div class="input-wrap"><input type="number" id="carPrice" value="800000" min="0"
+                                            step="10000"><span class="unit">元</span></div>
+                                </div>
+                                <div class="field">
+                                    <label for="downPayment">頭期款</label>
+                                    <div class="input-wrap"><input type="number" id="downPayment" value="200000" min="0"
+                                            step="10000"><span class="unit">元</span></div>
+                                </div>
+                                <div class="field">
+                                    <label for="loanRate">貸款年利率</label>
+                                    <div class="input-wrap"><input type="number" id="loanRate" value="3.5" min="0"
+                                            max="20" step="0.1"><span class="unit">%</span></div>
+                                </div>
+                                <div class="field">
+                                    <label for="loanYears">貸款年數</label>
+                                    <div class="input-wrap"><input type="number" id="loanYears" value="5" min="0"
+                                            max="10" step="1"><span class="unit">年</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="card">
+                        <div class="card-header" data-toggle="usage">
+                            <h2><span class="icon">⛽</span> 使用成本</h2><span class="toggle-icon">▼</span>
+                        </div>
+                        <div class="card-body open" id="body-usage">
+                            <div class="grid-3">
+                                <div class="field">
+                                    <label for="fuelMonthly">油費 / 月</label>
+                                    <div class="input-wrap"><input type="number" id="fuelMonthly" value="3000" min="0"
+                                            step="100"><span class="unit">元</span></div>
+                                </div>
+                                <div class="field">
+                                    <label for="parkingMonthly">停車費 / 月</label>
+                                    <div class="input-wrap"><input type="number" id="parkingMonthly" value="3000"
+                                            min="0" step="100"><span class="unit">元</span></div>
+                                </div>
+                                <div class="field">
+                                    <label for="etcMonthly">過路費 ETC / 月</label>
+                                    <div class="input-wrap"><input type="number" id="etcMonthly" value="500" min="0"
+                                            step="100"><span class="unit">元</span></div>
+                                </div>
+                                <div class="field">
+                                    <label for="fineYearly">罰單預算 / 年</label>
+                                    <div class="input-wrap"><input type="number" id="fineYearly" value="1000" min="0"
+                                            step="500"><span class="unit">元</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="card">
+                        <div class="card-header" data-toggle="maintenance">
+                            <h2><span class="icon">🔧</span> 維護保養</h2><span class="toggle-icon">▼</span>
+                        </div>
+                        <div class="card-body open" id="body-maintenance">
+                            <div class="grid-3">
+                                <div class="field">
+                                    <label for="maintenanceCost">定期保養 / 次</label>
+                                    <div class="input-wrap"><input type="number" id="maintenanceCost" value="3000"
+                                            min="0" step="500"><span class="unit">元</span></div>
+                                </div>
+                                <div class="field">
+                                    <label for="maintenanceInterval">保養週期</label>
+                                    <div class="input-wrap"><input type="number" id="maintenanceInterval" value="6"
+                                            min="1" max="24" step="1"><span class="unit">個月</span></div>
+                                </div>
+                                <div class="field">
+                                    <label for="tireCost">輪胎更換 / 次（4 條）</label>
+                                    <div class="input-wrap"><input type="number" id="tireCost" value="12000" min="0"
+                                            step="1000"><span class="unit">元</span></div>
+                                </div>
+                                <div class="field">
+                                    <label for="tireInterval">輪胎更換週期</label>
+                                    <div class="input-wrap"><input type="number" id="tireInterval" value="4" min="1"
+                                            max="10" step="1"><span class="unit">年</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="card">
+                        <div class="card-header" data-toggle="insurance">
+                            <h2><span class="icon">🛡️</span> 保險與稅費</h2><span class="toggle-icon">▼</span>
+                        </div>
+                        <div class="card-body open" id="body-insurance">
+                            <div class="grid-3">
+                                <div class="field">
+                                    <label for="insuranceMandatory">強制險 / 年</label>
+                                    <div class="input-wrap"><input type="number" id="insuranceMandatory" value="2500"
+                                            min="0" step="100"><span class="unit">元</span></div>
+                                </div>
+                                <div class="field">
+                                    <label for="insuranceOptional">任意險（甲/乙式）/ 年</label>
+                                    <div class="input-wrap"><input type="number" id="insuranceOptional" value="15000"
+                                            min="0" step="1000"><span class="unit">元</span></div>
+                                </div>
+                                <div class="field">
+                                    <label for="licenseTax">牌照稅 / 年</label>
+                                    <div class="input-wrap"><input type="number" id="licenseTax" value="7120" min="0"
+                                            step="10"><span class="unit">元</span></div>
+                                </div>
+                                <div class="field">
+                                    <label for="fuelTax">燃料稅 / 年</label>
+                                    <div class="input-wrap"><input type="number" id="fuelTax" value="4800" min="0"
+                                            step="10"><span class="unit">元</span></div>
+                                </div>
+                                <div class="field">
+                                    <label for="inspectionFee">驗車費 / 次</label>
+                                    <div class="input-wrap"><input type="number" id="inspectionFee" value="450" min="0"
+                                            step="50"><span class="unit">元</span></div>
+                                    <small class="hint">第 5 年起每年 1 次，第 10 年起每年 2 次</small>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- ── 純電車區塊 ── -->
+                <div id="block-ev" class="mode-block" style="display:none">
+                    <div class="mode-block-title"><span class="icon">⚡</span> 純電車設定</div>
+
+                    <section class="card">
+                        <div class="card-header" data-toggle="ev-purchase">
+                            <h2><span class="icon">💰</span> 購車基本</h2><span class="toggle-icon">▼</span>
+                        </div>
+                        <div class="card-body open" id="body-ev-purchase">
+                            <div class="grid-3">
+                                <div class="field">
+                                    <label for="evCarPrice">車輛總價（含選配）</label>
+                                    <div class="input-wrap"><input type="number" id="evCarPrice" value="1200000" min="0"
+                                            step="10000"><span class="unit">元</span></div>
+                                </div>
+                                <div class="field">
+                                    <label for="evDownPayment">頭期款</label>
+                                    <div class="input-wrap"><input type="number" id="evDownPayment" value="300000"
+                                            min="0" step="10000"><span class="unit">元</span></div>
+                                </div>
+                                <div class="field">
+                                    <label for="evLoanRate">貸款年利率</label>
+                                    <div class="input-wrap"><input type="number" id="evLoanRate" value="3.0" min="0"
+                                            max="20" step="0.1"><span class="unit">%</span></div>
+                                </div>
+                                <div class="field">
+                                    <label for="evLoanYears">貸款年數</label>
+                                    <div class="input-wrap"><input type="number" id="evLoanYears" value="5" min="0"
+                                            max="10" step="1"><span class="unit">年</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="card">
+                        <div class="card-header" data-toggle="ev-charge">
+                            <h2><span class="icon">🔋</span> 充電費用</h2><span class="toggle-icon">▼</span>
+                        </div>
+                        <div class="card-body open" id="body-ev-charge">
+                            <div class="grid-3">
+                                <div class="field">
+                                    <label for="evBatteryKwh">電池容量</label>
+                                    <div class="input-wrap"><input type="number" id="evBatteryKwh" value="75" min="20"
+                                            max="200" step="1"><span class="unit">kWh</span></div>
+                                </div>
+                                <div class="field">
+                                    <label for="evEfficiency">平均電耗</label>
+                                    <div class="input-wrap"><input type="number" id="evEfficiency" value="6.5" min="2"
+                                            max="15" step="0.1"><span class="unit">km/kWh</span></div>
+                                </div>
+                                <div class="field">
+                                    <label for="evHomeRate">家用電費</label>
+                                    <div class="input-wrap"><input type="number" id="evHomeRate" value="2.8" min="0"
+                                            max="20" step="0.1"><span class="unit">元/度</span></div>
+                                    <small class="hint">平均含基本費攤提</small>
+                                </div>
+                                <div class="field">
+                                    <label for="evFastRate">快充站電費</label>
+                                    <div class="input-wrap"><input type="number" id="evFastRate" value="10" min="0"
+                                            max="30" step="0.5"><span class="unit">元/度</span></div>
+                                </div>
+                                <div class="field">
+                                    <label for="evHomeChargePercent">家充比例</label>
+                                    <div class="input-wrap"><input type="number" id="evHomeChargePercent" value="80"
+                                            min="0" max="100" step="5"><span class="unit">%</span></div>
+                                </div>
+                                <div class="field">
+                                    <label for="evChargerInstall">家用充電樁安裝費</label>
+                                    <div class="input-wrap"><input type="number" id="evChargerInstall" value="30000"
+                                            min="0" step="5000"><span class="unit">元</span></div>
+                                    <small class="hint">一次性費用</small>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="card">
+                        <div class="card-header" data-toggle="ev-battery">
+                            <h2><span class="icon">⚡</span> 電池衰退與保值</h2><span class="toggle-icon">▼</span>
+                        </div>
+                        <div class="card-body open" id="body-ev-battery">
+                            <div class="grid-3">
+                                <div class="field">
+                                    <label for="evBatteryWarrantyYears">電池保固年限</label>
+                                    <div class="input-wrap"><input type="number" id="evBatteryWarrantyYears" value="8"
+                                            min="1" max="15" step="1"><span class="unit">年</span></div>
+                                </div>
+                                <div class="field">
+                                    <label for="evBatteryReplaceCost">電池更換預備金（過保後）</label>
+                                    <div class="input-wrap"><input type="number" id="evBatteryReplaceCost"
+                                            value="300000" min="0" step="10000"><span class="unit">元</span></div>
+                                    <small class="hint">若預期持有超出保固期</small>
+                                </div>
+                                <div class="field">
+                                    <label for="evDepreciationRate">年折舊率（EV 較快）</label>
+                                    <div class="input-wrap"><input type="number" id="evDepreciationRate" value="18"
+                                            min="0" max="50" step="1"><span class="unit">%</span></div>
+                                    <small class="hint">EV 約 15~25%</small>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="card">
+                        <div class="card-header" data-toggle="ev-usage">
+                            <h2><span class="icon">🚗</span> 其他使用成本</h2><span class="toggle-icon">▼</span>
+                        </div>
+                        <div class="card-body open" id="body-ev-usage">
+                            <div class="grid-3">
+                                <div class="field">
+                                    <label for="evParkingMonthly">停車費 / 月</label>
+                                    <div class="input-wrap"><input type="number" id="evParkingMonthly" value="3000"
+                                            min="0" step="100"><span class="unit">元</span></div>
+                                </div>
+                                <div class="field">
+                                    <label for="evEtcMonthly">過路費 ETC / 月</label>
+                                    <div class="input-wrap"><input type="number" id="evEtcMonthly" value="500" min="0"
+                                            step="100"><span class="unit">元</span></div>
+                                </div>
+                                <div class="field">
+                                    <label for="evFineYearly">罰單預算 / 年</label>
+                                    <div class="input-wrap"><input type="number" id="evFineYearly" value="1000" min="0"
+                                            step="500"><span class="unit">元</span></div>
+                                </div>
+                                <div class="field">
+                                    <label for="evMaintenanceCost">年度保養費（EV 較低）</label>
+                                    <div class="input-wrap"><input type="number" id="evMaintenanceCost" value="8000"
+                                            min="0" step="500"><span class="unit">元/年</span></div>
+                                    <small class="hint">約燃油車 30-50%</small>
+                                </div>
+                                <div class="field">
+                                    <label for="evTireCost">輪胎更換 / 次（4 條）</label>
+                                    <div class="input-wrap"><input type="number" id="evTireCost" value="14000" min="0"
+                                            step="1000"><span class="unit">元</span></div>
+                                    <small class="hint">EV 因車重磨損較快</small>
+                                </div>
+                                <div class="field">
+                                    <label for="evTireInterval">輪胎更換週期</label>
+                                    <div class="input-wrap"><input type="number" id="evTireInterval" value="3" min="1"
+                                            max="8" step="1"><span class="unit">年</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="card">
+                        <div class="card-header" data-toggle="ev-insurance">
+                            <h2><span class="icon">🛡️</span> 保險與稅費</h2><span class="toggle-icon">▼</span>
+                        </div>
+                        <div class="card-body open" id="body-ev-insurance">
+                            <div class="grid-3">
+                                <div class="field">
+                                    <label for="evInsuranceMandatory">強制險 / 年</label>
+                                    <div class="input-wrap"><input type="number" id="evInsuranceMandatory" value="2500"
+                                            min="0" step="100"><span class="unit">元</span></div>
+                                </div>
+                                <div class="field">
+                                    <label for="evInsuranceOptional">任意險 / 年</label>
+                                    <div class="input-wrap"><input type="number" id="evInsuranceOptional" value="20000"
+                                            min="0" step="1000"><span class="unit">元</span></div>
+                                    <small class="hint">EV 零件貴，保費略高</small>
+                                </div>
+                                <div class="field">
+                                    <label for="evLicenseTax">牌照稅 / 年</label>
+                                    <div class="input-wrap"><input type="number" id="evLicenseTax" value="7120" min="0"
+                                            step="10"><span class="unit">元</span></div>
+                                    <small class="hint">依馬力課稅，非電力</small>
+                                </div>
+                                <div class="field">
+                                    <label for="evInspectionFee">驗車費 / 次</label>
+                                    <div class="input-wrap"><input type="number" id="evInspectionFee" value="450"
+                                            min="0" step="50"><span class="unit">元</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- ── 共用進階設定 ── -->
+                <section class="card collapsed" id="section-advanced">
+                    <div class="card-header" data-toggle="advanced">
+                        <h2><span class="icon">📊</span> 進階財務設定</h2><span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="card-body" id="body-advanced">
+                        <div class="grid-3">
+                            <div class="field" id="field-depreciationRate">
+                                <label for="depreciationRate">年折舊率（燃油車）</label>
+                                <div class="input-wrap"><input type="number" id="depreciationRate" value="15" min="0"
+                                        max="50" step="1"><span class="unit">%</span></div>
+                                <small class="hint">一般車輛約 10~20%</small>
+                            </div>
+                            <div class="field">
+                                <label for="investReturnRate">投資年化報酬率</label>
+                                <div class="input-wrap"><input type="number" id="investReturnRate" value="7" min="0"
+                                        max="30" step="0.5"><span class="unit">%</span></div>
+                                <small class="hint">指數型基金約 7-10%</small>
+                            </div>
+                            <div class="field">
+                                <label for="annualKm">年行駛里程</label>
+                                <div class="input-wrap"><input type="number" id="annualKm" value="15000" min="0"
+                                        step="1000"><span class="unit">公里</span></div>
+                            </div>
+                            <div class="field">
+                                <label for="inflationRate">年通膨率</label>
+                                <div class="input-wrap"><input type="number" id="inflationRate" value="2" min="0"
+                                        max="10" step="0.5"><span class="unit">%</span></div>
+                            </div>
+                            <div class="field">
+                                <label for="holdingYears">分析年數</label>
+                                <div class="input-wrap"><input type="number" id="holdingYears" value="30" min="1"
+                                        max="30" step="1"><span class="unit">年</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ── 長期租車 ── -->
+                <div id="block-rental" class="mode-block compare-block" style="display:none">
+                    <div class="mode-block-title compare-title"><span class="icon">📋</span> 長期租車設定</div>
+                    <section class="card">
+                        <div class="card-header" data-toggle="rental-main">
+                            <h2><span class="icon">📋</span> 租車方案</h2><span class="toggle-icon">▼</span>
+                        </div>
+                        <div class="card-body open" id="body-rental-main">
+                            <div class="grid-3">
+                                <div class="field">
+                                    <label for="rentalMonthly">月租金（含保險稅金）</label>
+                                    <div class="input-wrap"><input type="number" id="rentalMonthly" value="18000"
+                                            min="0" step="500"><span class="unit">元/月</span></div>
+                                    <small class="hint">通常含強制險、牌照稅</small>
+                                </div>
+                                <div class="field">
+                                    <label for="rentalDeposit">押金 / 保證金</label>
+                                    <div class="input-wrap"><input type="number" id="rentalDeposit" value="30000"
+                                            min="0" step="5000"><span class="unit">元</span></div>
+                                </div>
+                                <div class="field">
+                                    <label for="rentalKmLimit">合約年里程上限</label>
+                                    <div class="input-wrap"><input type="number" id="rentalKmLimit" value="20000"
+                                            min="0" step="1000"><span class="unit">公里/年</span></div>
+                                </div>
+                                <div class="field">
+                                    <label for="rentalOverKmFee">超里程費率</label>
+                                    <div class="input-wrap"><input type="number" id="rentalOverKmFee" value="5" min="0"
+                                            max="30" step="0.5"><span class="unit">元/km</span></div>
+                                </div>
+                                <div class="field">
+                                    <label for="rentalFuelMonthly">油費 / 月（自付）</label>
+                                    <div class="input-wrap"><input type="number" id="rentalFuelMonthly" value="3000"
+                                            min="0" step="100"><span class="unit">元</span></div>
+                                </div>
+                                <div class="field">
+                                    <label for="rentalParkingMonthly">停車費 / 月（自付）</label>
+                                    <div class="input-wrap"><input type="number" id="rentalParkingMonthly" value="3000"
+                                            min="0" step="100"><span class="unit">元</span></div>
+                                </div>
+                                <div class="field">
+                                    <label for="rentalEtcMonthly">ETC / 月</label>
+                                    <div class="input-wrap"><input type="number" id="rentalEtcMonthly" value="500"
+                                            min="0" step="100"><span class="unit">元</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- ── 汽車訂閱制 ── -->
+                <div id="block-subscription" class="mode-block compare-block" style="display:none">
+                    <div class="mode-block-title compare-title"><span class="icon">🔄</span> 汽車訂閱制設定</div>
+                    <section class="card">
+                        <div class="card-header" data-toggle="sub-main">
+                            <h2><span class="icon">🔄</span> 訂閱方案</h2><span class="toggle-icon">▼</span>
+                        </div>
+                        <div class="card-body open" id="body-sub-main">
+                            <div class="grid-3">
+                                <div class="field">
+                                    <label for="subMonthlyBase">月費基數</label>
+                                    <div class="input-wrap"><input type="number" id="subMonthlyBase" value="12000"
+                                            min="0" step="500"><span class="unit">元/月</span></div>
+                                    <small class="hint">通常含保險、稅金、保養</small>
+                                </div>
+                                <div class="field">
+                                    <label for="subPerKm">里程計費</label>
+                                    <div class="input-wrap"><input type="number" id="subPerKm" value="4" min="0"
+                                            max="20" step="0.5"><span class="unit">元/km</span></div>
+                                    <small class="hint">部分方案按里程額外收費</small>
+                                </div>
+                                <div class="field">
+                                    <label for="subInitFee">初始費 / 訂閱金</label>
+                                    <div class="input-wrap"><input type="number" id="subInitFee" value="10000" min="0"
+                                            step="1000"><span class="unit">元</span></div>
+                                </div>
+                                <div class="field">
+                                    <label for="subParkingMonthly">停車費 / 月</label>
+                                    <div class="input-wrap"><input type="number" id="subParkingMonthly" value="3000"
+                                            min="0" step="100"><span class="unit">元</span></div>
+                                </div>
+                                <div class="field">
+                                    <label for="subEtcMonthly">ETC / 月</label>
+                                    <div class="input-wrap"><input type="number" id="subEtcMonthly" value="500" min="0"
+                                            step="100"><span class="unit">元</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- ── Uber / 叫車為主 ── -->
+                <div id="block-uber" class="mode-block compare-block" style="display:none">
+                    <div class="mode-block-title compare-title"><span class="icon">🚕</span> 叫車為主設定</div>
+                    <section class="card">
+                        <div class="card-header" data-toggle="uber-main">
+                            <h2><span class="icon">🚕</span> 每月交通習慣</h2><span class="toggle-icon">▼</span>
+                        </div>
+                        <div class="card-body open" id="body-uber-main">
+                            <div class="grid-3">
+                                <div class="field">
+                                    <label for="uberCommuteTrips">通勤搭車 / 月（來回趟次）</label>
+                                    <div class="input-wrap"><input type="number" id="uberCommuteTrips" value="40"
+                                            min="0" step="2"><span class="unit">趟</span></div>
+                                </div>
+                                <div class="field">
+                                    <label for="uberCommutePrice">通勤單趟平均車資</label>
+                                    <div class="input-wrap"><input type="number" id="uberCommutePrice" value="200"
+                                            min="0" step="10"><span class="unit">元</span></div>
+                                </div>
+                                <div class="field">
+                                    <label for="uberWeekendTrips">假日長途搭車 / 月</label>
+                                    <div class="input-wrap"><input type="number" id="uberWeekendTrips" value="4" min="0"
+                                            step="1"><span class="unit">趟</span></div>
+                                </div>
+                                <div class="field">
+                                    <label for="uberWeekendPrice">假日單趟平均車資</label>
+                                    <div class="input-wrap"><input type="number" id="uberWeekendPrice" value="800"
+                                            min="0" step="50"><span class="unit">元</span></div>
+                                </div>
+                                <div class="field">
+                                    <label for="uberTransitMonthly">大眾運輸 / 月</label>
+                                    <div class="input-wrap"><input type="number" id="uberTransitMonthly" value="1200"
+                                            min="0" step="100"><span class="unit">元</span></div>
+                                    <small class="hint">月票、捷運、公車等</small>
+                                </div>
+                            </div>
+                            <div class="uber-preview" id="uberMonthlyPreview">
+                                預估每月交通支出：<strong id="uberMonthlyTotal">—</strong>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- ── 自訂週期費用 ── -->
+                <section class="card collapsed" id="section-custom">
+                    <div class="card-header" data-toggle="custom">
+                        <h2><span class="icon">📝</span> 自訂週期費用（主方案）</h2><span class="toggle-icon">▶</span>
+                    </div>
+                    <div class="card-body" id="body-custom">
+                        <p class="hint" style="margin-bottom:12px;">新增如：大修、電瓶更換、冷氣保養等，可指定發生週期與起始年份。</p>
+                        <div id="customItems"></div>
+                        <button type="button" class="btn-secondary" id="addCustomItem">＋ 新增項目</button>
+                    </div>
+                </section>
+
+                <!-- 操作按鈕 -->
+                <div class="action-row">
+                    <button type="button" class="btn-ghost" id="backToStep1Btn">← 返回</button>
+                    <button type="submit" class="btn-primary" id="calcBtn">
+                        <span class="btn-icon">🔍</span> 開始計算比較
+                    </button>
+                    <button type="button" class="btn-ghost" id="resetBtn">重置</button>
+                </div>
+
+            </form>
+        </section>
+
+        <!-- ===== STEP 3: 結果比較 ===== -->
+        <section id="step3" class="step-section">
+
+            <!-- 白話決策建議 -->
+            <div class="decision-banner" id="decisionBanner">
+                <div class="decision-icon">💡</div>
+                <div class="decision-text" id="decisionText">計算中...</div>
+            </div>
+
+            <!-- 多方案摘要對比 -->
+            <div class="compare-cards" id="compareCards"></div>
+
+            <!-- 圖表區 -->
+            <div class="charts-row">
+                <div class="chart-card">
+                    <h3>📈 各方案累積成本比較</h3>
+                    <div class="chart-wrap">
+                        <canvas id="lineChart"></canvas>
+                    </div>
+                </div>
+                <div class="chart-card">
+                    <h3>🥧 主方案成本佔比</h3>
+                    <div class="chart-wrap">
+                        <canvas id="doughnutChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 每公里 TCO（主方案） -->
+            <div class="per-km-bar" id="perKmBar">
+                <div>
+                    <span class="per-km-label">主方案每公里全成本（TCO）</span>
+                    <div class="per-km-hint" id="perKmHint"></div>
+                </div>
+                <span class="per-km-value" id="perKmCost">—</span>
+            </div>
+
+            <!-- 明細表格（主方案） -->
+            <section class="table-section">
+                <h3 id="detailTableTitle">📋 主方案逐年成本明細</h3>
+                <div class="table-scroll">
+                    <table id="detailTable">
+                        <thead>
+                            <tr>
+                                <th>年份</th>
+                                <th>貸款/租金</th>
+                                <th>使用</th>
+                                <th>保養</th>
+                                <th>保險稅費</th>
+                                <th>自訂</th>
+                                <th>該年合計</th>
+                                <th>累計花費</th>
+                                <th>月均成本</th>
+                                <th>殘值</th>
+                                <th>持有淨成本</th>
+                                <th>年均成本</th>
+                                <th>投資機會成本</th>
+                            </tr>
+                        </thead>
+                        <tbody id="detailBody"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- 返回操作列 -->
+            <div class="action-row">
+                <button type="button" class="btn-ghost" id="backToStep2Btn">← 修改數字</button>
+                <button type="button" class="btn-ghost" id="backToStep1Btn2">↩ 重新選情境</button>
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <p>此工具僅供參考，實際費用依車款、使用情境與個人習慣而異。</p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
