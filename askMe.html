@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>問我 — 技術・3C・生活決策</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0f0f0d;
+      --surface: #1a1a17;
+      --border: #2e2e28;
+      --accent: #d4ff5c;
+      --accent-dim: #a8cc3a;
+      --text: #e8e8e0;
+      --muted: #6b6b60;
+      --tag-bg: #222218;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Noto Serif TC', serif;
+      line-height: 1.7;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Grain overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 100;
+      opacity: 0.4;
+    }
+
+    /* Layout */
+    .container {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Header */
+    header {
+      padding: 48px 0 0;
+      animation: fadeUp 0.6s ease both;
+    }
+
+    .mono {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    /* Hero */
+    .hero {
+      padding: 64px 0 56px;
+      animation: fadeUp 0.6s 0.1s ease both;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.4rem, 6vw, 3.6rem);
+      font-weight: 900;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 24px;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--accent);
+      position: relative;
+    }
+
+    .hero p {
+      font-size: 1.05rem;
+      color: #b0b0a0;
+      max-width: 520px;
+      margin-bottom: 32px;
+    }
+
+    /* Tags */
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 40px;
+    }
+
+    .tag {
+      background: var(--tag-bg);
+      border: 1px solid var(--border);
+      color: var(--accent);
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      padding: 6px 12px;
+      border-radius: 2px;
+    }
+
+    /* Divider */
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 48px 0;
+    }
+
+    /* Form section */
+    .form-section {
+      animation: fadeUp 0.6s 0.2s ease both;
+    }
+
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+
+    .section-label .num {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--accent);
+      background: rgba(212,255,92,0.08);
+      border: 1px solid rgba(212,255,92,0.2);
+      padding: 4px 8px;
+      border-radius: 2px;
+    }
+
+    .section-label h2 {
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+
+    /* Form */
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    label span {
+      color: var(--accent);
+      margin-left: 2px;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: 'Noto Serif TC', serif;
+      font-size: 0.95rem;
+      padding: 12px 16px;
+      border-radius: 4px;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      -webkit-appearance: none;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(212,255,92,0.08);
+    }
+
+    select {
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b6b60' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 36px;
+    }
+
+    select option {
+      background: var(--surface);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 140px;
+    }
+
+    .hint {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+
+    /* Submit button */
+    .btn-submit {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--accent);
+      color: #0f0f0d;
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 14px 28px;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s;
+      margin-top: 8px;
+    }
+
+    .btn-submit:hover {
+      background: var(--accent-dim);
+      transform: translateY(-1px);
+    }
+
+    .btn-submit:active {
+      transform: translateY(0);
+    }
+
+    /* BMC section */
+    .bmc-section {
+      margin-top: 56px;
+      padding: 28px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      animation: fadeUp 0.6s 0.3s ease both;
+    }
+
+    .bmc-text p:first-child {
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .bmc-text p:last-child {
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    .btn-bmc {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      color: var(--accent);
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-decoration: none;
+      border: 1px solid rgba(212,255,92,0.3);
+      padding: 10px 18px;
+      border-radius: 3px;
+      white-space: nowrap;
+      transition: border-color 0.15s, background 0.15s;
+      flex-shrink: 0;
+    }
+
+    .btn-bmc:hover {
+      border-color: var(--accent);
+      background: rgba(212,255,92,0.06);
+    }
+
+    /* Footer */
+    footer {
+      padding: 48px 0 40px;
+      animation: fadeUp 0.6s 0.4s ease both;
+    }
+
+    footer p {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    /* Success state */
+    .success-msg {
+      display: none;
+      padding: 20px;
+      background: rgba(212,255,92,0.06);
+      border: 1px solid rgba(212,255,92,0.2);
+      border-radius: 4px;
+      margin-top: 16px;
+    }
+
+    .success-msg p {
+      font-size: 0.9rem;
+      color: var(--accent);
+    }
+
+    /* Animations */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Mobile */
+    @media (max-width: 520px) {
+      .bmc-section {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <header>
+      <p class="mono">v0.1 — 問我什麼都行</p>
+    </header>
+
+    <section class="hero">
+      <h1>有問題？<br><em>直接問我</em></h1>
+      <p>
+        AI 能回答很多事，但有些問題你自己也說不清楚。
+        這裡就是那個空間——把模糊的困惑丟給我，我來梳理、然後回答你。
+      </p>
+      <div class="tags">
+        <span class="tag">技術 / 開發</span>
+        <span class="tag">3C 選購</span>
+        <span class="tag">生活決策</span>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <section class="form-section">
+      <div class="section-label">
+        <span class="num">01</span>
+        <h2>提問</h2>
+      </div>
+
+      <!-- 替換這個 action 為你的 Google 表單 action URL -->
+      <form id="askForm" action="https://docs.google.com/forms/d/e/1FAIpQLSehA3GIMUVjSuNIceWmvbCSYRVArY_qskWeB0VdtgmgP5DpwQ/formResponse" method="POST">
+        <div class="form-group">
+          <label for="name">暱稱</label>
+          <input type="text" id="name" name="entry.1951391456" placeholder="匿名也沒關係">
+        </div>
+
+        <div class="form-group">
+          <label for="category">問題類型 <span>*</span></label>
+          <select id="category" name="entry.260669474" required>
+            <option value="" disabled selected>選擇一個類型</option>
+            <option value="技術開發">技術開發</option>
+            <option value="3C選購">3C選購</option>
+            <option value="生活決策">生活決策</option>
+            <option value="其他">其他</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="question">你的問題 <span>*</span></label>
+          <textarea id="question" name="entry.514432364" required placeholder="不用問得很精確，把你的情況說清楚就好。"></textarea>
+          <p class="hint">// 通常 2–3 天內回覆</p>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email（選填，用來通知你回覆）</label>
+          <input type="email" id="email" name="entry.1810108814" placeholder="留了才收得到回覆通知">
+        </div>
+
+        <button type="submit" class="btn-submit">
+          <span>送出問題</span>
+          <span>→</span>
+        </button>
+      </form>
+
+      <div class="success-msg" id="successMsg">
+        <p>✓ 收到了，我會盡快回覆你。</p>
+      </div>
+    </section>
+
+    <div class="bmc-section">
+      <div class="bmc-text">
+        <p>若您覺得有幫助？歡迎用＄支持我^^</p>
+        <p>回答完全免費，請不請咖啡都沒關係。</p>
+      </div>
+      <!-- 替換 href 為你的 Buy Me a Coffee 連結 -->
+      <!-- <a href="https://www.buymeacoffee.com/你的帳號" target="_blank" class="btn-bmc">
+        ☕ 請我喝咖啡
+      </a> -->
+
+      <div>
+        <style>.pp-UPQWTWU6KVUTY{text-align:center;border:none;border-radius:0.25rem;min-width:11.625rem;padding:0 2rem;height:2.625rem;font-weight:bold;background-color:#FFD140;color:#000000;font-family:"Helvetica Neue",Arial,sans-serif;font-size:1rem;line-height:1.25rem;cursor:pointer;}</style>
+        <form action="https://www.paypal.com/ncp/payment/UPQWTWU6KVUTY" method="post" target="_blank" style="display:inline-grid;justify-items:center;align-content:start;gap:0.5rem;">
+          <input class="pp-UPQWTWU6KVUTY" type="submit" value="贊助與支持" />
+          <img src=https://www.paypalobjects.com/images/Debit_Credit_APM.svg alt="cards" />
+          <section style="font-size: 0.75rem;"> Powered by <img src="https://www.paypalobjects.com/paypal-ui/logos/svg/paypal-wordmark-color.svg" alt="paypal" style="height:0.875rem;vertical-align:middle;"/></section>
+        </form>
+      </div>
+
+    </div>
+
+
+    <footer>
+      <p>© 2026 — 回覆免費，問題無限。</p>
+    </footer>
+
+  </div>
+
+  <script>
+    document.getElementById('askForm').addEventListener('submit', function() {
+      // 送出後 Google 會跳到感謝頁，這是預期行為
+    });
+  </script>
+</body>
+</html>
