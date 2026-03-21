@@ -1,45 +1,46 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>問我 — 技術・3C・生活決策</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Inter:wght@400;600;800&family=DM+Mono:wght@400;500&display=swap"
+    rel="stylesheet">
   <style>
     :root {
-      --bg: #0f0f0d;
-      --surface: #1a1a17;
-      --border: #2e2e28;
-      --accent: #d4ff5c;
-      --accent-dim: #a8cc3a;
-      --text: #e8e8e0;
-      --muted: #6b6b60;
-      --tag-bg: #222218;
+      --bg: #f8f9fa;
+      --surface: #ffffff;
+      --border: #e5e7eb;
+      --accent: #2563eb;
+      --accent-dim: #1d4ed8;
+      --accent-light: #eff6ff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --tag-bg: #f3f4f6;
+      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
     }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-    html { scroll-behavior: smooth; }
+    html {
+      scroll-behavior: smooth;
+    }
 
     body {
       background: var(--bg);
       color: var(--text);
-      font-family: 'Noto Serif TC', serif;
+      font-family: 'Noto Sans TC', sans-serif;
       line-height: 1.7;
       min-height: 100vh;
       overflow-x: hidden;
-    }
-
-    /* Grain overlay */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 100;
-      opacity: 0.4;
     }
 
     /* Layout */
@@ -53,6 +54,25 @@
     header {
       padding: 48px 0 0;
       animation: fadeUp 0.6s ease both;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .back-link {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.2s;
+    }
+
+    .back-link:hover {
+      color: var(--accent);
     }
 
     .mono {
@@ -70,10 +90,12 @@
     }
 
     .hero h1 {
+      font-family: 'Inter', sans-serif;
       font-size: clamp(2.4rem, 6vw, 3.6rem);
-      font-weight: 900;
+      font-weight: 800;
       line-height: 1.15;
       letter-spacing: -0.02em;
+      color: #111827;
       margin-bottom: 24px;
     }
 
@@ -85,9 +107,10 @@
 
     .hero p {
       font-size: 1.05rem;
-      color: #b0b0a0;
+      color: var(--muted);
       max-width: 520px;
       margin-bottom: 32px;
+      line-height: 1.8;
     }
 
     /* Tags */
@@ -106,7 +129,7 @@
       font-size: 11px;
       letter-spacing: 0.1em;
       padding: 6px 12px;
-      border-radius: 2px;
+      border-radius: 4px;
     }
 
     /* Divider */
@@ -132,16 +155,17 @@
       font-family: 'DM Mono', monospace;
       font-size: 11px;
       color: var(--accent);
-      background: rgba(212,255,92,0.08);
-      border: 1px solid rgba(212,255,92,0.2);
+      background: var(--accent-light);
+      border: 1px solid #bfdbfe;
       padding: 4px 8px;
-      border-radius: 2px;
+      border-radius: 4px;
     }
 
     .section-label h2 {
       font-size: 1rem;
       font-weight: 600;
       letter-spacing: 0.02em;
+      color: #111827;
     }
 
     /* Form */
@@ -164,28 +188,38 @@
       margin-left: 2px;
     }
 
-    input, select, textarea {
+    input,
+    select,
+    textarea {
       width: 100%;
       background: var(--surface);
       border: 1px solid var(--border);
       color: var(--text);
-      font-family: 'Noto Serif TC', serif;
+      font-family: 'Noto Sans TC', sans-serif;
       font-size: 0.95rem;
       padding: 12px 16px;
-      border-radius: 4px;
+      border-radius: 6px;
       outline: none;
       transition: border-color 0.2s, box-shadow 0.2s;
       -webkit-appearance: none;
+      box-shadow: var(--shadow-sm);
     }
 
-    input:focus, select:focus, textarea:focus {
+    input:focus,
+    select:focus,
+    textarea:focus {
       border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(212,255,92,0.08);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: #9ca3af;
     }
 
     select {
       cursor: pointer;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b6b60' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7280' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
       background-repeat: no-repeat;
       background-position: right 14px center;
       padding-right: 36px;
@@ -193,6 +227,7 @@
 
     select option {
       background: var(--surface);
+      color: var(--text);
     }
 
     textarea {
@@ -212,8 +247,8 @@
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      background: var(--accent);
-      color: #0f0f0d;
+      background: #111827;
+      color: #ffffff;
       font-family: 'DM Mono', monospace;
       font-size: 12px;
       font-weight: 500;
@@ -221,14 +256,14 @@
       text-transform: uppercase;
       padding: 14px 28px;
       border: none;
-      border-radius: 3px;
+      border-radius: 6px;
       cursor: pointer;
       transition: background 0.15s, transform 0.1s;
       margin-top: 8px;
     }
 
     .btn-submit:hover {
-      background: var(--accent-dim);
+      background: var(--accent);
       transform: translateY(-1px);
     }
 
@@ -242,17 +277,19 @@
       padding: 28px;
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 6px;
+      border-radius: 8px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 20px;
+      box-shadow: var(--shadow-sm);
       animation: fadeUp 0.6s 0.3s ease both;
     }
 
     .bmc-text p:first-child {
       font-size: 0.9rem;
       font-weight: 600;
+      color: #111827;
       margin-bottom: 4px;
     }
 
@@ -271,9 +308,9 @@
       font-size: 11px;
       letter-spacing: 0.08em;
       text-decoration: none;
-      border: 1px solid rgba(212,255,92,0.3);
+      border: 1px solid #bfdbfe;
       padding: 10px 18px;
-      border-radius: 3px;
+      border-radius: 6px;
       white-space: nowrap;
       transition: border-color 0.15s, background 0.15s;
       flex-shrink: 0;
@@ -281,7 +318,7 @@
 
     .btn-bmc:hover {
       border-color: var(--accent);
-      background: rgba(212,255,92,0.06);
+      background: var(--accent-light);
     }
 
     /* Footer */
@@ -300,21 +337,28 @@
     .success-msg {
       display: none;
       padding: 20px;
-      background: rgba(212,255,92,0.06);
-      border: 1px solid rgba(212,255,92,0.2);
-      border-radius: 4px;
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-radius: 6px;
       margin-top: 16px;
     }
 
     .success-msg p {
       font-size: 0.9rem;
-      color: var(--accent);
+      color: #166534;
     }
 
     /* Animations */
     @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(16px); }
-      to { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(16px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     /* Mobile */
@@ -326,11 +370,13 @@
     }
   </style>
 </head>
+
 <body>
   <div class="container">
 
     <header>
-      <p class="mono">v0.1 — 問我什麼都行</p>
+      <a href="index.html" class="back-link">← 返回首頁</a>
+      <p class="mono">v1.0 — 問我什麼都行</p>
     </header>
 
     <section class="hero">
@@ -355,7 +401,9 @@
       </div>
 
       <!-- 替換這個 action 為你的 Google 表單 action URL -->
-      <form id="askForm" action="https://docs.google.com/forms/d/e/1FAIpQLSehA3GIMUVjSuNIceWmvbCSYRVArY_qskWeB0VdtgmgP5DpwQ/formResponse" method="POST">
+      <form id="askForm"
+        action="https://docs.google.com/forms/d/e/1FAIpQLSehA3GIMUVjSuNIceWmvbCSYRVArY_qskWeB0VdtgmgP5DpwQ/formResponse"
+        method="POST">
         <div class="form-group">
           <label for="name">暱稱</label>
           <input type="text" id="name" name="entry.1951391456" placeholder="匿名也沒關係">
@@ -405,11 +453,30 @@
       </a> -->
 
       <div>
-        <style>.pp-UPQWTWU6KVUTY{text-align:center;border:none;border-radius:0.25rem;min-width:11.625rem;padding:0 2rem;height:2.625rem;font-weight:bold;background-color:#FFD140;color:#000000;font-family:"Helvetica Neue",Arial,sans-serif;font-size:1rem;line-height:1.25rem;cursor:pointer;}</style>
-        <form action="https://www.paypal.com/ncp/payment/UPQWTWU6KVUTY" method="post" target="_blank" style="display:inline-grid;justify-items:center;align-content:start;gap:0.5rem;">
+        <style>
+          .pp-UPQWTWU6KVUTY {
+            text-align: center;
+            border: none;
+            border-radius: 0.25rem;
+            min-width: 11.625rem;
+            padding: 0 2rem;
+            height: 2.625rem;
+            font-weight: bold;
+            background-color: #FFD140;
+            color: #000000;
+            font-family: "Helvetica Neue", Arial, sans-serif;
+            font-size: 1rem;
+            line-height: 1.25rem;
+            cursor: pointer;
+          }
+        </style>
+        <form action="https://www.paypal.com/ncp/payment/UPQWTWU6KVUTY" method="post" target="_blank"
+          style="display:inline-grid;justify-items:center;align-content:start;gap:0.5rem;">
           <input class="pp-UPQWTWU6KVUTY" type="submit" value="贊助與支持" />
           <img src=https://www.paypalobjects.com/images/Debit_Credit_APM.svg alt="cards" />
-          <section style="font-size: 0.75rem;"> Powered by <img src="https://www.paypalobjects.com/paypal-ui/logos/svg/paypal-wordmark-color.svg" alt="paypal" style="height:0.875rem;vertical-align:middle;"/></section>
+          <section style="font-size: 0.75rem;"> Powered by <img
+              src="https://www.paypalobjects.com/paypal-ui/logos/svg/paypal-wordmark-color.svg" alt="paypal"
+              style="height:0.875rem;vertical-align:middle;" /></section>
         </form>
       </div>
 
@@ -423,9 +490,10 @@
   </div>
 
   <script>
-    document.getElementById('askForm').addEventListener('submit', function() {
+    document.getElementById('askForm').addEventListener('submit', function () {
       // 送出後 Google 會跳到感謝頁，這是預期行為
     });
   </script>
 </body>
+
 </html>
