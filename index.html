@@ -723,8 +723,7 @@
                 //     `;
                 // });
 
-                // 直接將資料渲染到當前位置的父層，或你可以改成 document.body
-                const container = document.currentScript.parentElement; 
+                const container = document.getElementById('blog-list');
                 
                 posts.slice(0, postCount).forEach(post => {
                     const img = post.image || 'https://placeholder.com';
