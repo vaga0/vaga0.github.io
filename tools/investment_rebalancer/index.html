@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>投資再平衡工具</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@400;500;600&family=Syne:wght@600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f7f6f2;--bg2:#fff;--bg3:#edece8;--surface:#fff;
+  --text:#18181a;--text2:#6b6a68;--text3:#a8a8a5;
+  --border:rgba(0,0,0,.09);--border2:rgba(0,0,0,.18);
+  --accent:#1a3a2a;--accent2:#2d6648;--accent-light:#e6f0eb;--accent-pale:#f0f5f2;
+  --gold:#b8891a;--gold-light:#faf3e0;
+  --red:#9c2c2c;--red-light:#fdf0f0;
+  --green:#1d7a52;--green-light:#e8f5ee;
+  --r:10px;--r-lg:16px;--r-xl:20px;
+  --shadow:0 1px 3px rgba(0,0,0,.07),0 4px 16px rgba(0,0,0,.05);
+  --shadow-lg:0 4px 24px rgba(0,0,0,.1),0 1px 4px rgba(0,0,0,.06);
+  --font:'Noto Sans TC',sans-serif;--mono:'DM Mono',monospace;--display:'Syne',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);font-size:14px;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.5}
+
+/* SCREENS */
+.screen{display:none}.screen.active{display:block}
+
+/* WELCOME */
+.welcome-wrap{max-width:860px;margin:0 auto;padding:48px 20px 64px}
+.hero{text-align:center;margin-bottom:40px}
+.hero-eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--accent2);text-transform:uppercase;margin-bottom:12px}
+.hero h1{font-family:var(--display);font-size:clamp(28px,5vw,44px);font-weight:700;line-height:1.1;margin-bottom:10px;letter-spacing:-.02em}
+.hero-sub{font-size:14px;color:var(--text2);max-width:480px;margin:0 auto}
+.section-label{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);margin-bottom:16px}
+.preset-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:24px}
+@media(max-width:540px){.preset-grid{grid-template-columns:1fr}}
+.preset-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:20px;cursor:pointer;transition:transform .15s,box-shadow .15s,border-color .15s;position:relative;overflow:hidden}
+.preset-card::before{content:'';position:absolute;inset:0;background:var(--accent-pale);opacity:0;transition:opacity .15s}
+.preset-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg);border-color:var(--accent)}
+.preset-card:hover::before{opacity:1}
+.preset-card>*{position:relative}
+.preset-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px}
+.preset-emoji{font-size:24px;line-height:1}
+.preset-risk span{font-size:10px;opacity:.3}.preset-risk span.on{opacity:1;color:var(--gold)}
+.preset-name{font-family:var(--display);font-size:16px;font-weight:600;margin-bottom:4px}
+.preset-lev{font-family:var(--mono);font-size:11px;color:var(--accent2);margin-bottom:8px}
+.preset-desc{font-size:12px;color:var(--text2);line-height:1.55;margin-bottom:12px}
+.preset-stocks{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:12px}
+.chip{font-family:var(--mono);font-size:10px;padding:2px 7px;border-radius:99px;border:1px solid}
+.chip-tw{border-color:#1a3a7a33;background:#f0f4fc;color:#1a3a7a}
+.chip-qqq{border-color:#1a6a3a33;background:#f0faf4;color:#1a6a3a}
+.chip-spy{border-color:#7a3a1a33;background:#fdf4f0;color:#7a3a1a}
+.chip-lev{border-color:#8a5a1a33;background:#fdf7ee;color:#8a5a1a}
+.chip-sec{border-color:#6b21a833;background:#fdf0ff;color:#6b21a8}
+.chip-bond{border-color:#2c528233;background:#f0f4f8;color:#2c5282}
+.preset-cta{font-size:12px;font-weight:500;color:var(--accent2)}
+.or-divider{text-align:center;position:relative;margin:8px 0 16px}
+.or-divider::before{content:'';position:absolute;top:50%;left:0;right:0;height:1px;background:var(--border)}
+.or-divider span{background:var(--bg);padding:0 12px;color:var(--text3);font-size:12px;position:relative}
+.btn-custom{width:100%;background:var(--bg2);border:1.5px dashed var(--border2);border-radius:var(--r-lg);padding:18px 20px;cursor:pointer;text-align:left;display:flex;align-items:center;gap:12px;transition:border-color .15s,background .15s;font-family:var(--font)}
+.btn-custom:hover{border-color:var(--accent);background:var(--accent-pale)}
+.btn-custom-icon{font-size:22px;flex-shrink:0}
+.btn-custom-main{font-size:14px;font-weight:500;color:var(--text)}
+.btn-custom-sub{font-size:12px;color:var(--text2);margin-top:2px}
+
+/* CUSTOM PICKER */
+.narrow{max-width:680px;margin:0 auto;padding:32px 20px 64px}
+.screen-header{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+.back-btn{background:none;border:1px solid var(--border2);border-radius:var(--r);padding:6px 12px;font-size:13px;cursor:pointer;color:var(--text2);font-family:var(--font)}
+.back-btn:hover{background:var(--bg3)}
+.screen-header h2{font-family:var(--display);font-size:22px;font-weight:700}
+.guide{font-size:13px;color:var(--text2);margin-bottom:24px;line-height:1.6}
+.guide strong{color:var(--text);font-weight:500}
+.custom-group{margin-bottom:20px}
+.group-label{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);margin-bottom:10px}
+.stock-picks{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+@media(max-width:480px){.stock-picks{grid-template-columns:1fr}}
+.stock-pick-card{border:1.5px solid var(--border);border-radius:var(--r);padding:12px;cursor:pointer;transition:border-color .15s,background .15s;user-select:none}
+.stock-pick-card.selected{border-color:var(--accent);background:var(--accent-pale)}
+.stock-pick-card:hover{border-color:var(--accent2)}
+.spk-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
+.spk-ticker{font-family:var(--display);font-size:15px;font-weight:600}
+.spk-check{width:18px;height:18px;border:1.5px solid var(--border2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;transition:all .15s;flex-shrink:0}
+.stock-pick-card.selected .spk-check{background:var(--accent);border-color:var(--accent);color:#fff}
+.spk-name{font-size:11px;color:var(--text2);margin-bottom:6px}
+.spk-meta{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:6px}
+.spk-desc{font-size:11px;color:var(--text2);line-height:1.5;padding-top:6px;border-top:1px solid var(--border)}
+.error-msg{background:var(--red-light);color:var(--red);border:1px solid;border-color:var(--red);border-radius:var(--r);padding:10px 14px;font-size:13px;margin-bottom:16px}
+
+/* BUTTONS */
+.btn-primary{background:var(--accent);color:#fff;border:none;border-radius:var(--r);padding:12px 24px;font-size:14px;font-weight:500;cursor:pointer;font-family:var(--font);transition:background .15s,transform .1s;width:100%;margin-top:8px}
+.btn-primary:hover{background:var(--accent2);transform:translateY(-1px)}
+.btn-secondary{background:var(--bg3);color:var(--text);border:1px solid var(--border2);border-radius:var(--r);padding:10px 20px;font-size:13px;cursor:pointer;font-family:var(--font)}
+.btn-secondary:hover{background:var(--bg)}
+
+/* TOPBAR */
+.topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;position:sticky;top:0;z-index:100}
+.topbar-left{display:flex;align-items:center;gap:10px}
+.back-link{background:none;border:none;font-size:12px;color:var(--text2);cursor:pointer;font-family:var(--font);padding:4px}
+.back-link:hover{color:var(--text)}
+.portfolio-badge{font-family:var(--mono);font-size:11px;background:var(--accent-light);color:var(--accent2);padding:3px 10px;border-radius:99px;letter-spacing:.04em}
+.topbar-right{display:flex;align-items:center;gap:6px}
+.icon-btn{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:6px 12px;font-size:12px;cursor:pointer;color:var(--text2);font-family:var(--font);white-space:nowrap}
+.icon-btn:hover{background:var(--bg);color:var(--text)}
+
+/* STEPPER */
+.stepper{display:flex;background:var(--surface);border-bottom:1px solid var(--border)}
+.step-item{flex:1;display:flex;align-items:center;gap:10px;padding:14px 16px;cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;position:relative}
+.step-item:not(:last-child)::after{content:'';position:absolute;right:0;top:50%;transform:translateY(-50%);width:1px;height:40%;background:var(--border)}
+.step-item:hover{background:var(--bg3)}
+.step-item.s-active{border-bottom-color:var(--accent);background:var(--accent-pale)}
+.step-item.s-done{border-bottom-color:var(--green-light)}
+.step-circle{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:12px;font-weight:500;background:var(--bg3);color:var(--text3);flex-shrink:0;transition:all .2s}
+.step-item.s-active .step-circle{background:var(--accent);color:#fff}
+.step-item.s-done .step-circle{background:var(--green);color:#fff}
+.step-title{font-size:13px;font-weight:500;color:var(--text2)}
+.step-sub{font-size:11px;color:var(--text3);margin-top:1px}
+.step-item.s-active .step-title{color:var(--text)}
+@media(max-width:520px){.step-sub{display:none}.step-item{padding:12px 10px;gap:8px}}
+
+/* MAIN */
+.main-wrap{max-width:960px;margin:0 auto;padding:24px 20px 80px}
+.panel{display:none}.panel.active{display:block}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:20px 24px;margin-bottom:14px}
+.card-title{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.card-title .ct-main{color:var(--text2)}
+
+/* METRICS */
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
+@media(max-width:600px){.metrics{grid-template-columns:repeat(2,1fr)}}
+.metric{background:var(--bg3);border-radius:var(--r);padding:12px 14px}
+.metric-lbl{font-size:11px;color:var(--text3);margin-bottom:4px;font-family:var(--mono)}
+.metric-val{font-family:var(--display);font-size:22px;font-weight:600;line-height:1.1}
+.metric-sub{font-size:11px;color:var(--text3);margin-top:3px}
+
+/* TABLE */
+.tbl-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{font-family:var(--mono);font-size:10px;letter-spacing:.07em;text-transform:uppercase;color:var(--text3);text-align:left;padding:8px 10px;border-bottom:1px solid var(--border)}
+td{padding:9px 10px;border-bottom:1px solid var(--border);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--bg3)}
+.num-input{width:90px;border:1px solid var(--border2);border-radius:var(--r);padding:6px 8px;font-size:13px;font-family:var(--mono);background:var(--bg3);color:var(--text);text-align:right;outline:none;transition:border-color .15s,box-shadow .15s}
+.num-input:focus{border-color:var(--accent2);box-shadow:0 0 0 2px var(--accent-light)}
+.fetch-btn{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:5px 8px;font-size:11px;cursor:pointer;color:var(--text2);font-family:var(--mono);white-space:nowrap;transition:all .15s;margin-left:4px}
+.fetch-btn:hover{background:var(--accent-pale);border-color:var(--accent);color:var(--accent2)}
+.fetch-btn:disabled{opacity:.4;cursor:not-allowed}
+.fetch-btn.loading{animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:.5}50%{opacity:1}}
+
+/* BADGES */
+.badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:99px;font-size:10px;font-weight:500;font-family:var(--mono);border:1px solid}
+.b1x{background:var(--bg3);color:var(--text3);border-color:var(--border2)}
+.b2x,.b3x{background:var(--gold-light);color:var(--gold);border-color:rgba(184,137,26,.25)}
+.btw{background:#f0f4fc;color:#1a3a7a;border-color:#1a3a7a22}
+.bus{background:#f0faf4;color:#1a6a3a;border-color:#1a6a3a22}
+.bspy{background:#fdf4f0;color:#7a3a1a;border-color:#7a3a1a22}
+.bbond{background:#f0f4f8;color:#2c5282;border-color:#2c528222}
+.bsox{background:#fdf0ff;color:#6b21a8;border-color:#6b21a822}
+.btech{background:#f0f9ff;color:#0369a1;border-color:#0369a122}
+.bgold{background:#fffbeb;color:#92400e;border-color:#92400e22}
+.val-cell{font-family:var(--mono);font-size:12px;font-weight:500}
+
+/* INFO TIP */
+.info-tip{display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:var(--bg3);color:var(--text3);font-size:10px;cursor:pointer;margin-left:4px;border:1px solid var(--border);vertical-align:middle}
+#floating-tip{display:none;position:fixed;z-index:9999;background:#fff;border:1px solid #d0cfc9;border-radius:10px;padding:12px 14px;width:240px;font-size:12px;color:#4a4a48;line-height:1.6;box-shadow:0 4px 24px rgba(0,0,0,.13);pointer-events:none}
+
+/* EXPOSURE BARS */
+.expo-item{margin-bottom:14px}
+.expo-header{display:flex;align-items:center;gap:8px;margin-bottom:5px}
+.expo-ticker{font-family:var(--display);font-size:13px;font-weight:600;width:68px}
+.expo-stats{font-family:var(--mono);font-size:10px;color:var(--text3);display:flex;gap:10px}
+.expo-bars{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.bar-wrap{display:flex;flex-direction:column;gap:2px}
+.bar-track{height:7px;background:var(--bg3);border-radius:4px;overflow:hidden}
+.bar-fill{height:100%;border-radius:4px;transition:width .4s cubic-bezier(.4,0,.2,1)}
+.bar-label{font-size:10px;color:var(--text3);font-family:var(--mono)}
+
+/* TARGET ALLOC */
+.alloc-layer{margin-bottom:20px}
+.alloc-layer-title{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);margin-bottom:10px}
+.alloc-row{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.alloc-name{font-size:13px;color:var(--text2);width:90px;flex-shrink:0}
+.alloc-input{width:64px;border:1px solid var(--border2);border-radius:var(--r);padding:6px 8px;font-family:var(--mono);font-size:13px;background:var(--bg3);color:var(--text);text-align:right;outline:none}
+.alloc-input:focus{border-color:var(--accent2)}
+.alloc-unit{font-size:12px;color:var(--text3);white-space:nowrap}
+.alloc-bar-wrap{flex:1;height:6px;background:var(--bg3);border-radius:3px;overflow:hidden;min-width:40px}
+.alloc-bar-fill{height:100%;border-radius:3px;transition:width .35s}
+.alloc-val{font-family:var(--mono);font-size:11px;color:var(--text2);width:80px;text-align:right;white-space:nowrap}
+.sum-check{font-family:var(--mono);font-size:11px;padding:4px 10px;border-radius:var(--r);margin-top:6px;display:inline-block}
+.sum-ok{background:var(--green-light);color:var(--green)}
+.sum-warn{background:var(--red-light);color:var(--red)}
+
+/* RESULTS */
+.result-action-buy{color:var(--green);font-weight:500;font-size:12px}
+.result-action-sell{color:var(--red);font-weight:500;font-size:12px}
+.result-action-hold{color:var(--text3);font-size:12px}
+.diff-pos{color:var(--green);font-family:var(--mono);font-size:12px}
+.diff-neg{color:var(--red);font-family:var(--mono);font-size:12px}
+.diff-zero{color:var(--text3);font-family:var(--mono);font-size:12px}
+
+/* NAV */
+.step-nav{display:flex;justify-content:space-between;align-items:center;margin-top:24px;gap:12px}
+.nav-hint{font-size:12px;color:var(--text3);text-align:center;flex:1}
+.guide-banner{background:var(--accent-light);border:1px solid var(--accent);border-radius:var(--r);padding:12px 16px;margin-bottom:16px;font-size:13px;color:var(--text2);line-height:1.6}
+.guide-banner strong{color:var(--accent2);font-weight:600}
+hr.divider{border:none;border-top:1px solid var(--border);margin:16px 0}
+
+/* TOAST */
+.save-toast{position:fixed;bottom:24px;right:24px;background:var(--accent);color:#fff;padding:10px 18px;border-radius:var(--r);font-size:13px;font-weight:500;z-index:999;opacity:0;transform:translateY(8px);transition:all .25s;pointer-events:none}
+.save-toast.show{opacity:1;transform:translateY(0)}
+</style>
+</head>
+<body>
+
+<!-- WELCOME -->
+<div id="s-welcome" class="screen active">
+  <div class="welcome-wrap">
+    <div class="hero">
+      <div class="hero-eyebrow">Portfolio Rebalancer</div>
+      <h1>投資再平衡工具</h1>
+      <p class="hero-sub">台股 ETF × 美股槓桿 ETF &nbsp;·&nbsp; 曝險率計算 & 再平衡建議</p>
+    </div>
+    <div class="section-label">選擇投資策略</div>
+    <div class="preset-grid" id="preset-grid"></div>
+    <div class="or-divider"><span>或</span></div>
+    <button class="btn-custom" onclick="openCustom()">
+      <span class="btn-custom-icon">✏️</span>
+      <div>
+        <div class="btn-custom-main">自訂投資組合</div>
+        <div class="btn-custom-sub">自由選擇 2~6 檔標的，台股美股任意組合</div>
+      </div>
+    </button>
+    <div style="margin-top:20px;text-align:center">
+      <button class="icon-btn" onclick="tryLoadSave()">💾 讀取上次儲存的資料</button>
+    </div>
+  </div>
+</div>
+
+<!-- CUSTOM PICKER -->
+<div id="s-custom" class="screen">
+  <div class="narrow">
+    <div class="screen-header">
+      <button class="back-btn" onclick="showScreen('welcome')">← 返回</button>
+      <h2>自訂投資組合</h2>
+    </div>
+    <p class="guide">選擇你要投資的標的，最少 <strong>2 檔</strong>、最多 <strong>6 檔</strong>。</p>
+    <div class="custom-group">
+      <div class="group-label">🇹🇼 台股</div>
+      <div class="stock-picks" id="tw-picks"></div>
+    </div>
+    <div class="custom-group">
+      <div class="group-label">🇺🇸 美股 — QQQ 系列（Nasdaq 100）</div>
+      <div class="stock-picks" id="qqq-picks"></div>
+    </div>
+    <div class="custom-group">
+      <div class="group-label">🇺🇸 美股 — SPY 系列（S&P 500）</div>
+      <div class="stock-picks" id="spy-picks"></div>
+    </div>
+    <div class="custom-group">
+      <div class="group-label">🇺🇸 美股 — 產業型</div>
+      <div class="stock-picks" id="sector-picks"></div>
+    </div>
+    <div class="custom-group">
+      <div class="group-label">🇺🇸 美股 — 債券 / 現金 / 黃金</div>
+      <div class="stock-picks" id="bond-picks"></div>
+    </div>
+    <div id="custom-error" class="error-msg" style="display:none"></div>
+    <button class="btn-primary" onclick="confirmCustom()">確認並開始 →</button>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div id="s-main" class="screen">
+  <div class="topbar">
+    <div class="topbar-left">
+      <button class="back-link" onclick="backToStart()">← 更換組合</button>
+      <span class="portfolio-badge" id="portfolio-badge">—</span>
+    </div>
+    <div class="topbar-right">
+      <button class="icon-btn" onclick="saveData()">💾 儲存</button>
+      <button class="icon-btn" onclick="exportData()">⬇ 匯出</button>
+      <label class="icon-btn" style="cursor:pointer">⬆ 匯入<input type="file" accept=".json" onchange="importData(event)" style="display:none"></label>
+    </div>
+  </div>
+  <div class="stepper" id="stepper">
+    <div class="step-item s-active" data-step="1" onclick="goStep(1)">
+      <div class="step-circle">1</div>
+      <div><div class="step-title">持倉輸入</div><div class="step-sub">股數與股價</div></div>
+    </div>
+    <div class="step-item" data-step="2" onclick="goStep(2)">
+      <div class="step-circle">2</div>
+      <div><div class="step-title">目標比例</div><div class="step-sub">配置設定</div></div>
+    </div>
+    <div class="step-item" data-step="3" onclick="goStep(3)">
+      <div class="step-circle">3</div>
+      <div><div class="step-title">再平衡建議</div><div class="step-sub">買賣操作</div></div>
+    </div>
+  </div>
+
+  <div class="main-wrap">
+    <!-- PANEL 1 -->
+    <div class="panel active" id="panel-1">
+      <div class="guide-banner"><strong>步驟一：輸入現有持倉</strong><br>填入每一檔持有股數與目前股價。點「抓取昨收」可自動帶入前一交易日收盤價，失敗請手動輸入。</div>
+      <div class="card" id="tw-holdings-card">
+        <div class="card-title"><span>🇹🇼</span><span class="ct-main">台股持倉</span></div>
+        <div class="tbl-wrap"><table><thead><tr><th>代碼</th><th>名稱</th><th>類型</th><th>持有股數</th><th>股價（NTD）</th><th>市值（NTD）</th></tr></thead><tbody id="tw-tbody"></tbody></table></div>
+      </div>
+      <div class="card" id="us-holdings-card">
+        <div class="card-title">
+          <span>🇺🇸</span><span class="ct-main">美股持倉</span>
+          <span style="margin-left:auto;display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text2)">USD/NTD 匯率 <input type="number" id="fx" value="32" min="1" step="0.01" class="num-input" style="width:72px;text-align:center" oninput="calc()"></span>
+        </div>
+        <div class="tbl-wrap"><table><thead><tr><th>代碼</th><th>系列</th><th>類型</th><th>持有股數</th><th>股價（USD）</th><th>市值（NTD）</th></tr></thead><tbody id="us-tbody"></tbody></table></div>
+      </div>
+      <div class="metrics" id="metrics-row"></div>
+      <div class="card">
+        <div class="card-title"><span class="ct-main">各股曝險分佈</span><span style="margin-left:auto;font-size:11px;color:var(--text3)">淡色=市值 / 深色=槓桿曝險</span></div>
+        <div id="exposure-bars"></div>
+      </div>
+      <div class="step-nav">
+        <div></div>
+        <div class="nav-hint">填完持倉後，繼續設定目標比例</div>
+        <button class="btn-primary" style="width:auto" onclick="goStep(2)">下一步：目標比例 →</button>
+      </div>
+    </div>
+
+    <!-- PANEL 2 -->
+    <div class="panel" id="panel-2">
+      <div class="guide-banner"><strong>步驟二：設定目標配置比例</strong><br>調整各層分配比例，互補的兩欄會自動聯動。</div>
+      <div class="card">
+        <div id="target-layers"></div>
+        <hr class="divider">
+        <div class="card-title"><span class="ct-main">目標配置預覽</span></div>
+        <div id="target-preview"></div>
+      </div>
+      <div class="step-nav">
+        <button class="btn-secondary" onclick="goStep(1)">← 返回持倉</button>
+        <div class="nav-hint">確認比例後查看再平衡建議</div>
+        <button class="btn-primary" style="width:auto" onclick="goStep(3)">下一步：再平衡建議 →</button>
+      </div>
+    </div>
+
+    <!-- PANEL 3 -->
+    <div class="panel" id="panel-3">
+      <div class="guide-banner"><strong>步驟三：再平衡建議</strong><br>台股以「張」計算（1張=1000股），美股直接給股數。</div>
+      <div class="metrics" id="result-metrics"></div>
+      <div class="card">
+        <div class="card-title"><span class="ct-main">調整明細（現況 vs 目標）</span></div>
+        <div class="tbl-wrap"><table><thead><tr><th>代碼</th><th>類型</th><th>現有股數</th><th>現有市值</th><th>現有佔比</th><th>目標佔比</th><th>目標市值</th><th>差額</th><th>建議操作</th></tr></thead><tbody id="result-tbody"></tbody></table></div>
+      </div>
+      <div class="card">
+        <div class="card-title"><span class="ct-main">調整後配置預覽</span></div>
+        <div id="after-preview"></div>
+      </div>
+      <div class="step-nav">
+        <button class="btn-secondary" onclick="goStep(2)">← 調整比例</button>
+        <div class="nav-hint">完成後可儲存或匯出記錄</div>
+        <button class="btn-primary" style="width:auto" onclick="saveData()">💾 儲存紀錄</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="save-toast" id="toast"></div>
+<div id="floating-tip"></div>
+
+<script>
+// ── DATA ──
+const ALL_STOCKS = [
+  { id:'0050',   name:'元大台灣50',      mkt:'tw', series:'tw',   lev:1, currency:'ntd', yahoo:'0050.TW',
+    desc:'追蹤台灣市值前50大上市公司，以台積電、聯發科為主要成分，是台股最主流的寬基指數型ETF。費用率低、流動性高，適合長期持有作為台股核心配置。' },
+  { id:'00631L', name:'元大台灣50正2',   mkt:'tw', series:'tw',   lev:2, currency:'ntd', yahoo:'00631L.TW',
+    desc:'每日追蹤台灣50指數2倍報酬。長期持有因每日重置會產生槓桿衰減效果，趨勢行情下表現優異，震盪市場損耗較大。依台股法規，槓桿ETF上限為正2倍。' },
+  { id:'QQQM',   name:'Invesco QQQM',   mkt:'us', series:'qqq',  lev:1, currency:'usd', yahoo:'QQQM',
+    desc:'追蹤Nasdaq-100指數，涵蓋100家最大型非金融科技公司，包含蘋果、輝達、微軟等。QQQM是QQQ的低費率版本（費率0.15%），適合長期投資人。' },
+  { id:'QLD',    name:'ProShares QLD',  mkt:'us', series:'qqq',  lev:2, currency:'usd', yahoo:'QLD',
+    desc:'每日追蹤Nasdaq-100指數2倍報酬。槓桿衰減介於QQQM與TQQQ之間，是希望加槓桿但不想承擔TQQQ極端波動的折衷選項。' },
+  { id:'TQQQ',   name:'ProShares TQQQ', mkt:'us', series:'qqq',  lev:3, currency:'usd', yahoo:'TQQQ',
+    desc:'每日追蹤Nasdaq-100指數3倍報酬。歷史最大回撤超過90%，須了解槓桿ETF每日重置特性。長期持有需搭配定期再平衡以降低衰減損耗。' },
+  { id:'SPYM',   name:'SPDR SPYM',      mkt:'us', series:'spy',  lev:1, currency:'usd', yahoo:'SPYM',
+    desc:'追蹤S&P 500指數，代表美國500大企業，是全球最廣泛的股市基準指標。費率0.09%，適合作為美股核心穩定配置。' },
+  { id:'SSO',    name:'ProShares SSO',  mkt:'us', series:'spy',  lev:2, currency:'usd', yahoo:'SSO',
+    desc:'每日追蹤S&P 500指數2倍報酬。相比UPRO波動與回撤幅度更小，適合想在S&P 500適度加槓桿但控制極端風險的投資人。' },
+  { id:'UPRO',   name:'ProShares UPRO', mkt:'us', series:'spy',  lev:3, currency:'usd', yahoo:'UPRO',
+    desc:'每日追蹤S&P 500指數3倍報酬。2020年疫情期間最大回撤超過95%，波動性極高。搭配現貨定期再平衡可改善風險調整後報酬。' },
+  { id:'SOXL',   name:'Direxion SOXL',  mkt:'us', series:'sox',  lev:3, currency:'usd', yahoo:'SOXL',
+    desc:'每日追蹤ICE Semiconductor指數3倍報酬，高度集中在台積電、輝達、AMD等半導體公司。產業集中度極高，適合看好半導體長期趨勢的積極投資人。' },
+  { id:'TECL',   name:'Direxion TECL',  mkt:'us', series:'tech', lev:3, currency:'usd', yahoo:'TECL',
+    desc:'每日追蹤Technology Select Sector指數3倍報酬，涵蓋蘋果、微軟、輝達等科技龍頭。比SOXL分散性略高，是科技板塊的高槓桿押注工具。' },
+  { id:'SGOV',   name:'iShares SGOV',   mkt:'us', series:'bond', lev:1, currency:'usd', yahoo:'SGOV',
+    desc:'追蹤0~3個月美國國庫券，近似現金等價物。利率較高時提供穩定利息收入（年化約4~5%），幾乎無信用風險，可作為組合中的穩定錨點或現金等待部位。' },
+  { id:'GLD',    name:'SPDR Gold GLD',  mkt:'us', series:'gold', lev:1, currency:'usd', yahoo:'GLD',
+    desc:'追蹤實物黃金價格，是全球最大的黃金ETF。與股市相關性低，在通膨、地緣風險或美元走弱時具備避險功能，適合作為分散化配置的一部分。' },
+];
+
+const COLORS = {
+  '0050':'#2563b5','00631L':'#d97706',
+  'QQQM':'#059669','QLD':'#10b981','TQQQ':'#65a30d',
+  'SPYM':'#dc4f22','SSO':'#f97316','UPRO':'#c026a0',
+  'SOXL':'#7c3aed','TECL':'#0891b2','SGOV':'#475569','GLD':'#d4a017'
+};
+const SERIES_LABEL = { tw:'台股', qqq:'QQQ系列', spy:'SPY系列', sox:'半導體', tech:'科技3x', bond:'債券/現金', gold:'黃金' };
+const SERIES_BADGE = { tw:'btw', qqq:'bus', spy:'bspy', sox:'bsox', tech:'btech', bond:'bbond', gold:'bgold' };
+const LEV_BADGE    = { 1:'b1x', 2:'b2x', 3:'b3x' };
+
+const PRESETS = [
+  { id:'stable', name:'穩健均衡', emoji:'🌿', risk:2, avgLev:'1.0x',
+    desc:'100% 現貨配置，台美各半，不使用槓桿，適合保守型長期投資人。',
+    stocks:['0050','QQQM','SPYM'],
+    targets:{ tw:50,us:50, series_qqq:50,series_spy:50, '0050':100,'00631L':0, QQQM:100,QLD:0,TQQQ:0, SPYM:100,SSO:0,UPRO:0 }
+  },
+  { id:'growth', name:'成長均衡', emoji:'📈', risk:3, avgLev:'≈1.4x',
+    desc:'加入少量槓桿 ETF 提升長期報酬，台美各半，現貨與槓桿各約 6:4。',
+    stocks:['0050','00631L','QQQM','TQQQ','SPYM','UPRO'],
+    targets:{ tw:50,us:50, series_qqq:50,series_spy:50, '0050':60,'00631L':40, QQQM:60,QLD:0,TQQQ:40, SPYM:60,SSO:0,UPRO:40 }
+  },
+  { id:'user-defense', name:'穩守進攻', emoji:'🛡️', risk:3, avgLev:'≈1.6x',
+    desc:'以 60% SPYM 作為防守核心，搭配 00631L 與 TQQQ 槓桿部位追求超額報酬。重心在穩健的 S&P 500，以少量槓桿增添彈性。',
+    stocks:['00631L','SPYM','TQQQ'],
+    targets:{ tw:20,us:80, series_qqq:25,series_spy:75, '0050':0,'00631L':100, QQQM:0,QLD:0,TQQQ:100, SPYM:100,SSO:0,UPRO:0 }
+  },
+  { id:'aggressive', name:'積極槓桿', emoji:'⚡', risk:4, avgLev:'≈1.8x',
+    desc:'槓桿比例達 70%，追求長期超額報酬，波動較大，需承受顯著回撤風險。',
+    stocks:['0050','00631L','QQQM','TQQQ','SPYM','UPRO'],
+    targets:{ tw:50,us:50, series_qqq:50,series_spy:50, '0050':30,'00631L':70, QQQM:30,QLD:0,TQQQ:70, SPYM:30,SSO:0,UPRO:70 }
+  },
+  { id:'full-lev', name:'全槓桿激進', emoji:'🚀', risk:5, avgLev:'≈2.5x',
+    desc:'100% 槓桿配置，綜合曝險約 2.5x，適合深度了解槓桿 ETF 機制的投資人。',
+    stocks:['00631L','TQQQ','UPRO'],
+    targets:{ tw:50,us:50, series_qqq:50,series_spy:50, '0050':0,'00631L':100, QQQM:0,QLD:0,TQQQ:100, SPYM:0,SSO:0,UPRO:100 }
+  }
+];
+
+// ── STATE ──
+const DEFAULT_TARGETS = { tw:50,us:50, series_qqq:50,series_spy:50,series_sox:100,series_tech:100,series_bond:100,series_gold:100,
+  '0050':50,'00631L':50, QQQM:50,QLD:50,TQQQ:50, SPYM:50,SSO:50,UPRO:50, SOXL:100,TECL:100,SGOV:100,GLD:100 };
+let state = { mode:null, presetId:null, portfolioName:'', activeStockIds:[], holdings:{}, targets:{...DEFAULT_TARGETS}, fx:32, currentStep:1 };
+function getActiveStocks(){ return ALL_STOCKS.filter(s=>state.activeStockIds.includes(s.id)); }
+
+// ── SCREENS ──
+function showScreen(id){ document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('active',s.id==='s-'+id)); }
+
+// ── WELCOME ──
+function renderPresetGrid(){
+  const grid = document.getElementById('preset-grid');
+  grid.innerHTML = PRESETS.map(p=>{
+    const risk = Array.from({length:5},(_,i)=>`<span class="${i<p.risk?'on':''}"">★</span>`).join('');
+    const chips = p.stocks.map(sid=>{
+      const s=ALL_STOCKS.find(x=>x.id===sid);
+      const cls=s.series==='tw'?'chip-tw':s.series==='qqq'?'chip-qqq':['spy'].includes(s.series)?'chip-spy':['sox','tech'].includes(s.series)?'chip-sec':'chip-bond';
+      return `<span class="chip ${cls}">${sid}${s.lev>1?' '+s.lev+'x':''}</span>`;
+    }).join('');
+    return `<div class="preset-card" onclick="usePreset('${p.id}')">
+      <div class="preset-header"><span class="preset-emoji">${p.emoji}</span><div class="preset-risk">${risk}</div></div>
+      <div class="preset-name">${p.name}</div>
+      <div class="preset-lev">平均槓桿 ${p.avgLev}</div>
+      <div class="preset-desc">${p.desc}</div>
+      <div class="preset-stocks">${chips}</div>
+      <div class="preset-cta">使用此策略 →</div>
+    </div>`;
+  }).join('');
+}
+
+function usePreset(id){
+  const p=PRESETS.find(x=>x.id===id);
+  state.mode='preset'; state.presetId=id; state.portfolioName=p.name;
+  state.activeStockIds=[...p.stocks];
+  state.targets={...DEFAULT_TARGETS,...p.targets};
+  p.stocks.forEach(sid=>{ if(!state.holdings[sid]) state.holdings[sid]={shares:0,price:0}; });
+  launchMain();
+}
+
+// ── CUSTOM ──
+let _sel = new Set();
+function openCustom(){ _sel=new Set(state.activeStockIds); renderCustomPicker(); showScreen('custom'); }
+
+function renderCustomPicker(){
+  const groups={
+    'tw-picks':    ALL_STOCKS.filter(s=>s.series==='tw'),
+    'qqq-picks':   ALL_STOCKS.filter(s=>s.series==='qqq'),
+    'spy-picks':   ALL_STOCKS.filter(s=>s.series==='spy'),
+    'sector-picks':ALL_STOCKS.filter(s=>['sox','tech'].includes(s.series)),
+    'bond-picks':  ALL_STOCKS.filter(s=>['bond','gold'].includes(s.series)),
+  };
+  for(const[gid,stocks] of Object.entries(groups)){
+    const el=document.getElementById(gid); if(!el) continue;
+    el.innerHTML=stocks.map(s=>{
+      const sel=_sel.has(s.id)?'selected':'';
+      const lbl=SERIES_LABEL[s.series]||s.series;
+      return `<div class="stock-pick-card ${sel}" id="pick-${s.id}" onclick="togglePick('${s.id}')">
+        <div class="spk-header"><span class="spk-ticker">${s.id}</span><span class="spk-check">✓</span></div>
+        <div class="spk-name">${s.name}</div>
+        <div class="spk-meta"><span class="badge ${LEV_BADGE[s.lev]}">${s.lev}x</span><span class="badge ${SERIES_BADGE[s.series]}">${lbl}</span><span style="font-family:var(--mono);font-size:10px;color:var(--text3)">${s.currency==='ntd'?'NTD':'USD'}</span></div>
+        <div class="spk-desc">${s.desc}</div>
+      </div>`;
+    }).join('');
+  }
+}
+
+function togglePick(id){
+  if(_sel.has(id)){ _sel.delete(id); document.getElementById('pick-'+id).classList.remove('selected'); }
+  else{
+    if(_sel.size>=6){ showErr('最多選 6 檔'); return; }
+    _sel.add(id); document.getElementById('pick-'+id).classList.add('selected');
+  }
+  document.getElementById('custom-error').style.display='none';
+}
+function showErr(msg){ const el=document.getElementById('custom-error'); el.textContent=msg; el.style.display='block'; }
+
+function confirmCustom(){
+  if(_sel.size<2){ showErr('請至少選擇 2 檔標的'); return; }
+  state.mode='custom'; state.presetId=null; state.portfolioName='自訂組合';
+  state.activeStockIds=[..._sel];
+  state.targets={...DEFAULT_TARGETS};
+  state.activeStockIds.forEach(sid=>{ if(!state.holdings[sid]) state.holdings[sid]={shares:0,price:0}; });
+  launchMain();
+}
+
+// ── MAIN ──
+function launchMain(){
+  document.getElementById('portfolio-badge').textContent=state.portfolioName;
+  renderHoldings(); renderTargetLayers(); calc(); goStep(1); showScreen('main');
+}
+
+function renderHoldings(){
+  const actv=getActiveStocks();
+  const tw=actv.filter(s=>s.mkt==='tw'), us=actv.filter(s=>s.mkt==='us');
+  document.getElementById('tw-holdings-card').style.display=tw.length?'':'none';
+  document.getElementById('us-holdings-card').style.display=us.length?'':'none';
+  const row=s=>{
+    const h=state.holdings[s.id]||{shares:0,price:0};
+    const lbl=SERIES_LABEL[s.series]||s.series;
+    const serBadge=`<span class="badge ${SERIES_BADGE[s.series]}">${lbl}</span>`;
+    const levBadge=`<span class="badge ${LEV_BADGE[s.lev]}">${s.lev}x</span>`;
+    const d=s.desc.replace(/'/g,"&#39;");
+    return `<tr>
+      <td><strong>${s.id}</strong><span class="info-tip" onmouseenter="showTip(event,'${d}')" onmouseleave="hideTip()">?</span></td>
+      <td style="color:var(--text2);font-size:12px">${s.name}</td>
+      <td>${s.mkt==='tw'?'':serBadge}${levBadge}</td>
+      <td><input type="number" class="num-input" id="h_${s.id}" value="${h.shares}" min="0" step="1" oninput="onHC('${s.id}')"></td>
+      <td style="display:flex;align-items:center;gap:4px"><input type="number" class="num-input" id="p_${s.id}" value="${h.price}" min="0" step="0.01" oninput="onHC('${s.id}')"><button class="fetch-btn" id="fetch_${s.id}" onclick="fetchPrice('${s.id}')">抓取昨收</button></td>
+      <td class="val-cell" id="v_${s.id}">—</td>
+    </tr>`;
+  };
+  document.getElementById('tw-tbody').innerHTML=tw.map(row).join('');
+  document.getElementById('us-tbody').innerHTML=us.map(row).join('');
+}
+
+function onHC(id){
+  const s=parseFloat(document.getElementById('h_'+id)?.value)||0;
+  const p=parseFloat(document.getElementById('p_'+id)?.value)||0;
+  if(!state.holdings[id]) state.holdings[id]={};
+  state.holdings[id].shares=s; state.holdings[id].price=p; calc();
+}
+
+// ── PRICE FETCH ──
+async function fetchPrice(id){
+  const stock=ALL_STOCKS.find(s=>s.id===id);
+  const btn=document.getElementById('fetch_'+id);
+  btn.disabled=true; btn.classList.add('loading'); btn.textContent='抓取中…';
+  const yahooUrl=`https://query1.finance.yahoo.com/v8/finance/chart/${stock.yahoo}?interval=1d&range=5d`;
+  const proxies=[
+    ()=>fetch(`https://corsproxy.io/?${encodeURIComponent(yahooUrl)}`),
+    ()=>fetch(`https://api.allorigins.win/raw?url=${encodeURIComponent(yahooUrl)}`),
+    ()=>fetch(`https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(yahooUrl)}`),
+  ];
+  let price=null;
+  for(const attempt of proxies){
+    try{ const r=await attempt(); if(!r.ok) continue; const d=await r.json(); const m=d?.chart?.result?.[0]?.meta; const pc=m?.previousClose??m?.regularMarketPrice; if(pc&&pc>0){price=pc;break;} }catch{}
+  }
+  if(price){ const inp=document.getElementById('p_'+id); inp.value=price.toFixed(2); onHC(id); btn.textContent='✓ 已更新'; btn.style.color='var(--green)'; setTimeout(()=>{btn.textContent='抓取昨收';btn.style.color='';},2500); }
+  else{ btn.textContent='✗ 失敗，請手動輸入'; btn.style.color='var(--red)'; setTimeout(()=>{btn.textContent='抓取昨收';btn.style.color='';},3000); }
+  btn.disabled=false; btn.classList.remove('loading');
+}
+
+// ── CALC ──
+function gv(id){ return parseFloat(document.getElementById(id)?.value)||0; }
+function fmt(n){ return Math.round(n).toLocaleString('zh-TW'); }
+function fmtD(n,d=1){ return (+n).toFixed(d); }
+
+function calc(){
+  const actv=getActiveStocks(), fx=gv('fx')||32; state.fx=fx;
+  const vals={};
+  actv.forEach(s=>{ const h=state.holdings[s.id]||{shares:0,price:0}; vals[s.id]=s.currency==='usd'?(h.shares||0)*(h.price||0)*fx:(h.shares||0)*(h.price||0); });
+  const total=Object.values(vals).reduce((a,b)=>a+b,0);
+
+  actv.forEach(s=>{
+    const el=document.getElementById('v_'+s.id); if(!el) return;
+    const v=vals[s.id]||0, h=state.holdings[s.id]||{};
+    el.innerHTML=s.currency==='usd'?`<div>NT$${fmt(v)}</div><div style="font-size:10px;color:var(--text3)">US$${fmt((h.shares||0)*(h.price||0))}</div>`:`NT$${fmt(v)}`;
+  });
+
+  const exposure=actv.reduce((s,h)=>s+(vals[h.id]||0)*h.lev,0);
+  const leverage=total>0?exposure/total:0;
+  const twV=actv.filter(s=>s.mkt==='tw').reduce((s,h)=>s+(vals[h.id]||0),0);
+  const usV=actv.filter(s=>s.mkt==='us').reduce((s,h)=>s+(vals[h.id]||0),0);
+
+  document.getElementById('metrics-row').innerHTML=`
+    <div class="metric"><div class="metric-lbl">總資產（NTD）</div><div class="metric-val" style="font-size:18px">NT$${fmt(total)}</div></div>
+    <div class="metric"><div class="metric-lbl">等效市場曝險</div><div class="metric-val" style="font-size:18px">NT$${fmt(exposure)}</div><div class="metric-sub">槓桿加權後</div></div>
+    <div class="metric"><div class="metric-lbl">綜合槓桿倍數</div><div class="metric-val">${fmtD(leverage)}x</div></div>
+    <div class="metric"><div class="metric-lbl">台股 / 美股</div><div class="metric-val" style="font-size:17px">${total>0?(twV/total*100).toFixed(0):0}% / ${total>0?(usV/total*100).toFixed(0):0}%</div></div>`;
+
+  // Exposure bars
+  const bEl=document.getElementById('exposure-bars');
+  bEl.innerHTML=actv.map(s=>{ if(!total) return ''; const mp=(vals[s.id]||0)/total*100, ep=exposure>0?(vals[s.id]||0)*s.lev/exposure*100:0, c=COLORS[s.id];
+    return `<div class="expo-item"><div class="expo-header"><span class="expo-ticker">${s.id}</span><span class="expo-stats"><span>市值 ${mp.toFixed(1)}%</span><span>→ 曝險 ${ep.toFixed(1)}%</span><span>${s.lev}x</span></span></div>
+    <div class="expo-bars"><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:${mp}%;background:${c};opacity:.45"></div></div><div class="bar-label">市值佔比</div></div>
+    <div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:${ep}%;background:${c}"></div></div><div class="bar-label">等效曝險</div></div></div></div>`;
+  }).join('');
+
+  renderTargetPreview(actv,total);
+  renderResults(actv,vals,total,exposure,leverage);
+}
+
+// ── TARGET LAYERS ──
+function renderTargetLayers(){
+  const actv=getActiveStocks(), hasTW=actv.some(s=>s.mkt==='tw'), hasUS=actv.some(s=>s.mkt==='us');
+  let html='';
+  if(hasTW&&hasUS){
+    html+=`<div class="alloc-layer"><div class="alloc-layer-title">第一層：台股 vs 美股</div>
+      ${aRow('tw','🇹🇼 台股','t_tw','%（整體）','us')}
+      ${aRow('us','🇺🇸 美股','t_us','%（整體）','tw')}</div>`;
+  }
+  const usSeriesIds=[...new Set(actv.filter(s=>s.mkt==='us').map(s=>s.series))];
+  if(usSeriesIds.length>=2){
+    html+=`<div class="alloc-layer"><div class="alloc-layer-title">第二層：美股各系列分配（美股總額中）</div>`;
+    usSeriesIds.forEach((sid,i)=>{ const ctr=usSeriesIds.length===2?'series_'+usSeriesIds[1-i]:null; html+=aRow('series_'+sid,SERIES_LABEL[sid]||sid,'ts_'+sid,'%（美股中）',ctr); });
+    if(usSeriesIds.length>=3) html+=`<div id="series-sum-check" class="sum-check">請確認合計為 100%</div>`;
+    html+=`</div>`;
+  }
+  if(hasTW){ const ts=actv.filter(s=>s.series==='tw'); if(ts.length>=2){ html+=`<div class="alloc-layer"><div class="alloc-layer-title">台股內部分配</div>`; const ip=ts.length===2; ts.forEach((s,i)=>{ html+=aRow(s.id,`${s.id} (${s.lev}x)`,'t_'+s.id,'%（台股中）',ip?ts[1-i].id:null); }); html+=`</div>`; } }
+  usSeriesIds.forEach(sid=>{ const ss=actv.filter(s=>s.series===sid); if(ss.length>=2){ html+=`<div class="alloc-layer"><div class="alloc-layer-title">${SERIES_LABEL[sid]||sid} 內部分配</div>`; const ip=ss.length===2; ss.forEach((s,i)=>{ html+=aRow(s.id,`${s.id} (${s.lev}x)`,'t_'+s.id,`%（${SERIES_LABEL[sid]||sid}中）`,ip?ss[1-i].id:null); }); html+=`</div>`; } });
+  document.getElementById('target-layers').innerHTML=html;
+  checkSeriesSum(usSeriesIds);
+}
+
+function aRow(key,label,inputId,unit,counterKey){
+  const val=state.targets[key]??50, rawKey=key.replace('series_',''), c=COLORS[rawKey]||'var(--accent2)';
+  const sk=key.replace(/[^a-zA-Z0-9_]/g,'_');
+  return `<div class="alloc-row"><span class="alloc-name">${label}</span>
+    <input type="number" class="alloc-input" id="${inputId}" value="${val}" min="0" max="100" step="1" oninput="syncAlloc('${key}','${counterKey||''}',this.value)">
+    <span class="alloc-unit">${unit}</span>
+    <div class="alloc-bar-wrap"><div class="alloc-bar-fill" id="bar_${sk}" style="width:${val}%;background:${c};opacity:.7"></div></div>
+    <span class="alloc-val" id="aval_${sk}"></span>
+  </div>`;
+}
+
+function syncAlloc(key,counterKey,val){
+  val=Math.min(100,Math.max(0,parseFloat(val)||0)); state.targets[key]=val;
+  const sk=key.replace(/[^a-zA-Z0-9_]/g,'_');
+  if(counterKey){ const cv=Math.max(0,100-val); state.targets[counterKey]=cv; const csk=counterKey.replace(/[^a-zA-Z0-9_]/g,'_'); const cid=counterKey.startsWith('series_')?'ts_'+counterKey.replace('series_',''):'t_'+counterKey; const ci=document.getElementById(cid); if(ci) ci.value=cv; const cb=document.getElementById('bar_'+csk); if(cb) cb.style.width=cv+'%'; }
+  const bar=document.getElementById('bar_'+sk); if(bar) bar.style.width=val+'%';
+  const actv=getActiveStocks(); const usIds=[...new Set(actv.filter(s=>s.mkt==='us').map(s=>s.series))]; if(usIds.length>=3) checkSeriesSum(usIds);
+  calc();
+}
+
+function checkSeriesSum(ids){ if(!ids||ids.length<3) return; const sum=ids.reduce((a,sid)=>a+(state.targets['series_'+sid]||0),0); const el=document.getElementById('series-sum-check'); if(!el) return; el.textContent=`美股系列合計：${sum}%（需為 100%）`; el.className='sum-check '+(Math.abs(sum-100)<1?'sum-ok':'sum-warn'); }
+
+// ── TARGET PREVIEW ──
+function renderTargetPreview(actv,total){
+  const targets=getTargets(total,actv), el=document.getElementById('target-preview'); if(!el) return;
+  el.innerHTML=actv.map(s=>{ const tv=targets[s.id]||0, tp=total>0?tv/total*100:0, c=COLORS[s.id]; const av=document.getElementById('aval_'+s.id.replace(/[^a-zA-Z0-9_]/g,'_')); if(av) av.textContent=`NT$${fmt(tv)}`;
+    return `<div class="alloc-row" style="margin-bottom:6px"><span style="width:72px;font-family:var(--display);font-size:13px;font-weight:600">${s.id}</span><div class="alloc-bar-wrap"><div class="alloc-bar-fill" style="width:${tp}%;background:${c}"></div></div><span style="font-family:var(--mono);font-size:11px;color:${c};width:38px;text-align:right">${tp.toFixed(1)}%</span><span style="font-family:var(--mono);font-size:11px;color:var(--text2);width:110px;text-align:right">NT$${fmt(tv)}</span></div>`;
+  }).join('');
+}
+
+function getTargets(total,actv){
+  const t=state.targets, hasTW=actv.some(s=>s.mkt==='tw'), hasUS=actv.some(s=>s.mkt==='us');
+  const twT=hasTW&&hasUS?total*(t.tw??50)/100:hasTW?total:0;
+  const usT=hasTW&&hasUS?total*(t.us??50)/100:hasUS?total:0;
+  const usIds=[...new Set(actv.filter(s=>s.mkt==='us').map(s=>s.series))];
+  const serT={};
+  if(usIds.length===1){ serT[usIds[0]]=usT; }
+  else{ const raw=usIds.reduce((a,sid)=>a+(t['series_'+sid]??0),0); usIds.forEach(sid=>{ serT[sid]=raw>0?usT*(t['series_'+sid]??0)/raw:usT/usIds.length; }); }
+  const result={};
+  const twStocks=actv.filter(s=>s.series==='tw');
+  if(twStocks.length===1){ result[twStocks[0].id]=twT; }
+  else if(twStocks.length>=2){ const s2=twStocks.reduce((a,s)=>a+(t[s.id]??50),0); twStocks.forEach(s=>{ result[s.id]=s2>0?twT*(t[s.id]??50)/s2:twT/twStocks.length; }); }
+  usIds.forEach(sid=>{ const ss=actv.filter(s=>s.series===sid), st=serT[sid]||0; if(ss.length===1){ result[ss[0].id]=st; } else{ const sum=ss.reduce((a,s)=>a+(t[s.id]??50),0); ss.forEach(s=>{ result[s.id]=sum>0?st*(t[s.id]??50)/sum:st/ss.length; }); } });
+  return result;
+}
+
+// ── RESULTS ──
+function renderResults(actv,vals,total,exposure,leverage){
+  const targets=getTargets(total,actv), fx=state.fx;
+  const tExposure=actv.reduce((s,h)=>s+(targets[h.id]||0)*h.lev,0), tLev=total>0?tExposure/total:0;
+  let buy=0, sell=0;
+  actv.forEach(s=>{ const d=(targets[s.id]||0)-(vals[s.id]||0); if(d>100) buy+=d; else if(d<-100) sell+=Math.abs(d); });
+  const rm=document.getElementById('result-metrics'); if(!rm) return;
+  rm.innerHTML=`<div class="metric"><div class="metric-lbl">調整前槓桿</div><div class="metric-val">${fmtD(leverage)}x</div></div><div class="metric"><div class="metric-lbl">調整後槓桿</div><div class="metric-val">${fmtD(tLev)}x</div></div><div class="metric"><div class="metric-lbl">預計買入</div><div class="metric-val" style="color:var(--green)">NT$${fmt(buy)}</div></div><div class="metric"><div class="metric-lbl">預計賣出</div><div class="metric-val" style="color:var(--red)">NT$${fmt(sell)}</div></div>`;
+  const tbody=document.getElementById('result-tbody'); if(!tbody) return;
+  tbody.innerHTML=actv.map(s=>{ const cur=vals[s.id]||0, tv=targets[s.id]||0, diff=tv-cur, cp=total>0?cur/total*100:0, tp=total>0?tv/total*100:0; let action='維持',aCls='result-action-hold';
+    if(Math.abs(diff)>100){ const up=s.currency==='usd'?(state.holdings[s.id]?.price||0)*fx:(state.holdings[s.id]?.price||0); const n=up>0?Math.round(Math.abs(diff)/up):0;
+      if(diff>0){ aCls='result-action-buy'; action=s.currency==='ntd'?(Math.ceil(n/1000)>0?`買入 ${Math.ceil(n/1000)} 張`:'買入 <1 張'):`買入 ${n} 股`; }
+      else{ aCls='result-action-sell'; action=s.currency==='ntd'?(Math.floor(n/1000)>0?`賣出 ${Math.floor(n/1000)} 張`:'賣出 <1 張'):`賣出 ${n} 股`; }
+    }
+    const dc=diff>100?'diff-pos':diff<-100?'diff-neg':'diff-zero';
+    return `<tr><td><strong>${s.id}</strong></td><td><span class="badge ${LEV_BADGE[s.lev]}">${s.lev}x</span></td><td style="font-family:var(--mono)">${(state.holdings[s.id]?.shares||0).toLocaleString()}</td><td class="val-cell">NT$${fmt(cur)}</td><td style="font-family:var(--mono);color:var(--text2)">${cp.toFixed(1)}%</td><td style="font-family:var(--mono);font-weight:500">${tp.toFixed(1)}%</td><td class="val-cell">NT$${fmt(tv)}</td><td class="${dc}">${diff>=0?'+':''}NT$${fmt(diff)}</td><td class="${aCls}">${action}</td></tr>`;
+  }).join('');
+  const ae=document.getElementById('after-preview'); if(!ae) return;
+  ae.innerHTML=actv.map(s=>{ const tv=targets[s.id]||0, tp=total>0?tv/total*100:0, c=COLORS[s.id];
+    return `<div class="alloc-row" style="margin-bottom:6px"><span style="width:72px;font-family:var(--display);font-size:13px;font-weight:600">${s.id}</span><div class="alloc-bar-wrap"><div class="alloc-bar-fill" style="width:${tp}%;background:${c}"></div></div><span style="font-family:var(--mono);font-size:11px;color:${c};width:38px;text-align:right">${tp.toFixed(1)}%</span><span style="font-family:var(--mono);font-size:11px;color:var(--text2);width:110px;text-align:right">NT$${fmt(tv)}</span></div>`;
+  }).join('');
+}
+
+// ── STEPPER ──
+function goStep(n){
+  if(n<1||n>3) return; state.currentStep=n;
+  document.querySelectorAll('.step-item').forEach(el=>{ const s=parseInt(el.dataset.step); el.classList.toggle('s-active',s===n); el.classList.toggle('s-done',s<n); if(s===n) el.classList.remove('s-done'); if(s<n) el.classList.remove('s-active'); if(s>n){ el.classList.remove('s-active'); el.classList.remove('s-done'); } });
+  document.querySelectorAll('.panel').forEach((el,i)=>el.classList.toggle('active',i+1===n));
+  if(n===2){ renderTargetLayers(); calc(); }
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ── TOOLTIP ──
+function showTip(e,text){ const t=document.getElementById('floating-tip'); t.textContent=text; t.style.display='block'; posTip(e); }
+function posTip(e){ const t=document.getElementById('floating-tip'); if(t.style.display==='none') return; const w=t.offsetWidth||240,h=t.offsetHeight||80,pad=14; let x=e.clientX+pad,y=e.clientY+pad; if(x+w>window.innerWidth-8) x=e.clientX-w-pad; if(y+h>window.innerHeight-8) y=e.clientY-h-pad; t.style.left=x+'px'; t.style.top=y+'px'; }
+function hideTip(){ document.getElementById('floating-tip').style.display='none'; }
+document.addEventListener('mousemove',e=>{ const t=document.getElementById('floating-tip'); if(t&&t.style.display!=='none') posTip(e); });
+
+// ── SAVE/EXPORT/IMPORT ──
+function getSnap(){ return {version:1,savedAt:new Date().toISOString(),mode:state.mode,presetId:state.presetId,portfolioName:state.portfolioName,activeStockIds:state.activeStockIds,holdings:state.holdings,targets:state.targets,fx:state.fx}; }
+function applySnap(s){ state.mode=s.mode; state.presetId=s.presetId; state.portfolioName=s.portfolioName; state.activeStockIds=s.activeStockIds; state.holdings=s.holdings||{}; state.targets={...DEFAULT_TARGETS,...(s.targets||{})}; state.fx=s.fx||32; }
+function showToast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2200); }
+function saveData(){ try{ localStorage.setItem('rbal_save',JSON.stringify(getSnap())); showToast('✓ 已儲存到瀏覽器'); }catch{ showToast('✗ 儲存失敗'); } }
+function exportData(){ const b=new Blob([JSON.stringify(getSnap(),null,2)],{type:'application/json'}); const a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download=`rebalancer_${new Date().toISOString().slice(0,10)}.json`; a.click(); showToast('⬇ 已匯出 JSON'); }
+function importData(e){ const f=e.target.files[0]; if(!f) return; const r=new FileReader(); r.onload=ev=>{ try{ applySnap(JSON.parse(ev.target.result)); const fx=document.getElementById('fx'); if(fx) fx.value=state.fx; launchMain(); showToast('✓ 匯入成功'); }catch{ showToast('✗ 格式錯誤'); } }; r.readAsText(f); e.target.value=''; }
+function tryLoadSave(){ try{ const raw=localStorage.getItem('rbal_save'); if(!raw){ showToast('沒有找到儲存的資料'); return; } applySnap(JSON.parse(raw)); launchMain(); showToast('✓ 已讀取上次儲存'); }catch{ showToast('✗ 讀取失敗'); } }
+function backToStart(){ saveData(); showScreen('welcome'); }
+
+// ── INIT ──
+renderPresetGrid();
+</script>
+</body>
+</html>
