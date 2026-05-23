@@ -719,24 +719,42 @@
         const siteUrl = 'https://kqlet.online';
         const postCount = 3;
 
-        fetch(`${siteUrl}/wp-json/wp/v2/posts?per_page=${postCount}&_embed`)
+        fetch(`${siteUrl}/index.json`)
             .then(res => res.json())
             .then(posts => {
+                // const container = document.getElementById('blog-list');
+                // posts.forEach(post => {
+                //     const img = post._embedded['wp:featuredmedia']?.[0]?.source_url || 'https://via.placeholder.com/200';
+                //     const date = new Date(post.date).toLocaleDateString();
+
+                //     container.innerHTML += `
+                //         <a href="${post.link}" target="_blank" class="blog-item">
+                //             <img src="${img}" alt="${post.title.rendered}" class="blog-thumb">
+                //             <div class="blog-content">
+                //                 <div class="blog-title">${post.title.rendered}</div>
+                //                 <div class="blog-date">${date}</div>
+                //             </div>
+                //         </a>
+                //     `;
+                // });
+
                 const container = document.getElementById('blog-list');
-                posts.forEach(post => {
-                    const img = post._embedded['wp:featuredmedia']?.[0]?.source_url || 'https://via.placeholder.com/200';
+                
+                posts.slice(0, postCount).forEach(post => {
+                    const img = post.image || 'https://placeholder.com';
                     const date = new Date(post.date).toLocaleDateString();
 
                     container.innerHTML += `
-                        <a href="${post.link}" target="_blank" class="blog-item">
-                            <img src="${img}" alt="${post.title.rendered}" class="blog-thumb">
+                        <a href="${post.permalink}" target="_blank" class="blog-item">
+                            <img src="${post.imge}" alt="${post.title}" class="blog-thumb">
                             <div class="blog-content">
-                                <div class="blog-title">${post.title.rendered}</div>
+                                <div class="blog-title">${post.title}</div>
                                 <div class="blog-date">${date}</div>
                             </div>
                         </a>
                     `;
                 });
+                
             })
             .catch(err => console.error('Error fetching posts:', err));
     </script>
