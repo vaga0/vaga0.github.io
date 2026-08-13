@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Curator Prompt Builder</title>
+<meta name="description" content="互動式 Prompt 組裝工具">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#F1F5F9;--surface:#FFF;--border:#E2E8F0;--border-active:#4F46E5;
+  --text:#0F172A;--text2:#64748B;--text3:#94A3B8;
+  --pri:#4F46E5;--pri-light:#EEF2FF;--pri-hover:#4338CA;
+  --ok:#10B981;--ok-light:#ECFDF5;
+  --r:12px;--r-sm:8px;
+  --shadow:0 1px 3px rgba(0,0,0,.08);
+  --shadow-md:0 4px 6px rgba(0,0,0,.07);
+  --sans:'Inter','Noto Sans TC',sans-serif;
+  --mono:'JetBrains Mono',monospace;
+}
+body{font-family:var(--sans);background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh}
+.wrap{max-width:920px;margin:0 auto;padding:2rem 1.5rem 4rem}
+header{text-align:center;margin-bottom:2rem}
+header h1{font-size:1.6rem;font-weight:700;margin-bottom:.35rem}
+header p{color:var(--text2);font-size:.9rem}
+
+/* 段落標籤 */
+.label{font-size:.75rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text3);margin:1.5rem 0 .6rem}
+.label:first-of-type{margin-top:0}
+
+/* 卡片 */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1rem 1.25rem;margin-bottom:.6rem;box-shadow:var(--shadow);transition:opacity .25s}
+.card.off{opacity:.4}
+.card-head{display:flex;align-items:center;justify-content:space-between;gap:.5rem}
+.card-left{display:flex;align-items:center;gap:.5rem}
+.num{display:inline-flex;align-items:center;justify-content:center;width:1.6rem;height:1.6rem;border-radius:50%;background:var(--pri-light);color:var(--pri);font-size:.75rem;font-weight:700;flex-shrink:0}
+.card-title{font-size:.95rem;font-weight:600}
+.card-desc{color:var(--text2);font-size:.8rem;margin-top:.35rem}
+
+/* Toggle */
+.tog{position:relative;width:40px;height:22px;flex-shrink:0}
+.tog input{opacity:0;width:0;height:0}
+.tog-s{position:absolute;cursor:pointer;inset:0;background:#CBD5E1;border-radius:22px;transition:.25s}
+.tog-s::before{content:'';position:absolute;height:16px;width:16px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.25s;box-shadow:0 1px 2px rgba(0,0,0,.15)}
+.tog input:checked+.tog-s{background:var(--pri)}
+.tog input:checked+.tog-s::before{transform:translateX(18px)}
+
+/* 風格選擇器 */
+.style-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:.5rem;margin-top:.75rem}
+.sty{border:2px solid var(--border);border-radius:var(--r-sm);padding:.6rem .7rem;cursor:pointer;transition:all .2s;background:var(--surface);user-select:none}
+.sty:hover{border-color:#A5B4FC;box-shadow:var(--shadow-md)}
+.sty.on{border-color:var(--pri);background:var(--pri-light)}
+.sty-emoji{font-size:1.15rem}
+.sty-name{font-size:.82rem;font-weight:600;margin-top:.15rem}
+.sty-tag{font-size:.68rem;color:var(--text3);margin-bottom:.4rem}
+.dots{display:flex;gap:3px}
+.dot{width:16px;height:16px;border-radius:50%;border:1px solid rgba(0,0,0,.1)}
+
+/* 模組 */
+.mod-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:.45rem}
+.mod{display:flex;align-items:center;gap:.55rem;padding:.6rem .85rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-sm);cursor:pointer;transition:all .2s;user-select:none}
+.mod:hover{border-color:#A5B4FC}
+.mod.on{border-color:var(--pri);background:var(--pri-light)}
+.mod input{accent-color:var(--pri);width:15px;height:15px;cursor:pointer;flex-shrink:0}
+.mod-name{font-size:.82rem;font-weight:500}
+
+/* 預覽 */
+.prev-section{margin-top:2rem}
+.prev-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:.6rem;flex-wrap:wrap;gap:.5rem}
+.prev-head h2{font-size:1.05rem;font-weight:600}
+.char-ct{font-size:.75rem;color:var(--text3);margin-left:.6rem}
+.copy-btn{display:inline-flex;align-items:center;gap:.35rem;padding:.45rem 1.1rem;background:var(--pri);color:#fff;border:none;border-radius:var(--r-sm);font-size:.82rem;font-weight:600;font-family:var(--sans);cursor:pointer;transition:all .2s}
+.copy-btn:hover{background:var(--pri-hover);box-shadow:var(--shadow-md)}
+.copy-btn.ok{background:var(--ok)}
+.prev-out{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1.1rem 1.3rem;font-family:var(--mono);font-size:.78rem;line-height:1.75;white-space:pre-wrap;word-wrap:break-word;max-height:520px;overflow-y:auto;box-shadow:var(--shadow);color:var(--text)}
+
+/* 說明按鈕 */
+.help-btn{display:inline-flex;align-items:center;gap:.3rem;padding:.4rem 1rem;background:var(--surface);color:var(--pri);border:1.5px solid var(--pri);border-radius:20px;font-size:.82rem;font-weight:600;font-family:var(--sans);cursor:pointer;transition:all .2s;margin-top:.7rem}
+.help-btn:hover{background:var(--pri);color:#fff}
+
+/* Modal */
+.modal-overlay{position:fixed;inset:0;background:rgba(15,23,42,.45);backdrop-filter:blur(4px);z-index:1000;display:none;align-items:center;justify-content:center;padding:1.5rem}
+.modal-overlay.show{display:flex}
+.modal{background:var(--surface);border-radius:var(--r);max-width:640px;width:100%;max-height:85vh;overflow-y:auto;padding:2rem 2.25rem;box-shadow:0 20px 60px rgba(0,0,0,.15);position:relative;animation:modalIn .25s ease}
+@keyframes modalIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.modal-close{position:absolute;top:1rem;right:1.25rem;background:none;border:none;font-size:1.4rem;cursor:pointer;color:var(--text3);transition:color .2s;line-height:1}
+.modal-close:hover{color:var(--text)}
+.modal h2{font-size:1.2rem;font-weight:700;margin-bottom:1rem}
+.modal h3{font-size:.95rem;font-weight:600;margin:1.25rem 0 .4rem;color:var(--pri)}
+.modal p,.modal li{font-size:.88rem;color:var(--text2);line-height:1.7}
+.modal ol,.modal ul{padding-left:1.25rem}
+.modal li{margin-bottom:.35rem}
+.modal code{background:var(--pri-light);color:var(--pri);padding:.1rem .35rem;border-radius:4px;font-size:.82rem;font-family:var(--mono)}
+.modal .step-num{display:inline-flex;align-items:center;justify-content:center;width:1.5rem;height:1.5rem;border-radius:50%;background:var(--pri);color:#fff;font-size:.72rem;font-weight:700;margin-right:.4rem;flex-shrink:0}
+.modal hr{border:none;border-top:1px solid var(--border);margin:1.25rem 0}
+
+@media(max-width:640px){
+  .wrap{padding:1rem}
+  header h1{font-size:1.3rem}
+  .style-grid{grid-template-columns:repeat(2,1fr)}
+  .mod-grid{grid-template-columns:1fr}
+  .modal{padding:1.5rem}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>🧩 AI Curator Prompt Builder</h1>
+    <p>選擇段落、配色、模組 → 一鍵複製完整 Prompt</p>
+    <button class="help-btn" onclick="openHelp()">❓ 使用說明</button>
+  </header>
+
+  <!-- 使用說明 Modal -->
+  <div class="modal-overlay" id="helpModal" onclick="if(event.target===this)closeHelp()">
+    <div class="modal">
+      <button class="modal-close" onclick="closeHelp()">&times;</button>
+      <h2>📖 使用說明</h2>
+
+      <h3>這是什麼？</h3>
+      <p>這個工具幫你快速產生一段「AI 對話轉互動講義」的指令 (Prompt)。<br>當你與 AI（ChatGPT、Claude、Gemini 等）完成一段有價值的深度對話後，把這段 Prompt 貼給 AI，它就會自動把整段聊天內容轉化為一份<strong>高視覺品質、具備互動元素的單頁 HTML 網頁</strong>。</p>
+
+      <h3>什麼時候用？</h3>
+      <ul>
+        <li>你跟 AI 深聊完一個主題，覺得精華內容值得保存</li>
+        <li>你想把對話整理成可分享、可複習的互動講義</li>
+        <li>你需要不同風格（淺色/暗色/不同配色）的視覺呈現</li>
+      </ul>
+
+      <hr>
+
+      <h3>三步驟使用</h3>
+      <ol>
+        <li><span class="step-num">1</span><strong>組裝 Prompt</strong>：在本頁選擇你要的段落、配色風格、追加模組</li>
+        <li><span class="step-num">2</span><strong>複製貼上</strong>：點擊底部「📋 複製」按鈕，回到 AI 對話視窗直接貼上送出</li>
+        <li><span class="step-num">3</span><strong>取得 HTML</strong>：AI 會回覆完整的 HTML 程式碼，將它存成 <code>.html</code> 檔案，雙擊即可在瀏覽器開啟</li>
+      </ol>
+
+      <hr>
+
+      <h3>各區塊說明</h3>
+      <ul>
+        <li><strong>核心段落 (1-5)</strong>：構成 Prompt 的五大指令區塊，預設全開。若某功能不需要，關掉開關即可排除</li>
+        <li><strong>配色風格</strong>：決定 AI 產出的 HTML 長什麼樣子。6 種風格任選其一</li>
+        <li><strong>追加模組</strong>：額外功能（如 Light/Dark 切換、目錄導航等），勾選後會自動插入 Prompt 適當位置</li>
+      </ul>
+
+      <hr>
+
+      <h3>💡 小提醒</h3>
+      <ul>
+        <li>此 Prompt 適用於所有主流 AI 模型，但建議使用能力較強的模型（如 GPT-4o、Claude Sonnet/Opus、Gemini Pro）以獲得最佳 HTML 品質</li>
+        <li>若 AI 一次無法完整輸出所有程式碼，可以回覆「請繼續」讓它補完</li>
+        <li>產出的 HTML 可免費發佈至 GitHub Pages、Netlify 或 Vercel</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="label">核心段落（點擊開關可排除）</div>
+
+  <div class="card" id="c1">
+    <div class="card-head">
+      <div class="card-left"><span class="num">1</span><span class="card-title">主線故事與脈絡</span></div>
+      <label class="tog"><input type="checkbox" checked onchange="update()"><span class="tog-s"></span></label>
+    </div>
+    <div class="card-desc">嚴禁問答錄，整理為邏輯清晰的故事脈絡</div>
+  </div>
+
+  <div class="card" id="c2">
+    <div class="card-head">
+      <div class="card-left"><span class="num">2</span><span class="card-title">多維度互補媒體</span></div>
+      <label class="tog"><input type="checkbox" checked onchange="update()"><span class="tog-s"></span></label>
+    </div>
+    <div class="card-desc">自動生成比較表格、SVG 流程圖與卡片圖表</div>
+  </div>
+
+  <div class="card" id="c3">
+    <div class="card-head">
+      <div class="card-left"><span class="num">3</span><span class="card-title">情境式學習按鈕</span></div>
+      <label class="tog"><input type="checkbox" checked onchange="update()"><span class="tog-s"></span></label>
+    </div>
+    <div class="card-desc">側欄抽屜、全螢幕彈窗、Active Recall 測驗</div>
+  </div>
+
+  <div class="card" id="c4">
+    <div class="card-head">
+      <div class="card-left"><span class="num">4</span><span class="card-title">視覺設計與美學</span></div>
+      <label class="tog"><input type="checkbox" checked onchange="update()"><span class="tog-s"></span></label>
+    </div>
+    <div class="card-desc">選擇一種配色風格</div>
+    <div class="style-grid" id="sg"></div>
+  </div>
+
+  <div class="card" id="c5">
+    <div class="card-head">
+      <div class="card-left"><span class="num">5</span><span class="card-title">程式碼輸出</span></div>
+      <label class="tog"><input type="checkbox" checked onchange="update()"><span class="tog-s"></span></label>
+    </div>
+    <div class="card-desc">單一 HTML 檔案，內含所有 CSS 與 JS</div>
+  </div>
+
+  <div class="label">可選追加模組（插入第 4 點尾端）</div>
+  <div class="mod-grid" id="mg"></div>
+
+  <div class="prev-section">
+    <div class="prev-head">
+      <div style="display:flex;align-items:center">
+        <h2>📋 組裝結果</h2>
+        <span class="char-ct" id="cc"></span>
+      </div>
+      <button class="copy-btn" id="cb" onclick="copyIt()">📋 複製</button>
+    </div>
+    <pre class="prev-out" id="out"></pre>
+  </div>
+</div>
+
+<script>
+/* ── 資料定義 ── */
+
+// 固定段落內容（第 1, 2, 3, 5 段）
+const SEC = {
+  1: '**主線故事與脈絡 (Narrative Flow)**：\n   - 嚴禁以「問答對話錄」直接複製貼上。\n   - 將內容整理為邏輯嚴密、標題清晰的故事脈絡（分章節：問題定位、解決方案、核心觀點、實踐建議）。',
+  2: '**多維度互補媒體 (Complementary Media)**：\n   - 適合結構化對比的概念 → 自動生成動態美觀的 HTML/CSS 比較表格。\n   - 適合流程/架構的概念 → 自動繪製美觀的 SVG 流程圖或卡片圖表。',
+  3: '**情境式學習按鈕 (Contextual Knowledge Buttons)**：\n   - 在內文中讀者可能感到疑惑或需要深挖的名詞/概念旁，加入 `<button class="ctx-btn">` 學習按鈕。\n   - **側欄抽屜 (Side Drawer)**：適合邊看內文邊參照的小補充或專有名詞。\n   - **全螢幕彈窗 (Full Modal)**：適合需要深度專注的案例研究或「主動提取 (Active Recall) 自我測驗卡片」。',
+  5: '**程式碼輸出**：\n   - 請直接提供完整的 `<!DOCTYPE html>` 單一檔案，內含所有樣式與 JS 互動邏輯，無須引用外部庫（字體除外）。'
+};
+
+// 第 4 段：配色風格選項
+const STYLES = [
+  {
+    id: 'original', emoji: '🌑', name: '原始暗色', tag: '主檔預設',
+    colors: ['#1a1a2e','#4361ee','#7b2ff7','#f0c929'],
+    body: '**視覺設計與美學**：\n   - 採用極簡現代深色模式 (Dark Mode)，和諧配色 (藍/紫/黃亮點)。\n   - 使用 Google Fonts (Noto Sans TC + Inter)，現代化字體排版與適當留白。'
+  },
+  {
+    id: 'nature', emoji: '🌿', name: '自然清新', tag: '科普・生活・教養',
+    colors: ['#2D6A4F','#E9C46A','#E76F51'],
+    body: '**視覺設計與美學**：\n   - 採用柔和自然淺色模式，白色/米白底搭配深灰文字。\n   - 主色調：森林綠 (#2D6A4F) 搭配暖沙色 (#E9C46A)。\n   - 強調色：赤陶橘 (#E76F51) 用於重要標記。\n   - 圓角卡片設計，適當留白，營造舒適閱讀節奏。\n   - 使用 Google Fonts (Noto Sans TC + Inter)，現代化字體排版。'
+  },
+  {
+    id: 'academic', emoji: '📘', name: '學院專業', tag: '技術・投資・報告',
+    colors: ['#1B4965','#BEE9E8','#CAA53D'],
+    body: '**視覺設計與美學**：\n   - 採用專業明亮淺色模式，純白底搭配深藍灰文字 (#1a1a2e)。\n   - 主色調：學院藍 (#1B4965) 搭配淺灰藍 (#BEE9E8)。\n   - 強調色：知性金 (#CAA53D) 用於重要標記與高亮。\n   - 以清晰的分隔線與留白建立視覺層次，卡片使用微陰影。\n   - 使用 Google Fonts (Noto Sans TC + Inter)，現代化字體排版。'
+  },
+  {
+    id: 'warm', emoji: '🌸', name: '柔美暖調', tag: '心理・人際・故事',
+    colors: ['#E8A0BF','#B8B8FF','#FFBE98','#FFF8F0'],
+    body: '**視覺設計與美學**：\n   - 採用溫柔暖色淺色模式，奶油白底 (#FFF8F0) 搭配深棕文字 (#3D2C2E)。\n   - 主色調：玫瑰粉 (#E8A0BF) 搭配薰衣草紫 (#B8B8FF)。\n   - 強調色：蜜桃橙 (#FFBE98) 用於標記與互動元素。\n   - 整體風格柔和圓潤，大量使用圓角和柔光陰影。\n   - 使用 Google Fonts (Noto Sans TC + Inter)，現代化字體排版。'
+  },
+  {
+    id: 'tech', emoji: '🌊', name: '極簡科技', tag: 'UI/UX・架構・工程',
+    colors: ['#4F46E5','#F3F4F6','#10B981','#F59E0B'],
+    body: '**視覺設計與美學**：\n   - 採用極簡明亮模式，純白底搭配石墨黑文字 (#111827)。\n   - 主色調：電光靛藍 (#4F46E5) 搭配冰灰 (#F3F4F6)。\n   - 強調色：翠綠 (#10B981) 用於成功狀態，琥珀 (#F59E0B) 用於注意標記。\n   - 扁平化設計，極細邊框，精準的 8px 格線系統留白。\n   - 使用 Google Fonts (Noto Sans TC + Inter)，現代化字體排版。'
+  },
+  {
+    id: 'dark', emoji: '🔮', name: '精緻暗色', tag: '改良深色版',
+    colors: ['#0F172A','#6366F1','#22D3EE','#FBBF24'],
+    body: '**視覺設計與美學**：\n   - 採用精緻深色模式，深邃墨色底 (#0F172A) 搭配淺灰白文字 (#E2E8F0)。\n   - 主色調：星空靛藍 (#6366F1) 搭配極光青 (#22D3EE)。\n   - 強調色：琥珀金 (#FBBF24) 用於重要標記，柔紅 (#FB7185) 用於警告。\n   - Glassmorphism 風格卡片，微透明毛玻璃效果搭配柔光邊框。\n   - 使用 Google Fonts (Noto Sans TC + Inter)，現代化字體排版。'
+  }
+];
+
+// 追加模組
+const MODS = [
+  { id: 'ld', emoji: '☀️🌙', name: 'Light/Dark 切換',
+    body: '   - **必須內建 Light/Dark 雙主題切換功能**：\n     - 在頁面右上角固定一個美觀的主題切換按鈕（☀️/🌙 圖示）。\n     - 使用 CSS 自訂屬性 (CSS Variables) 定義所有顏色，切換時透過 JS 在 `<html>` 上切換 `data-theme="light"` / `data-theme="dark"` 屬性。\n     - 淺色模式為預設。深色模式配色：背景 #0F172A、卡片 #1E293B、文字 #E2E8F0、主色 #818CF8、強調 #34D399。\n     - 切換動畫需平滑過渡 (transition: 0.3s ease)。' },
+  { id: 'print', emoji: '🖨️', name: '列印友好',
+    body: '   - 加入 `@media print` 樣式：列印時自動切換為白底黑字，隱藏互動按鈕，展開所有摺疊區塊。' },
+  { id: 'toc', emoji: '📑', name: '目錄導航',
+    body: '   - 在頁面左側或頂部生成固定式目錄 (Table of Contents)，點擊可平滑捲動至對應章節，且捲動時自動高亮當前章節。' },
+  { id: 'prog', emoji: '📊', name: '閱讀進度條',
+    body: '   - 在頁面最頂部顯示一條隨捲動進度變化的水平進度條 (Reading Progress Bar)。' },
+  { id: 'search', emoji: '🔍', name: '搜尋高亮',
+    body: '   - 提供一個頁內搜尋框 (Ctrl+F 風格)，輸入關鍵字後即時高亮所有匹配文字。' },
+  { id: 'top', emoji: '⬆️', name: '回到頂部',
+    body: '   - 在頁面右下角放置「回到頂部」浮動按鈕，捲動超過一定距離後才顯示。' }
+];
+
+/* ── 狀態 ── */
+let selectedStyle = 'nature'; // 預設選「自然清新」（淺色）
+let enabledMods = new Set();
+
+/* ── 初始化 UI ── */
+function initStyles() {
+  const g = document.getElementById('sg');
+  STYLES.forEach(s => {
+    const el = document.createElement('div');
+    el.className = 'sty' + (s.id === selectedStyle ? ' on' : '');
+    el.dataset.id = s.id;
+    el.innerHTML =
+      '<div class="sty-emoji">' + s.emoji + '</div>' +
+      '<div class="sty-name">' + s.name + '</div>' +
+      '<div class="sty-tag">' + s.tag + '</div>' +
+      '<div class="dots">' + s.colors.map(c => '<span class="dot" style="background:' + c + '"></span>').join('') + '</div>';
+    el.onclick = () => { selectedStyle = s.id; refreshStyles(); update(); };
+    g.appendChild(el);
+  });
+}
+
+function refreshStyles() {
+  document.querySelectorAll('.sty').forEach(el => {
+    el.classList.toggle('on', el.dataset.id === selectedStyle);
+  });
+}
+
+function initMods() {
+  const g = document.getElementById('mg');
+  MODS.forEach(m => {
+    const el = document.createElement('label');
+    el.className = 'mod';
+    el.dataset.id = m.id;
+    el.innerHTML =
+      '<input type="checkbox" onchange="toggleMod(\'' + m.id + '\', this.checked)">' +
+      '<span class="mod-name">' + m.emoji + ' ' + m.name + '</span>';
+    g.appendChild(el);
+  });
+}
+
+function toggleMod(id, on) {
+  if (on) enabledMods.add(id); else enabledMods.delete(id);
+  document.querySelectorAll('.mod').forEach(el => {
+    el.classList.toggle('on', enabledMods.has(el.dataset.id));
+  });
+  update();
+}
+
+/* ── 組裝 Prompt ── */
+function build() {
+  // 讀取各段落的開關狀態
+  const on = {};
+  for (let i = 1; i <= 5; i++) {
+    on[i] = document.querySelector('#c' + i + ' input[type=checkbox]').checked;
+  }
+
+  let lines = [];
+  lines.push('你現在扮演一位「資深出版總編輯與頂級 UI/UX 資訊設計師」。');
+  lines.push('請將我們剛才所有的對話討論內容進行重新梳理與出版級編排，並直接輸出為單一可執行的 HTML 檔案（包含 CSS 與 JS）。');
+  lines.push('');
+  lines.push('### 核心編排與呈現原則：');
+
+  let num = 1;
+  for (let i = 1; i <= 5; i++) {
+    if (!on[i]) continue;
+
+    lines.push('');
+
+    if (i === 4) {
+      // 第 4 段使用選中的配色風格
+      const style = STYLES.find(s => s.id === selectedStyle);
+      lines.push(num + '. ' + style.body);
+      // 追加已啟用的模組
+      MODS.forEach(m => {
+        if (enabledMods.has(m.id)) lines.push(m.body);
+      });
+    } else {
+      lines.push(num + '. ' + SEC[i]);
+    }
+    num++;
+  }
+
+  return lines.join('\n');
+}
+
+function update() {
+  // 更新卡片視覺狀態
+  for (let i = 1; i <= 5; i++) {
+    const card = document.getElementById('c' + i);
+    const checked = card.querySelector('input[type=checkbox]').checked;
+    card.classList.toggle('off', !checked);
+  }
+  // 組裝並顯示
+  const text = build();
+  document.getElementById('out').textContent = text;
+  document.getElementById('cc').textContent = text.length + ' 字';
+}
+
+/* ── 複製 ── */
+async function copyIt() {
+  const text = build();
+  try {
+    await navigator.clipboard.writeText(text);
+  } catch {
+    // clipboard API 失敗時的備援方案
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.cssText = 'position:fixed;left:-9999px';
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+  }
+  const btn = document.getElementById('cb');
+  btn.classList.add('ok');
+  btn.innerHTML = '✅ 已複製！';
+  setTimeout(() => { btn.classList.remove('ok'); btn.innerHTML = '📋 複製'; }, 1800);
+}
+
+/* ── 說明 Modal ── */
+function openHelp() { document.getElementById('helpModal').classList.add('show'); }
+function closeHelp() { document.getElementById('helpModal').classList.remove('show'); }
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeHelp(); });
+
+/* ── 啟動 ── */
+initStyles();
+initMods();
+update();
+</script>
+</body>
+</html>
