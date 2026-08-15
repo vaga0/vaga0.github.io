@@ -1,1202 +1,1453 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>現金流 ETF 雙引擎投資策略 ─ 打造月月穩定被動收入</title>
-<meta name="description" content="一張 A4 雙面彩色 DM，濃縮高股息 ETF 月月配組合、雙引擎資產架構、養股套利 SOP 與類現金管理，協助投資人系統化打造穩定被動現金流。">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;600;700;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
-/* =============================================
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>現金流 ETF 雙引擎投資策略 ─ 打造月月穩定被動收入</title>
+  <meta name="description" content="一張 A4 雙面彩色 DM，濃縮高股息 ETF 月月配組合、雙引擎資產架構、養股套利 SOP 與類現金管理，協助投資人系統化打造穩定被動現金流。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;600;700;900&family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <style>
+    /* =============================================
    DESIGN TOKENS
    ============================================= */
-:root {
-  /* --- 淺色商務 + 金融雜誌風色盤 --- */
-  --bg-page:        #ffffff;
-  --bg-section:     #f6f8fc;
-  --bg-card:        #ffffff;
-  --bg-accent:      #eef3fb;
-  --bg-hero:        linear-gradient(135deg, #0b1d3a 0%, #163a6b 50%, #1d4f8e 100%);
-  --bg-hero-accent: linear-gradient(135deg, #c9993a 0%, #e8c56a 100%);
+    :root {
+      /* --- 淺色商務 + 金融雜誌風色盤 --- */
+      --bg-page: #ffffff;
+      --bg-section: #f6f8fc;
+      --bg-card: #ffffff;
+      --bg-accent: #eef3fb;
+      --bg-hero: linear-gradient(135deg, #0b1d3a 0%, #163a6b 50%, #1d4f8e 100%);
+      --bg-hero-accent: linear-gradient(135deg, #c9993a 0%, #e8c56a 100%);
 
-  --text-dark:      #1a1a2e;
-  --text-body:      #374151;
-  --text-muted:     #6b7280;
-  --text-light:     #9ca3af;
-  --text-on-dark:   #ffffff;
-  --text-on-hero:   #f0e6d2;
+      --text-dark: #1a1a2e;
+      --text-body: #374151;
+      --text-muted: #6b7280;
+      --text-light: #9ca3af;
+      --text-on-dark: #ffffff;
+      --text-on-hero: #f0e6d2;
 
-  --blue-primary:   #1d4f8e;
-  --blue-mid:       #3b7dd8;
-  --blue-light:     #60a5fa;
-  --blue-pale:      #dbeafe;
+      --blue-primary: #1d4f8e;
+      --blue-mid: #3b7dd8;
+      --blue-light: #60a5fa;
+      --blue-pale: #dbeafe;
 
-  --gold-primary:   #b8860b;
-  --gold-mid:       #d4a429;
-  --gold-light:     #f5deb3;
-  --gold-pale:      #fdf8ed;
+      --gold-primary: #b8860b;
+      --gold-mid: #d4a429;
+      --gold-light: #f5deb3;
+      --gold-pale: #fdf8ed;
 
-  --green-primary:  #0d7a4f;
-  --green-mid:      #22c55e;
-  --green-pale:     #dcfce7;
+      --green-primary: #0d7a4f;
+      --green-mid: #22c55e;
+      --green-pale: #dcfce7;
 
-  --purple-primary: #6d28d9;
-  --purple-mid:     #8b5cf6;
-  --purple-pale:    #ede9fe;
+      --purple-primary: #6d28d9;
+      --purple-mid: #8b5cf6;
+      --purple-pale: #ede9fe;
 
-  --red-primary:    #dc2626;
-  --red-pale:       #fee2e2;
+      --red-primary: #dc2626;
+      --red-pale: #fee2e2;
 
-  --amber-primary:  #d97706;
-  --amber-pale:     #fef3c7;
+      --amber-primary: #d97706;
+      --amber-pale: #fef3c7;
 
-  --border-color:   #e5e7eb;
-  --border-accent:  #cbd5e1;
+      --border-color: #e5e7eb;
+      --border-accent: #cbd5e1;
 
-  --radius-sm:  6px;
-  --radius-md:  10px;
-  --radius-lg:  16px;
-  --radius-xl:  20px;
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 16px;
+      --radius-xl: 20px;
 
-  --shadow-card: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
-  --shadow-elevated: 0 4px 14px rgba(0,0,0,0.08);
-}
+      --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+      --shadow-elevated: 0 4px 14px rgba(0, 0, 0, 0.08);
+    }
 
-/* =============================================
+    /* =============================================
    RESET & BASE
    ============================================= */
-*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-html { font-size: 16px; }
+    html {
+      font-size: 16px;
+    }
 
-body {
-  font-family: 'Noto Sans TC', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  background: #f1f5f9;
-  color: var(--text-body);
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
-}
+    body {
+      font-family: 'Noto Sans TC', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #f1f5f9;
+      color: var(--text-body);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
 
-/* =============================================
+    /* =============================================
    DM PAGE LAYOUT — A4 DOUBLE-SIDED
    ============================================= */
-.dm-page {
-  width: 210mm;
-  min-height: 297mm;
-  margin: 20px auto;
-  background: var(--bg-page);
-  box-shadow: 0 0 30px rgba(0,0,0,0.12);
-  overflow: hidden;
-  position: relative;
-}
+    .dm-page {
+      width: 210mm;
+      min-height: 297mm;
+      margin: 20px auto;
+      background: var(--bg-page);
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.12);
+      overflow: hidden;
+      position: relative;
+    }
 
-.page-inner {
-  padding: 7mm 10mm;
-  min-height: 297mm;
-  display: flex;
-  flex-direction: column;
-}
+    .page-inner {
+      padding: 7mm 10mm;
+      min-height: 297mm;
+      display: flex;
+      flex-direction: column;
+    }
 
-/* =============================================
+    /* =============================================
    FRONT PAGE — HERO & CORE INFO
    ============================================= */
-.hero-banner {
-  background: var(--bg-hero);
-  border-radius: var(--radius-lg);
-  padding: 16px 22px 14px;
-  color: var(--text-on-dark);
-  position: relative;
-  overflow: hidden;
-  margin-bottom: 7px;
-  flex-shrink: 0;
-}
-
-.hero-banner::before {
-  content: '';
-  position: absolute;
-  top: -40%; right: -10%;
-  width: 300px; height: 300px;
-  background: radial-gradient(circle, rgba(200,160,60,0.12) 0%, transparent 70%);
-  pointer-events: none;
-}
-
-.hero-banner::after {
-  content: '';
-  position: absolute;
-  bottom: -30%; left: -5%;
-  width: 250px; height: 250px;
-  background: radial-gradient(circle, rgba(59,125,216,0.1) 0%, transparent 70%);
-  pointer-events: none;
-}
-
-.hero-top-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 8px;
-}
-
-.hero-badge {
-  background: var(--bg-hero-accent);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  font-size: 0.7rem;
-  font-weight: 800;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-}
-
-.hero-date {
-  font-size: 0.65rem;
-  color: rgba(255,255,255,0.5);
-  letter-spacing: 0.5px;
-}
-
-.hero-title {
-  font-size: 1.5rem;
-  font-weight: 900;
-  line-height: 1.2;
-  margin-bottom: 4px;
-  letter-spacing: -0.5px;
-}
-
-.hero-title .gold {
-  background: var(--bg-hero-accent);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.hero-subtitle {
-  font-size: 0.72rem;
-  color: rgba(255,255,255,0.7);
-  line-height: 1.5;
-  max-width: 90%;
-}
-
-/* --- KPI 數字條 --- */
-.kpi-strip {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 5px;
-  margin-bottom: 7px;
-  flex-shrink: 0;
-}
-
-.kpi-card {
-  background: var(--bg-section);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
-  padding: 7px 10px;
-  text-align: center;
-}
-
-.kpi-label {
-  font-size: 0.6rem;
-  color: var(--text-muted);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-bottom: 2px;
-}
-
-.kpi-value {
-  font-size: 1.05rem;
-  font-weight: 800;
-  color: var(--blue-primary);
-  line-height: 1.2;
-}
-
-.kpi-value.gold { color: var(--gold-primary); }
-.kpi-value.green { color: var(--green-primary); }
-
-.kpi-note {
-  font-size: 0.55rem;
-  color: var(--text-light);
-  margin-top: 1px;
-}
-
-/* --- 內容區 Section --- */
-.section-label {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 0.62rem;
-  font-weight: 800;
-  color: var(--blue-primary);
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  margin-bottom: 4px;
-}
-
-.section-label .num {
-  background: var(--blue-primary);
-  color: #fff;
-  width: 18px; height: 18px;
-  border-radius: 50%;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.6rem;
-  font-weight: 800;
-}
-
-.section-title {
-  font-size: 1.05rem;
-  font-weight: 800;
-  color: var(--text-dark);
-  margin-bottom: 8px;
-  line-height: 1.3;
-}
-
-/* --- 月曆圖 --- */
-.calendar-grid {
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  gap: 4px;
-  margin-bottom: 8px;
-}
-
-.cal-cell {
-  border-radius: var(--radius-sm);
-  padding: 4px 2px;
-  text-align: center;
-  border: 1px solid;
-}
-
-.cal-cell .month { font-size: 0.6rem; font-weight: 700; }
-.cal-cell .etf { font-size: 0.5rem; margin-top: 1px; }
-
-.cal-0056 { background: var(--blue-pale); border-color: #93c5fd; }
-.cal-0056 .month { color: var(--blue-primary); }
-.cal-0056 .etf { color: var(--blue-mid); }
-
-.cal-00878 { background: var(--green-pale); border-color: #86efac; }
-.cal-00878 .month { color: var(--green-primary); }
-.cal-00878 .etf { color: var(--green-mid); }
-
-.cal-00713 { background: var(--purple-pale); border-color: #c4b5fd; }
-.cal-00713 .month { color: var(--purple-primary); }
-.cal-00713 .etf { color: var(--purple-mid); }
-
-/* --- 圖例 --- */
-.legend-row {
-  display: flex;
-  gap: 12px;
-  margin-bottom: 5px;
-  flex-wrap: wrap;
-}
-
-.legend-item {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 0.62rem;
-  color: var(--text-muted);
-}
-
-.legend-dot {
-  width: 8px; height: 8px;
-  border-radius: 2px;
-  display: inline-block;
-}
-
-.legend-dot.blue { background: var(--blue-mid); }
-.legend-dot.green { background: var(--green-mid); }
-.legend-dot.purple { background: var(--purple-mid); }
-
-/* --- ETF 比較表 --- */
-.etf-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.68rem;
-  margin-bottom: 8px;
-}
-
-.etf-table th {
-  background: var(--blue-primary);
-  color: #fff;
-  padding: 6px 8px;
-  font-weight: 700;
-  text-align: left;
-  font-size: 0.62rem;
-  letter-spacing: 0.3px;
-}
-
-.etf-table th:first-child { border-radius: var(--radius-sm) 0 0 0; }
-.etf-table th:last-child { border-radius: 0 var(--radius-sm) 0 0; }
-
-.etf-table td {
-  padding: 5px 8px;
-  border-bottom: 1px solid var(--border-color);
-  color: var(--text-body);
-  vertical-align: middle;
-}
-
-.etf-table tbody tr:last-child td { border-bottom: none; }
-.etf-table tbody tr:hover { background: var(--bg-section); }
-
-.etf-code {
-  font-weight: 800;
-  font-size: 0.72rem;
-}
-
-.etf-code.blue { color: var(--blue-primary); }
-.etf-code.green { color: var(--green-primary); }
-.etf-code.purple { color: var(--purple-primary); }
-
-.yield-tag {
-  display: inline-block;
-  background: var(--green-pale);
-  color: var(--green-primary);
-  padding: 1px 6px;
-  border-radius: 10px;
-  font-weight: 700;
-  font-size: 0.62rem;
-}
-
-/* --- 重點提示框 --- */
-.tip-box {
-  border-radius: var(--radius-md);
-  padding: 6px 10px;
-  margin-bottom: 6px;
-  font-size: 0.65rem;
-  line-height: 1.55;
-  display: flex;
-  align-items: flex-start;
-  gap: 6px;
-}
-
-.tip-box .icon {
-  font-size: 0.9rem;
-  flex-shrink: 0;
-  margin-top: 1px;
-}
-
-.tip-blue { background: var(--blue-pale); border-left: 3px solid var(--blue-mid); }
-.tip-gold { background: var(--gold-pale); border-left: 3px solid var(--gold-primary); }
-.tip-green { background: var(--green-pale); border-left: 3px solid var(--green-primary); }
-.tip-red { background: var(--red-pale); border-left: 3px solid var(--red-primary); color: var(--red-primary); }
-
-.tip-box strong { color: var(--text-dark); }
-
-/* --- 雙引擎圖解 --- */
-.dual-engine-box {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 6px;
-  margin-bottom: 6px;
-}
-
-.engine-card {
-  border-radius: var(--radius-md);
-  padding: 8px 10px;
-  position: relative;
-}
-
-.engine-card.defense {
-  background: linear-gradient(135deg, #eef6ff 0%, #dbeafe 100%);
-  border: 1.5px solid #93c5fd;
-}
-
-.engine-card.attack {
-  background: linear-gradient(135deg, #fff7ed 0%, #fef3c7 100%);
-  border: 1.5px solid #fcd34d;
-}
-
-.engine-tag {
-  font-size: 0.55rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 3px;
-}
-
-.engine-tag.blue { color: var(--blue-primary); }
-.engine-tag.gold { color: var(--gold-primary); }
-
-.engine-title {
-  font-size: 0.9rem;
-  font-weight: 800;
-  margin-bottom: 4px;
-  color: var(--text-dark);
-}
-
-.engine-detail {
-  font-size: 0.6rem;
-  color: var(--text-muted);
-  line-height: 1.5;
-}
-
-.engine-flow {
-  margin-top: 6px;
-  font-size: 0.6rem;
-  font-weight: 700;
-  padding: 4px 8px;
-  border-radius: var(--radius-sm);
-}
-
-.engine-flow.green { background: rgba(34,197,94,0.12); color: var(--green-primary); }
-.engine-flow.gold { background: rgba(217,119,6,0.12); color: var(--amber-primary); }
-
-/* --- 步驟流程 --- */
-.steps-row {
-  display: flex;
-  gap: 5px;
-  margin-bottom: 6px;
-}
-
-.step-item {
-  flex: 1;
-  background: var(--bg-section);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
-  padding: 6px 8px;
-  position: relative;
-}
-
-.step-num {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 18px; height: 18px;
-  border-radius: 50%;
-  background: var(--blue-primary);
-  color: #fff;
-  font-size: 0.55rem;
-  font-weight: 800;
-  margin-bottom: 3px;
-}
-
-.step-title {
-  font-size: 0.65rem;
-  font-weight: 700;
-  color: var(--text-dark);
-  margin-bottom: 1px;
-}
-
-.step-desc {
-  font-size: 0.55rem;
-  color: var(--text-muted);
-  line-height: 1.4;
-}
-
-/* --- 戰術標的表格 --- */
-.tactic-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.64rem;
-  margin-bottom: 8px;
-}
-
-.tactic-table th {
-  background: var(--gold-primary);
-  color: #fff;
-  padding: 5px 7px;
-  font-weight: 700;
-  text-align: left;
-  font-size: 0.58rem;
-}
-
-.tactic-table th:first-child { border-radius: var(--radius-sm) 0 0 0; }
-.tactic-table th:last-child { border-radius: 0 var(--radius-sm) 0 0; }
-
-.tactic-table td {
-  padding: 5px 7px;
-  border-bottom: 1px solid var(--border-color);
-  color: var(--text-body);
-}
-
-.tactic-table tbody tr:last-child td { border-bottom: none; }
-
-/* --- SOP 決策卡片 --- */
-.sop-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 5px;
-  margin-bottom: 6px;
-}
-
-.sop-card {
-  border-radius: var(--radius-md);
-  padding: 7px 9px;
-  border: 1.5px solid;
-}
-
-.sop-card.a { background: var(--green-pale); border-color: #86efac; }
-.sop-card.b { background: var(--amber-pale); border-color: #fcd34d; }
-
-.sop-tag {
-  font-size: 0.55rem;
-  font-weight: 800;
-  letter-spacing: 0.5px;
-  margin-bottom: 3px;
-}
-
-.sop-tag.green { color: var(--green-primary); }
-.sop-tag.amber { color: var(--amber-primary); }
-
-.sop-title {
-  font-size: 0.68rem;
-  font-weight: 800;
-  color: var(--text-dark);
-  margin-bottom: 2px;
-}
-
-.sop-desc {
-  font-size: 0.58rem;
-  color: var(--text-body);
-  line-height: 1.5;
-}
-
-/* --- 類現金工具比較 --- */
-.cash-compare {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.62rem;
-  margin-bottom: 8px;
-}
-
-.cash-compare th {
-  background: var(--bg-section);
-  color: var(--text-dark);
-  padding: 5px 7px;
-  font-weight: 700;
-  border-bottom: 2px solid var(--blue-primary);
-  text-align: left;
-  font-size: 0.58rem;
-}
-
-.cash-compare td {
-  padding: 4px 7px;
-  border-bottom: 1px solid var(--border-color);
-}
-
-.cash-compare .crown { color: var(--gold-primary); font-weight: 800; }
-
-/* --- Checklist --- */
-.checklist {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2px 10px;
-  margin-bottom: 5px;
-}
-
-.check-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 4px;
-  font-size: 0.57rem;
-  color: var(--text-body);
-  line-height: 1.4;
-  padding: 2px 0;
-}
-
-.check-item::before {
-  content: '☐';
-  color: var(--blue-mid);
-  font-size: 0.72rem;
-  flex-shrink: 0;
-  margin-top: -1px;
-}
-
-/* --- 頁尾 --- */
-.page-footer {
-  margin-top: auto;
-  padding-top: 4px;
-  border-top: 1px solid var(--border-color);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 0.48rem;
-  color: var(--text-light);
-  flex-shrink: 0;
-}
-
-.page-footer .disclaimer {
-  max-width: 80%;
-  line-height: 1.4;
-}
-
-.page-footer .page-num {
-  font-weight: 800;
-  color: var(--blue-primary);
-  font-size: 0.7rem;
-}
-
-/* --- 情境應對小表格 --- */
-.scenario-mini {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.62rem;
-  margin-bottom: 8px;
-}
-
-.scenario-mini th {
-  background: var(--blue-primary);
-  color: #fff;
-  padding: 4px 7px;
-  font-weight: 700;
-  text-align: left;
-  font-size: 0.58rem;
-}
-
-.scenario-mini th:first-child { border-radius: var(--radius-sm) 0 0 0; }
-.scenario-mini th:last-child { border-radius: 0 var(--radius-sm) 0 0; }
-
-.scenario-mini td {
-  padding: 4px 7px;
-  border-bottom: 1px solid var(--border-color);
-}
-
-.badge-sm {
-  display: inline-block;
-  padding: 1px 6px;
-  border-radius: 8px;
-  font-size: 0.55rem;
-  font-weight: 700;
-}
-
-.badge-sm.green { background: var(--green-pale); color: var(--green-primary); }
-.badge-sm.amber { background: var(--amber-pale); color: var(--amber-primary); }
-.badge-sm.red { background: var(--red-pale); color: var(--red-primary); }
-.badge-sm.purple { background: var(--purple-pale); color: var(--purple-primary); }
-
-/* --- 名詞解釋 mini --- */
-.glossary-row {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 4px;
-  margin-bottom: 4px;
-}
-
-.glossary-chip {
-  background: var(--bg-section);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-sm);
-  padding: 3px 6px;
-}
-
-.glossary-chip .term {
-  font-size: 0.6rem;
-  font-weight: 700;
-  color: var(--blue-primary);
-  margin-bottom: 1px;
-}
-
-.glossary-chip .def {
-  font-size: 0.52rem;
-  color: var(--text-muted);
-  line-height: 1.4;
-}
-
-/* --- 分隔線 --- */
-.divider {
-  height: 1px;
-  background: var(--border-color);
-  margin: 8px 0;
-}
-
-/* --- 分隔水平線帶文字 --- */
-.divider-text {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin: 6px 0;
-  font-size: 0.55rem;
-  color: var(--text-light);
-  font-weight: 600;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-}
-
-.divider-text::before,
-.divider-text::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: var(--border-color);
-}
-
-/* --- 通用小字 --- */
-.text-xs { font-size: 0.6rem; }
-.text-xxs { font-size: 0.52rem; }
-.fw-800 { font-weight: 800; }
-.color-blue { color: var(--blue-primary); }
-.color-gold { color: var(--gold-primary); }
-.color-green { color: var(--green-primary); }
-.mb-4 { margin-bottom: 4px; }
-.mb-6 { margin-bottom: 6px; }
-
-/* =============================================
+    .hero-banner {
+      background: var(--bg-hero);
+      border-radius: var(--radius-lg);
+      padding: 16px 22px 14px;
+      color: var(--text-on-dark);
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 7px;
+      flex-shrink: 0;
+    }
+
+    .hero-banner::before {
+      content: '';
+      position: absolute;
+      top: -40%;
+      right: -10%;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(200, 160, 60, 0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-banner::after {
+      content: '';
+      position: absolute;
+      bottom: -30%;
+      left: -5%;
+      width: 250px;
+      height: 250px;
+      background: radial-gradient(circle, rgba(59, 125, 216, 0.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .hero-badge {
+      color: #e8c56a;
+      font-size: 0.7rem;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      display: inline-block;
+    }
+
+    .hero-date {
+      font-size: 0.65rem;
+      color: rgba(255, 255, 255, 0.5);
+      letter-spacing: 0.5px;
+    }
+
+    .hero-title {
+      font-size: 1.5rem;
+      font-weight: 900;
+      line-height: 1.25;
+      margin-bottom: 4px;
+      letter-spacing: -0.5px;
+    }
+
+    .hero-title .gold {
+      color: #e8c56a;
+      display: inline-block;
+    }
+
+    .hero-subtitle {
+      font-size: 0.72rem;
+      color: rgba(255, 255, 255, 0.7);
+      line-height: 1.5;
+      max-width: 90%;
+    }
+
+    /* --- KPI 數字條 --- */
+    .kpi-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 5px;
+      margin-bottom: 7px;
+      flex-shrink: 0;
+    }
+
+    .kpi-card {
+      background: var(--bg-section);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 7px 10px;
+      text-align: center;
+    }
+
+    .kpi-label {
+      font-size: 0.6rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 2px;
+    }
+
+    .kpi-value {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--blue-primary);
+      line-height: 1.2;
+    }
+
+    .kpi-value.gold {
+      color: var(--gold-primary);
+    }
+
+    .kpi-value.green {
+      color: var(--green-primary);
+    }
+
+    .kpi-note {
+      font-size: 0.55rem;
+      color: var(--text-light);
+      margin-top: 1px;
+    }
+
+    /* --- 內容區 Section --- */
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.62rem;
+      font-weight: 800;
+      color: var(--blue-primary);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 4px;
+    }
+
+    .section-label .num {
+      background: var(--blue-primary);
+      color: #fff;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.6rem;
+      font-weight: 800;
+    }
+
+    .section-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--text-dark);
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+
+    /* --- 月曆圖 --- */
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 4px;
+      margin-bottom: 8px;
+    }
+
+    .cal-cell {
+      border-radius: var(--radius-sm);
+      padding: 4px 2px;
+      text-align: center;
+      border: 1px solid;
+    }
+
+    .cal-cell .month {
+      font-size: 0.6rem;
+      font-weight: 700;
+    }
+
+    .cal-cell .etf {
+      font-size: 0.5rem;
+      margin-top: 1px;
+    }
+
+    .cal-0056 {
+      background: var(--blue-pale);
+      border-color: #93c5fd;
+    }
+
+    .cal-0056 .month {
+      color: var(--blue-primary);
+    }
+
+    .cal-0056 .etf {
+      color: var(--blue-mid);
+    }
+
+    .cal-00878 {
+      background: var(--green-pale);
+      border-color: #86efac;
+    }
+
+    .cal-00878 .month {
+      color: var(--green-primary);
+    }
+
+    .cal-00878 .etf {
+      color: var(--green-mid);
+    }
+
+    .cal-00713 {
+      background: var(--purple-pale);
+      border-color: #c4b5fd;
+    }
+
+    .cal-00713 .month {
+      color: var(--purple-primary);
+    }
+
+    .cal-00713 .etf {
+      color: var(--purple-mid);
+    }
+
+    /* --- 圖例 --- */
+    .legend-row {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 5px;
+      flex-wrap: wrap;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.62rem;
+      color: var(--text-muted);
+    }
+
+    .legend-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 2px;
+      display: inline-block;
+    }
+
+    .legend-dot.blue {
+      background: var(--blue-mid);
+    }
+
+    .legend-dot.green {
+      background: var(--green-mid);
+    }
+
+    .legend-dot.purple {
+      background: var(--purple-mid);
+    }
+
+    /* --- ETF 比較表 --- */
+    .etf-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.68rem;
+      margin-bottom: 8px;
+    }
+
+    .etf-table th {
+      background: var(--blue-primary);
+      color: #fff;
+      padding: 6px 8px;
+      font-weight: 700;
+      text-align: left;
+      font-size: 0.62rem;
+      letter-spacing: 0.3px;
+    }
+
+    .etf-table th:first-child {
+      border-radius: var(--radius-sm) 0 0 0;
+    }
+
+    .etf-table th:last-child {
+      border-radius: 0 var(--radius-sm) 0 0;
+    }
+
+    .etf-table td {
+      padding: 5px 8px;
+      border-bottom: 1px solid var(--border-color);
+      color: var(--text-body);
+      vertical-align: middle;
+    }
+
+    .etf-table tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    .etf-table tbody tr:hover {
+      background: var(--bg-section);
+    }
+
+    .etf-code {
+      font-weight: 800;
+      font-size: 0.72rem;
+    }
+
+    .etf-code.blue {
+      color: var(--blue-primary);
+    }
+
+    .etf-code.green {
+      color: var(--green-primary);
+    }
+
+    .etf-code.purple {
+      color: var(--purple-primary);
+    }
+
+    .yield-tag {
+      display: inline-block;
+      background: var(--green-pale);
+      color: var(--green-primary);
+      padding: 1px 6px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.62rem;
+    }
+
+    /* --- 重點提示框 --- */
+    .tip-box {
+      border-radius: var(--radius-md);
+      padding: 6px 10px;
+      margin-bottom: 6px;
+      font-size: 0.65rem;
+      line-height: 1.55;
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+    }
+
+    .tip-box .icon {
+      font-size: 0.9rem;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .tip-blue {
+      background: var(--blue-pale);
+      border-left: 3px solid var(--blue-mid);
+    }
+
+    .tip-gold {
+      background: var(--gold-pale);
+      border-left: 3px solid var(--gold-primary);
+    }
+
+    .tip-green {
+      background: var(--green-pale);
+      border-left: 3px solid var(--green-primary);
+    }
+
+    .tip-red {
+      background: var(--red-pale);
+      border-left: 3px solid var(--red-primary);
+      color: var(--red-primary);
+    }
+
+    .tip-box strong {
+      color: var(--text-dark);
+    }
+
+    /* --- 雙引擎圖解 --- */
+    .dual-engine-box {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      margin-bottom: 6px;
+    }
+
+    .engine-card {
+      border-radius: var(--radius-md);
+      padding: 8px 10px;
+      position: relative;
+    }
+
+    .engine-card.defense {
+      background: linear-gradient(135deg, #eef6ff 0%, #dbeafe 100%);
+      border: 1.5px solid #93c5fd;
+    }
+
+    .engine-card.attack {
+      background: linear-gradient(135deg, #fff7ed 0%, #fef3c7 100%);
+      border: 1.5px solid #fcd34d;
+    }
+
+    .engine-tag {
+      font-size: 0.55rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 3px;
+    }
+
+    .engine-tag.blue {
+      color: var(--blue-primary);
+    }
+
+    .engine-tag.gold {
+      color: var(--gold-primary);
+    }
+
+    .engine-title {
+      font-size: 0.9rem;
+      font-weight: 800;
+      margin-bottom: 4px;
+      color: var(--text-dark);
+    }
+
+    .engine-detail {
+      font-size: 0.6rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .engine-flow {
+      margin-top: 6px;
+      font-size: 0.6rem;
+      font-weight: 700;
+      padding: 4px 8px;
+      border-radius: var(--radius-sm);
+    }
+
+    .engine-flow.green {
+      background: rgba(34, 197, 94, 0.12);
+      color: var(--green-primary);
+    }
+
+    .engine-flow.gold {
+      background: rgba(217, 119, 6, 0.12);
+      color: var(--amber-primary);
+    }
+
+    /* --- 步驟流程 --- */
+    .steps-row {
+      display: flex;
+      gap: 5px;
+      margin-bottom: 6px;
+    }
+
+    .step-item {
+      flex: 1;
+      background: var(--bg-section);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 6px 8px;
+      position: relative;
+    }
+
+    .step-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--blue-primary);
+      color: #fff;
+      font-size: 0.55rem;
+      font-weight: 800;
+      margin-bottom: 3px;
+    }
+
+    .step-title {
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 1px;
+    }
+
+    .step-desc {
+      font-size: 0.55rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* --- 戰術標的表格 --- */
+    .tactic-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.64rem;
+      margin-bottom: 8px;
+    }
+
+    .tactic-table th {
+      background: var(--gold-primary);
+      color: #fff;
+      padding: 5px 7px;
+      font-weight: 700;
+      text-align: left;
+      font-size: 0.58rem;
+    }
+
+    .tactic-table th:first-child {
+      border-radius: var(--radius-sm) 0 0 0;
+    }
+
+    .tactic-table th:last-child {
+      border-radius: 0 var(--radius-sm) 0 0;
+    }
+
+    .tactic-table td {
+      padding: 5px 7px;
+      border-bottom: 1px solid var(--border-color);
+      color: var(--text-body);
+    }
+
+    .tactic-table tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    /* --- SOP 決策卡片 --- */
+    .sop-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5px;
+      margin-bottom: 6px;
+    }
+
+    .sop-card {
+      border-radius: var(--radius-md);
+      padding: 7px 9px;
+      border: 1.5px solid;
+    }
+
+    .sop-card.a {
+      background: var(--green-pale);
+      border-color: #86efac;
+    }
+
+    .sop-card.b {
+      background: var(--amber-pale);
+      border-color: #fcd34d;
+    }
+
+    .sop-tag {
+      font-size: 0.55rem;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      margin-bottom: 3px;
+    }
+
+    .sop-tag.green {
+      color: var(--green-primary);
+    }
+
+    .sop-tag.amber {
+      color: var(--amber-primary);
+    }
+
+    .sop-title {
+      font-size: 0.68rem;
+      font-weight: 800;
+      color: var(--text-dark);
+      margin-bottom: 2px;
+    }
+
+    .sop-desc {
+      font-size: 0.58rem;
+      color: var(--text-body);
+      line-height: 1.5;
+    }
+
+    /* --- 類現金工具比較 --- */
+    .cash-compare {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.62rem;
+      margin-bottom: 8px;
+    }
+
+    .cash-compare th {
+      background: var(--bg-section);
+      color: var(--text-dark);
+      padding: 5px 7px;
+      font-weight: 700;
+      border-bottom: 2px solid var(--blue-primary);
+      text-align: left;
+      font-size: 0.58rem;
+    }
+
+    .cash-compare td {
+      padding: 4px 7px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .cash-compare .crown {
+      color: var(--gold-primary);
+      font-weight: 800;
+    }
+
+    /* --- Checklist --- */
+    .checklist {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px 10px;
+      margin-bottom: 5px;
+    }
+
+    .check-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 4px;
+      font-size: 0.57rem;
+      color: var(--text-body);
+      line-height: 1.4;
+      padding: 2px 0;
+    }
+
+    .check-item::before {
+      content: '☐';
+      color: var(--blue-mid);
+      font-size: 0.72rem;
+      flex-shrink: 0;
+      margin-top: -1px;
+    }
+
+    /* --- 頁尾 --- */
+    .page-footer {
+      margin-top: auto;
+      padding-top: 4px;
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.48rem;
+      color: var(--text-light);
+      flex-shrink: 0;
+    }
+
+    .page-footer .disclaimer {
+      max-width: 80%;
+      line-height: 1.4;
+    }
+
+    .page-footer .page-num {
+      font-weight: 800;
+      color: var(--blue-primary);
+      font-size: 0.7rem;
+    }
+
+    /* --- 情境應對小表格 --- */
+    .scenario-mini {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.62rem;
+      margin-bottom: 8px;
+    }
+
+    .scenario-mini th {
+      background: var(--blue-primary);
+      color: #fff;
+      padding: 4px 7px;
+      font-weight: 700;
+      text-align: left;
+      font-size: 0.58rem;
+    }
+
+    .scenario-mini th:first-child {
+      border-radius: var(--radius-sm) 0 0 0;
+    }
+
+    .scenario-mini th:last-child {
+      border-radius: 0 var(--radius-sm) 0 0;
+    }
+
+    .scenario-mini td {
+      padding: 4px 7px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .badge-sm {
+      display: inline-block;
+      padding: 1px 6px;
+      border-radius: 8px;
+      font-size: 0.55rem;
+      font-weight: 700;
+    }
+
+    .badge-sm.green {
+      background: var(--green-pale);
+      color: var(--green-primary);
+    }
+
+    .badge-sm.amber {
+      background: var(--amber-pale);
+      color: var(--amber-primary);
+    }
+
+    .badge-sm.red {
+      background: var(--red-pale);
+      color: var(--red-primary);
+    }
+
+    .badge-sm.purple {
+      background: var(--purple-pale);
+      color: var(--purple-primary);
+    }
+
+    /* --- 名詞解釋 mini --- */
+    .glossary-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 4px;
+      margin-bottom: 4px;
+    }
+
+    .glossary-chip {
+      background: var(--bg-section);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 3px 6px;
+    }
+
+    .glossary-chip .term {
+      font-size: 0.6rem;
+      font-weight: 700;
+      color: var(--blue-primary);
+      margin-bottom: 1px;
+    }
+
+    .glossary-chip .def {
+      font-size: 0.52rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* --- 分隔線 --- */
+    .divider {
+      height: 1px;
+      background: var(--border-color);
+      margin: 8px 0;
+    }
+
+    /* --- 分隔水平線帶文字 --- */
+    .divider-text {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 6px 0;
+      font-size: 0.55rem;
+      color: var(--text-light);
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .divider-text::before,
+    .divider-text::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border-color);
+    }
+
+    /* --- 通用小字 --- */
+    .text-xs {
+      font-size: 0.6rem;
+    }
+
+    .text-xxs {
+      font-size: 0.52rem;
+    }
+
+    .fw-800 {
+      font-weight: 800;
+    }
+
+    .color-blue {
+      color: var(--blue-primary);
+    }
+
+    .color-gold {
+      color: var(--gold-primary);
+    }
+
+    .color-green {
+      color: var(--green-primary);
+    }
+
+    .mb-4 {
+      margin-bottom: 4px;
+    }
+
+    .mb-6 {
+      margin-bottom: 6px;
+    }
+
+    /* =============================================
    BACK PAGE HEADER
    ============================================= */
-.back-header {
-  background: linear-gradient(135deg, #0b1d3a 0%, #1d4f8e 100%);
-  border-radius: var(--radius-lg);
-  padding: 10px 18px;
-  color: var(--text-on-dark);
-  margin-bottom: 7px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-shrink: 0;
-}
+    .back-header {
+      background: linear-gradient(135deg, #0b1d3a 0%, #1d4f8e 100%);
+      border-radius: var(--radius-lg);
+      padding: 10px 18px;
+      color: var(--text-on-dark);
+      margin-bottom: 7px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-shrink: 0;
+    }
 
-.back-header-title {
-  font-size: 1rem;
-  font-weight: 900;
-  letter-spacing: -0.3px;
-}
+    .back-header-title {
+      font-size: 1rem;
+      font-weight: 900;
+      letter-spacing: -0.3px;
+    }
 
-.back-header-subtitle {
-  font-size: 0.65rem;
-  color: rgba(255,255,255,0.6);
-}
+    .back-header-subtitle {
+      font-size: 0.65rem;
+      color: rgba(255, 255, 255, 0.6);
+    }
 
-/* =============================================
+    /* =============================================
    PRINT STYLES — A4 DOUBLE-SIDED
    ============================================= */
-@media print {
-  @page {
-    size: A4;
-    margin: 0;
-  }
+    @media print {
+      @page {
+        size: A4;
+        margin: 0;
+      }
 
-  body {
-    background: #fff;
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
-  }
+      body {
+        background: #fff;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
 
-  .dm-page {
-    width: 210mm;
-    height: 297mm;
-    margin: 0;
-    box-shadow: none;
-    page-break-after: always;
-    page-break-inside: avoid;
-  }
+      .hero-title .gold,
+      .hero-badge,
+      .gold {
+        color: #e8c56a !important;
+        -webkit-text-fill-color: #e8c56a !important;
+        background: none !important;
+        -webkit-background-clip: unset !important;
+        background-clip: unset !important;
+        display: inline-block;
+      }
 
-  .dm-page:last-child {
-    page-break-after: auto;
-  }
+      .dm-page {
+        width: 210mm;
+        height: 297mm;
+        margin: 0;
+        box-shadow: none;
+        page-break-after: always;
+        break-after: page;
+        page-break-inside: avoid;
+        break-inside: avoid;
+      }
 
-  .page-inner {
-    height: 297mm;
-    overflow: hidden;
-  }
+      .dm-page:last-child {
+        page-break-after: auto;
+        break-after: auto;
+      }
 
-  .no-print { display: none !important; }
-}
+      .page-inner {
+        height: 297mm;
+        overflow: hidden;
+      }
 
-/* =============================================
+      .no-print {
+        display: none !important;
+      }
+    }
+
+    /* =============================================
    SCREEN RESPONSIVE (非列印預覽時)
    ============================================= */
-@media screen and (max-width: 800px) {
-  .dm-page {
-    width: 100%;
-    min-height: auto;
-    margin: 0;
-    border-radius: 0;
-  }
+    @media screen and (max-width: 800px) {
+      .dm-page {
+        width: 100%;
+        min-height: auto;
+        margin: 0;
+        border-radius: 0;
+      }
 
-  .page-inner {
-    height: auto;
-    padding: 16px;
-  }
+      .page-inner {
+        height: auto;
+        padding: 16px;
+      }
 
-  .kpi-strip { grid-template-columns: repeat(2, 1fr); }
-  .calendar-grid { grid-template-columns: repeat(6, 1fr); }
-  .dual-engine-box { grid-template-columns: 1fr; }
-  .steps-row { flex-direction: column; }
-  .sop-grid { grid-template-columns: 1fr; }
-  .checklist { grid-template-columns: 1fr; }
-  .glossary-row { grid-template-columns: 1fr; }
-}
-</style>
+      .kpi-strip {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .calendar-grid {
+        grid-template-columns: repeat(6, 1fr);
+      }
+
+      .dual-engine-box {
+        grid-template-columns: 1fr;
+      }
+
+      .steps-row {
+        flex-direction: column;
+      }
+
+      .sop-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .checklist {
+        grid-template-columns: 1fr;
+      }
+
+      .glossary-row {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-<!-- ======================================
+  <!-- ======================================
      PAGE 1 — FRONT (正面)
      ====================================== -->
-<div class="dm-page">
-  <div class="page-inner">
+  <div class="dm-page">
+    <div class="page-inner">
 
-    <!-- HERO BANNER -->
-    <div class="hero-banner">
-      <div class="hero-top-row">
-        <span class="hero-badge">INVESTMENT STRATEGY GUIDE</span>
-        <span class="hero-date">2026 Edition</span>
+      <!-- HERO BANNER -->
+      <div class="hero-banner">
+        <div class="hero-top-row">
+          <span class="hero-badge">INVESTMENT STRATEGY GUIDE</span>
+          <span class="hero-date">2026 Edition</span>
+        </div>
+        <h1 class="hero-title">
+          打造 <span class="gold">月月穩定現金流</span><br>
+          高股息 × 正二雙引擎投資策略
+        </h1>
+        <p class="hero-subtitle">
+          以高股息 ETF 組合覆蓋全年 12 個月現金流，搭配 10 萬正二獨立收割循環捕獲大盤爆發力，獲利單向回灌高股息，實現永續被動收入。
+        </p>
       </div>
-      <h1 class="hero-title">
-        打造 <span class="gold">月月穩定現金流</span><br>
-        高股息 ETF 雙引擎投資策略
-      </h1>
-      <p class="hero-subtitle">
-        用三檔高股息 ETF 覆蓋全年 12 個月配息，搭配戰術資金捕獲多頭價差回購張數，系統化建構不損耗本金的永續被動收入引擎。
-      </p>
+
+      <!-- KPI STRIP -->
+      <div class="kpi-strip">
+        <div class="kpi-card">
+          <div class="kpi-label">核心防禦部位</div>
+          <div class="kpi-value">170 萬</div>
+          <div class="kpi-note">高股息 × 月月配</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">正二攻擊部位</div>
+          <div class="kpi-value gold">10 萬</div>
+          <div class="kpi-note">00631L × 風險封頂</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">預估月均現金流</div>
+          <div class="kpi-value green">≈1.07 萬</div>
+          <div class="kpi-note">配息全數作生活費</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">所得稅效益</div>
+          <div class="kpi-value" style="color:var(--amber-primary)">退稅 ≈1萬</div>
+          <div class="kpi-note">8.5% 抵減紅利</div>
+        </div>
+      </div>
+
+      <!-- SECTION 1: 月月配三劍客 -->
+      <div class="section-label"><span class="num">1</span> 核心組合：月月配三劍客</div>
+
+      <div class="calendar-grid">
+        <div class="cal-cell cal-0056">
+          <div class="month">1月</div>
+          <div class="etf">0056</div>
+        </div>
+        <div class="cal-cell cal-00878">
+          <div class="month">2月</div>
+          <div class="etf">00878</div>
+        </div>
+        <div class="cal-cell cal-00713">
+          <div class="month">3月</div>
+          <div class="etf">00713</div>
+        </div>
+        <div class="cal-cell cal-0056">
+          <div class="month">4月</div>
+          <div class="etf">0056</div>
+        </div>
+        <div class="cal-cell cal-00878">
+          <div class="month">5月</div>
+          <div class="etf">00878</div>
+        </div>
+        <div class="cal-cell cal-00713">
+          <div class="month">6月</div>
+          <div class="etf">00713</div>
+        </div>
+        <div class="cal-cell cal-0056">
+          <div class="month">7月</div>
+          <div class="etf">0056</div>
+        </div>
+        <div class="cal-cell cal-00878">
+          <div class="month">8月</div>
+          <div class="etf">00878</div>
+        </div>
+        <div class="cal-cell cal-00713">
+          <div class="month">9月</div>
+          <div class="etf">00713</div>
+        </div>
+        <div class="cal-cell cal-0056">
+          <div class="month">10月</div>
+          <div class="etf">0056</div>
+        </div>
+        <div class="cal-cell cal-00878">
+          <div class="month">11月</div>
+          <div class="etf">00878</div>
+        </div>
+        <div class="cal-cell cal-00713">
+          <div class="month">12月</div>
+          <div class="etf">00713</div>
+        </div>
+      </div>
+
+      <div class="legend-row">
+        <span class="legend-item"><span class="legend-dot blue"></span><strong>0056</strong> 元大高股息（高息核心）</span>
+        <span class="legend-item"><span class="legend-dot green"></span><strong>00878</strong> 國泰永續高股息（ESG穩配）</span>
+        <span class="legend-item"><span class="legend-dot purple"></span><strong>00713</strong> 元大高息低波（防禦抗跌）</span>
+      </div>
+
+      <!-- ETF TABLE -->
+      <table class="etf-table">
+        <thead>
+          <tr>
+            <th>代碼</th>
+            <th>名稱</th>
+            <th>建議比例</th>
+            <th>除息月份</th>
+            <th>角色定位</th>
+            <th>年化殖利率</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="etf-code blue">0056</span></td>
+            <td>元大高股息</td>
+            <td><strong>35%</strong></td>
+            <td>1 / 4 / 7 / 10</td>
+            <td>高息核心、流動性佳</td>
+            <td><span class="yield-tag">~10.3%</span></td>
+          </tr>
+          <tr>
+            <td><span class="etf-code green">00878</span></td>
+            <td>國泰永續高股息</td>
+            <td><strong>35%</strong></td>
+            <td>2 / 5 / 8 / 11</td>
+            <td>ESG 篩選、穩定配息</td>
+            <td><span class="yield-tag">~12.4%</span></td>
+          </tr>
+          <tr>
+            <td><span class="etf-code purple">00713</span></td>
+            <td>元大高息低波</td>
+            <td><strong>30%</strong></td>
+            <td>3 / 6 / 9 / 12</td>
+            <td>低波動防禦、空頭抗跌</td>
+            <td><span class="yield-tag">~6.9%</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- SECTION 2: 雙引擎架構 -->
+      <div class="section-label"><span class="num">2</span> 雙引擎資產架構（雙池隔離）</div>
+
+      <div class="dual-engine-box">
+        <div class="engine-card defense">
+          <div class="engine-tag blue">🛡️ 防禦現金流核心 (94%)</div>
+          <div class="engine-title">170 萬 — 高股息 ETF 組合</div>
+          <div class="engine-detail">0056 + 00878 + 00713 月月配<br>原則：<strong>只進不出</strong>，安心穩定領息</div>
+          <div class="engine-flow green">➜ 配息直接作為生活費</div>
+        </div>
+        <div class="engine-card attack">
+          <div class="engine-tag gold">⚡ 獨立攻擊收割池 (上限 10 萬 / 6%)</div>
+          <div class="engine-title">10 萬 — 正向 2 倍 ETF (正二)</div>
+          <div class="engine-detail">00631L / 00685L (期貨保證金 200% 曝險)<br>原則：<strong>虧損封頂不補錢、獲利全數收割</strong></div>
+          <div class="engine-flow gold">➜ 超過 10 萬利潤全數轉買高股息</div>
+        </div>
+      </div>
+
+      <!-- SECTION 3: 建倉三步驟 -->
+      <div class="section-label"><span class="num">3</span> 建倉策略：分批進場三階段</div>
+
+      <div class="steps-row">
+        <div class="step-item">
+          <div class="step-num">1</div>
+          <div class="step-title">核心部位 (第 1 月)</div>
+          <div class="step-desc">投入 30%（≈51 萬），三檔各 ≈17 萬，建立基礎倉位。</div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">2</div>
+          <div class="step-title">定期定額 (第 2-6 月)</div>
+          <div class="step-desc">每月投入 10%（≈17 萬），拆 9 筆 ≤2 萬定期定額，手續費僅 9 元。</div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">3</div>
+          <div class="step-title">機動加碼 (第 7 月起)</div>
+          <div class="step-desc">保留 20%（≈34 萬）彈藥，等大盤回檔加碼，越跌越買。</div>
+        </div>
+      </div>
+
+      <div class="tip-box tip-blue">
+        <span class="icon">💡</span>
+        <span><strong>核心心法：</strong>穩定的現金流 > 最高的報酬率。不追求買在最低點，而是用紀律建立部位、用時間累積配息。高股息 ETF 的最大敵人不是市場下跌，而是你在下跌時恐慌賣出。</span>
+      </div>
+
+      <!-- FOOTER -->
+      <div class="page-footer">
+        <div class="disclaimer">
+          ⚠️ 免責聲明：本 DM 為個人投資研究整理，不構成任何投資建議。投資一定有風險，請根據自身風險承受度審慎評估。數據截至 2026/08，請以各投信官方公告為準。
+        </div>
+        <div class="page-num">A</div>
+      </div>
+
     </div>
-
-    <!-- KPI STRIP -->
-    <div class="kpi-strip">
-      <div class="kpi-card">
-        <div class="kpi-label">核心防禦部位</div>
-        <div class="kpi-value">170 萬</div>
-        <div class="kpi-note">高股息 × 月月配</div>
-      </div>
-      <div class="kpi-card">
-        <div class="kpi-label">攻擊戰術部位</div>
-        <div class="kpi-value gold">10 萬</div>
-        <div class="kpi-note">成長標的 × 養股套利</div>
-      </div>
-      <div class="kpi-card">
-        <div class="kpi-label">預估月均現金流</div>
-        <div class="kpi-value green">≈1.07 萬</div>
-        <div class="kpi-note">配息全數作生活費</div>
-      </div>
-      <div class="kpi-card">
-        <div class="kpi-label">所得稅效益</div>
-        <div class="kpi-value" style="color:var(--amber-primary)">退稅 ≈1萬</div>
-        <div class="kpi-note">8.5% 抵減紅利</div>
-      </div>
-    </div>
-
-    <!-- SECTION 1: 月月配三劍客 -->
-    <div class="section-label"><span class="num">1</span> 核心組合：月月配三劍客</div>
-
-    <div class="calendar-grid">
-      <div class="cal-cell cal-0056"><div class="month">1月</div><div class="etf">0056</div></div>
-      <div class="cal-cell cal-00878"><div class="month">2月</div><div class="etf">00878</div></div>
-      <div class="cal-cell cal-00713"><div class="month">3月</div><div class="etf">00713</div></div>
-      <div class="cal-cell cal-0056"><div class="month">4月</div><div class="etf">0056</div></div>
-      <div class="cal-cell cal-00878"><div class="month">5月</div><div class="etf">00878</div></div>
-      <div class="cal-cell cal-00713"><div class="month">6月</div><div class="etf">00713</div></div>
-      <div class="cal-cell cal-0056"><div class="month">7月</div><div class="etf">0056</div></div>
-      <div class="cal-cell cal-00878"><div class="month">8月</div><div class="etf">00878</div></div>
-      <div class="cal-cell cal-00713"><div class="month">9月</div><div class="etf">00713</div></div>
-      <div class="cal-cell cal-0056"><div class="month">10月</div><div class="etf">0056</div></div>
-      <div class="cal-cell cal-00878"><div class="month">11月</div><div class="etf">00878</div></div>
-      <div class="cal-cell cal-00713"><div class="month">12月</div><div class="etf">00713</div></div>
-    </div>
-
-    <div class="legend-row">
-      <span class="legend-item"><span class="legend-dot blue"></span><strong>0056</strong> 元大高股息（高息核心）</span>
-      <span class="legend-item"><span class="legend-dot green"></span><strong>00878</strong> 國泰永續高股息（ESG穩配）</span>
-      <span class="legend-item"><span class="legend-dot purple"></span><strong>00713</strong> 元大高息低波（防禦抗跌）</span>
-    </div>
-
-    <!-- ETF TABLE -->
-    <table class="etf-table">
-      <thead>
-        <tr>
-          <th>代碼</th>
-          <th>名稱</th>
-          <th>建議比例</th>
-          <th>除息月份</th>
-          <th>角色定位</th>
-          <th>年化殖利率</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><span class="etf-code blue">0056</span></td>
-          <td>元大高股息</td>
-          <td><strong>35%</strong></td>
-          <td>1 / 4 / 7 / 10</td>
-          <td>高息核心、流動性佳</td>
-          <td><span class="yield-tag">~10.3%</span></td>
-        </tr>
-        <tr>
-          <td><span class="etf-code green">00878</span></td>
-          <td>國泰永續高股息</td>
-          <td><strong>35%</strong></td>
-          <td>2 / 5 / 8 / 11</td>
-          <td>ESG 篩選、穩定配息</td>
-          <td><span class="yield-tag">~12.4%</span></td>
-        </tr>
-        <tr>
-          <td><span class="etf-code purple">00713</span></td>
-          <td>元大高息低波</td>
-          <td><strong>30%</strong></td>
-          <td>3 / 6 / 9 / 12</td>
-          <td>低波動防禦、空頭抗跌</td>
-          <td><span class="yield-tag">~6.9%</span></td>
-        </tr>
-      </tbody>
-    </table>
-
-    <!-- SECTION 2: 雙引擎架構 -->
-    <div class="section-label"><span class="num">2</span> 雙引擎資產架構</div>
-
-    <div class="dual-engine-box">
-      <div class="engine-card defense">
-        <div class="engine-tag blue">🛡️ 防禦核心引擎</div>
-        <div class="engine-title">170 萬 — 高股息 ETF 組合</div>
-        <div class="engine-detail">0056 + 00878 + 00713 月月配<br>原則：<strong>只進不出</strong>，安心領息</div>
-        <div class="engine-flow green">➜ 配息直接作為生活費</div>
-      </div>
-      <div class="engine-card attack">
-        <div class="engine-tag gold">⚡ 攻擊戰術引擎</div>
-        <div class="engine-title">10 萬 — 成長型標的</div>
-        <div class="engine-detail">006208 / 00757 / 2330 等高爆發標的<br>獲利達 15%~20% 即<strong>紀律停利</strong></div>
-        <div class="engine-flow gold">➜ 獲利轉買高股息，累積張數</div>
-      </div>
-    </div>
-
-    <!-- SECTION 3: 建倉三步驟 -->
-    <div class="section-label"><span class="num">3</span> 建倉策略：分批進場三階段</div>
-
-    <div class="steps-row">
-      <div class="step-item">
-        <div class="step-num">1</div>
-        <div class="step-title">核心部位 (第 1 月)</div>
-        <div class="step-desc">投入 30%（≈51 萬），三檔各 ≈17 萬，建立基礎倉位。</div>
-      </div>
-      <div class="step-item">
-        <div class="step-num">2</div>
-        <div class="step-title">定期定額 (第 2-6 月)</div>
-        <div class="step-desc">每月投入 10%（≈17 萬），拆 9 筆 ≤2 萬定期定額，手續費僅 9 元。</div>
-      </div>
-      <div class="step-item">
-        <div class="step-num">3</div>
-        <div class="step-title">機動加碼 (第 7 月起)</div>
-        <div class="step-desc">保留 20%（≈34 萬）彈藥，等大盤回檔加碼，越跌越買。</div>
-      </div>
-    </div>
-
-    <div class="tip-box tip-blue">
-      <span class="icon">💡</span>
-      <span><strong>核心心法：</strong>穩定的現金流 > 最高的報酬率。不追求買在最低點，而是用紀律建立部位、用時間累積配息。高股息 ETF 的最大敵人不是市場下跌，而是你在下跌時恐慌賣出。</span>
-    </div>
-
-    <!-- FOOTER -->
-    <div class="page-footer">
-      <div class="disclaimer">
-        ⚠️ 免責聲明：本 DM 為個人投資研究整理，不構成任何投資建議。投資一定有風險，請根據自身風險承受度審慎評估。數據截至 2026/08，請以各投信官方公告為準。
-      </div>
-      <div class="page-num">A</div>
-    </div>
-
   </div>
-</div>
 
-<!-- ======================================
+  <!-- ======================================
      PAGE 2 — BACK (背面)
      ====================================== -->
-<div class="dm-page">
-  <div class="page-inner">
+  <div class="dm-page">
+    <div class="page-inner">
 
-    <!-- BACK HEADER -->
-    <div class="back-header">
-      <div>
-        <div class="back-header-title">策略執行手冊 ─ 實戰 SOP 與風控指南</div>
+      <!-- BACK HEADER -->
+      <div class="back-header">
+        <div>
+          <div class="back-header-title">策略執行手冊 ─ 實戰 SOP 與風控指南</div>
+        </div>
+        <div class="back-header-subtitle">DUAL-ENGINE PLAYBOOK</div>
       </div>
-      <div class="back-header-subtitle">DUAL-ENGINE PLAYBOOK</div>
-    </div>
 
-    <!-- SECTION 4: 10萬戰術標的 -->
-    <div class="section-label"><span class="num">4</span> 10 萬戰術標的嚴選</div>
+      <!-- SECTION 4: 10萬正二標的與特性 -->
+      <div class="section-label"><span class="num">4</span> 10 萬正二收割標的與機制解析</div>
 
-    <table class="tactic-table">
-      <thead>
-        <tr>
-          <th>類別</th>
-          <th>推薦代碼</th>
-          <th>成長動能</th>
-          <th>適格性與風險</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><strong>台股市值型</strong></td>
-          <td><span class="fw-800 color-blue">006208</span> 富邦台50</td>
-          <td>前 50 大企業，年化 8%~12%</td>
-          <td><span class="badge-sm green">最穩健首選</span> 無槓桿損耗</td>
-        </tr>
-        <tr>
-          <td><strong>美股科技巨頭</strong></td>
-          <td><span class="fw-800 color-blue">00757</span> 統一 FANG+</td>
-          <td>NVDA / TSMC / AAPL 等 10 強</td>
-          <td><span class="badge-sm amber">AI 風口爆發力最強</span></td>
-        </tr>
-        <tr>
-          <td><strong>半導體產業</strong></td>
-          <td><span class="fw-800 color-blue">00891</span> 中信關鍵半導體</td>
-          <td>聯發科 / 日月光 / 台積電供應鏈</td>
-          <td><span class="badge-sm purple">強勢產業波段</span></td>
-        </tr>
-        <tr>
-          <td><strong>護國神山個股</strong></td>
-          <td><span class="fw-800 color-blue">2330</span> 台積電零股</td>
-          <td>全球晶圓代工霸主，基本面極紮實</td>
-          <td><span class="badge-sm green">直攻核心動能</span> 零股彈性高</td>
-        </tr>
-      </tbody>
-    </table>
+      <table class="tactic-table">
+        <thead>
+          <tr>
+            <th>標的代碼</th>
+            <th>ETF 完整名稱</th>
+            <th>主要期貨標的 / 核心優勢</th>
+            <th>操作定位與風險封頂</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="fw-800 color-blue">00631L</span></td>
+            <td>元大台灣50正2</td>
+            <td>台指期貨（大台/小台）+ 台積電期貨（部分）</td>
+            <td><span class="badge-sm green">爆發力首選</span> 享逆價差轉倉紅利</td>
+          </tr>
+          <tr>
+            <td><span class="fw-800 color-blue">00685L</span></td>
+            <td>群益臺灣加權正2</td>
+            <td>台指期貨 + 台積電個股期貨</td>
+            <td><span class="badge-sm amber">高權重搭配</span> 追蹤誤差低</td>
+          </tr>
+        </tbody>
+      </table>
 
-    <!-- SECTION 5: 獲利停利 SOP -->
-    <div class="section-label"><span class="num">5</span> 養股套利 SOP ─ 獲利停利後的資金調配</div>
+      <!-- SECTION 5: 正二收割循環 SOP -->
+      <div class="section-label"><span class="num">5</span> 正二收割循環 SOP ─ 獲利 50/50 雙軌分流機制</div>
 
-    <div class="sop-grid">
-      <div class="sop-card a">
-        <div class="sop-tag green">✅ 情境 A：高股息正在「打折」</div>
-        <div class="sop-title">馬上全數買進高股息 ETF</div>
-        <div class="sop-desc">
-          當 0056/00878/00713 剛除息完折價，或股價低於 20 日均線（月線）時 → <strong>毫不猶豫，全額買進</strong>，鎖定高殖利率與便宜張數。
+      <div class="sop-grid">
+        <div class="sop-card a">
+          <div class="sop-tag green">📅 機制 1：無腦保底年終結算（一年一次）</div>
+          <div class="sop-title">利潤 50% 買高股息 + 50% 留作加碼金</div>
+          <div class="sop-desc">
+            <strong>每年固定一日</strong>檢視：若市值 >10 萬，將<strong>超出 10 萬之利潤 50% 轉買高股息、50% 保留為正二拉回加碼金</strong>（加碼金上限 5 萬，達標後利潤
+            100% 買高股息）；若市值 ≤10 萬且無加碼金時<strong>絕不補錢</strong>。
+          </div>
+        </div>
+        <div class="sop-card b">
+          <div class="sop-tag amber">📈 機制 2：主動技術分析波段收割（隨時）</div>
+          <div class="sop-title">技術背離 / 爆量過熱 ➜ 獲利分流落袋</div>
+          <div class="sop-desc">
+            年中遇 KD/MACD/RSI 出現高檔背離或乖離過大時，<strong>隨時將超出 10 萬利潤執行 50/50 分流</strong>（50% 灌入高股息、50% 轉入正二加碼金池），待拉回時再分批加碼建立底倉。
+          </div>
         </div>
       </div>
-      <div class="sop-card b">
-        <div class="sop-tag amber">⚖️ 情境 B：市場創高過熱中</div>
-        <div class="sop-title">執行 50 / 50 拆分法</div>
-        <div class="sop-desc">
-          <strong>50% 立刻買進高股息</strong>，確保資金無縫開始滾利息；<strong>50% 暫存 00719B 或高利活存</strong>，靜待大盤回檔 3%~5% 再一次性加碼。
+
+      <!-- SECTION 6: 情境應對 + 均線 -->
+      <div class="section-label"><span class="num">6</span> 建倉期情境應對 ─ 均線操作紀律（未完全投入前）</div>
+
+      <table class="scenario-mini">
+        <thead>
+          <tr>
+            <th>大盤狀態</th>
+            <th>判斷條件</th>
+            <th>建倉期 / 正二獲利現金投入策略</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="badge-sm green">多頭</span></td>
+            <td>月線 > 季線，股價在月線上</td>
+            <td>按標準比例 35:35:30 穩健進場；正二池享受 200% 飆漲爆發力</td>
+          </tr>
+          <tr>
+            <td><span class="badge-sm amber">盤整</span></td>
+            <td>月線與季線糾結</td>
+            <td>維持定期定額進場，正二持倉不動觀望</td>
+          </tr>
+          <tr>
+            <td><span class="badge-sm red">空頭</span></td>
+            <td>月線 < 季線</td>
+            <td>加速投入高股息！正二 pool 虧損封頂，絕不自掏腰包攤平</td>
+          </tr>
+          <tr>
+            <td><span class="badge-sm purple">恐慌 (&gt;-10%)</span></td>
+            <td>單月跌 > 10%</td>
+            <td>🔥 剩餘建倉金全數投入高股息；正二底倉保留等待大奇蹟日逆轉</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="tip-box tip-blue" style="margin-bottom: 6px;">
+        <span class="icon">📌</span>
+        <span><strong>高股息只進不出原則：</strong>均線擇時<strong>僅適用於建倉期（資金未完全投入前）</strong>。一旦 170
+          萬全數建倉完成，持股<strong>絕不因大盤下跌而抽離</strong>，後續僅將「正二獲利收割所累積的現金池」按上述策略持續投入高股息。</span>
+      </div>
+
+      <div class="tip-box tip-red">
+        <span class="icon">🚫</span>
+        <span><strong>正二虧損絕不自外部補錢！</strong>正二池為「獨立封頂池」，最大損失僅限於該 10 萬元。依靠期貨逆價差與大盤長期多頭修復淨值，守護防禦核心。</span>
+      </div>
+
+      <!-- SECTION 7: 類現金管理 -->
+      <div class="section-label"><span class="num">7</span> 閒置資金增益：類現金停泊工具</div>
+
+      <table class="cash-compare">
+        <thead>
+          <tr>
+            <th>工具</th>
+            <th>代碼 / 管道</th>
+            <th>年化收益</th>
+            <th>價格波動</th>
+            <th>優勢</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="crown">👑 超短期美債 ETF</td>
+            <td><strong>00719B</strong> / 00865B</td>
+            <td><strong style="color:var(--green-primary)">4.0%~4.8%</strong></td>
+            <td>極低（近直線）</td>
+            <td>類現金首選，T+2 即可買股</td>
+          </tr>
+          <tr>
+            <td>金控特別股</td>
+            <td>2881A / 2882A</td>
+            <td>3.8%~4.2%</td>
+            <td>非常低</td>
+            <td>固定配息優先股</td>
+          </tr>
+          <tr>
+            <td style="color:var(--text-light)">一般交割戶</td>
+            <td style="color:var(--text-light)">傳統券商活存</td>
+            <td style="color:var(--red-primary)">0.005%~0.05%</td>
+            <td>—</td>
+            <td style="color:var(--text-light)">利息極微薄，避免長期停放</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- SECTION 8: 再平衡 -->
+      <div class="section-label"><span class="num">8</span> 再平衡與稅務要點</div>
+
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px;">
+        <div class="tip-box tip-gold" style="margin:0;">
+          <span class="icon">⚖️</span>
+          <span><strong>再平衡觸發：</strong>任一高股息偏離目標 ±5%（如 35% 變 >40%）。<br>優先用新資金與正二收割利潤補弱，每 6 個月固定檢視。</span>
+        </div>
+        <div class="tip-box tip-green" style="margin:0;">
+          <span class="icon">🎁</span>
+          <span><strong>退稅紅利：</strong>年配息 ≈12.8 萬，若在免稅級距，可享 8.5% 股利抵減稅額。<br>預估可退稅 ≈10,838 元！正二價差免所得稅。</span>
         </div>
       </div>
+
+      <!-- SECTION 9: 執行檢查清單 -->
+      <div class="section-label"><span class="num">9</span> 執行檢查清單 Checklist</div>
+
+      <div class="checklist">
+        <div class="check-item">高股息池 170 萬分批/定期投入建倉</div>
+        <div class="check-item">設定券商定期定額與手續費優惠</div>
+        <div class="check-item">正二獨立池投入 10 萬（00631L/00685L）</div>
+        <div class="check-item">正二虧損時嚴守紀律：絕不額外補錢</div>
+        <div class="check-item">每年定期或遇技術高檔執行「獲利收割」</div>
+        <div class="check-item">正二溢出利潤全數單向回灌高股息 ETF</div>
+        <div class="check-item">閒置資金掛 00719B 享 4%+ 收益</div>
+        <div class="check-item">每半年檢視高股息比例，執行再平衡</div>
+      </div>
+
+      <!-- 名詞解釋 -->
+      <div class="divider-text">關鍵名詞速查</div>
+
+      <div class="glossary-row">
+        <div class="glossary-chip">
+          <div class="term">正二 (00631L)</div>
+          <div class="def">追蹤指數單日 2 倍，純期貨無現貨，自帶槓桿</div>
+        </div>
+        <div class="glossary-chip">
+          <div class="term">逆價差轉倉紅利</div>
+          <div class="def">台指期常態逆價差，轉倉結算自帶內生性增益</div>
+        </div>
+        <div class="glossary-chip">
+          <div class="term">每日再平衡</div>
+          <div class="def">每日收盤前經理人依淨值調整期貨部位維持 200% 曝險</div>
+        </div>
+        <div class="glossary-chip">
+          <div class="term">風險封頂</div>
+          <div class="def">正二池虧損止於 10 萬，絕不侵蝕高股息防禦母池</div>
+        </div>
+        <div class="glossary-chip">
+          <div class="term">月線 (20MA)</div>
+          <div class="def">過去 20 個交易日收盤價平均值，短線強弱分水嶺</div>
+        </div>
+        <div class="glossary-chip">
+          <div class="term">股利抵減稅額</div>
+          <div class="def">股利所得享 8.5% 抵減稅額，低所得級距享退稅紅利</div>
+        </div>
+      </div>
+
+      <!-- FOOTER -->
+      <div class="page-footer">
+        <div class="disclaimer">
+          ⚠️ 本 DM 僅為個人投資策略整理，不構成投資建議。投資一定有風險，ETF 配息率與報酬率均受市場波動影響。所有數據截至 2026 年 8 月，以各投信官方公告為準。
+        </div>
+        <div class="page-num">B</div>
+      </div>
+
     </div>
-
-    <!-- SECTION 6: 情境應對 + 均線 -->
-    <div class="section-label"><span class="num">6</span> 情境應對 ─ 均線操作紀律</div>
-
-    <table class="scenario-mini">
-      <thead>
-        <tr><th>大盤狀態</th><th>判斷條件</th><th>操作建議</th></tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><span class="badge-sm green">多頭</span></td>
-          <td>月線 > 季線，股價在月線上</td>
-          <td>正常投入 35:35:30</td>
-        </tr>
-        <tr>
-          <td><span class="badge-sm amber">盤整</span></td>
-          <td>月線與季線糾結</td>
-          <td>維持定期定額，微調增持 00713</td>
-        </tr>
-        <tr>
-          <td><span class="badge-sm red">空頭</span></td>
-          <td>月線 < 季線</td>
-          <td>加速投入！越跌 = 越高殖利率</td>
-        </tr>
-        <tr>
-          <td><span class="badge-sm purple">恐慌 (&gt;-10%)</span></td>
-          <td>單月跌 > 10%</td>
-          <td>🔥 全數投入（歷史超額報酬來源）</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <div class="tip-box tip-red">
-      <span class="icon">🚫</span>
-      <span><strong>絕不在熊市賣出高股息持股！</strong>賣出 = 切斷生活費現金流 + 雙重擇時失敗風險。股價下跌時，個人殖利率反而飆高，正是累積張數的黃金時機。</span>
-    </div>
-
-    <!-- SECTION 7: 類現金管理 -->
-    <div class="section-label"><span class="num">7</span> 閒置資金增益：類現金停泊工具</div>
-
-    <table class="cash-compare">
-      <thead>
-        <tr><th>工具</th><th>代碼 / 管道</th><th>年化收益</th><th>價格波動</th><th>優勢</th></tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td class="crown">👑 超短期美債 ETF</td>
-          <td><strong>00719B</strong> / 00865B</td>
-          <td><strong style="color:var(--green-primary)">4.0%~4.8%</strong></td>
-          <td>極低（近直線）</td>
-          <td>類現金首選，T+2 即可買股</td>
-        </tr>
-        <tr>
-          <td>金控特別股</td>
-          <td>2881A / 2882A</td>
-          <td>3.8%~4.2%</td>
-          <td>非常低</td>
-          <td>固定配息優先股</td>
-        </tr>
-        <tr>
-          <td style="color:var(--text-light)">一般交割戶</td>
-          <td style="color:var(--text-light)">傳統券商活存</td>
-          <td style="color:var(--red-primary)">0.005%~0.05%</td>
-          <td>—</td>
-          <td style="color:var(--text-light)">利息極微薄，避免長期停放</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <!-- SECTION 8: 再平衡 -->
-    <div class="section-label"><span class="num">8</span> 再平衡與稅務要點</div>
-
-    <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px;">
-      <div class="tip-box tip-gold" style="margin:0;">
-        <span class="icon">⚖️</span>
-        <span><strong>再平衡觸發：</strong>任一檔偏離目標 ±5 個百分點（如 35% 漲至 >40% 或跌至 <30%）。<br>優先用新資金補弱，次之用戰術獲利補，最後才賣出。每 6 個月固定檢視。</span>
-      </div>
-      <div class="tip-box tip-green" style="margin:0;">
-        <span class="icon">🎁</span>
-        <span><strong>退稅紅利：</strong>年配息 ≈12.8 萬，若在免稅級距，可享 8.5% 股利抵減稅額。<br>預估可退稅 ≈10,838 元！不但不繳稅，還有退稅紅利。<br>單筆配息 <2 萬免扣二代健保。</span>
-      </div>
-    </div>
-
-    <!-- SECTION 9: 執行檢查清單 -->
-    <div class="section-label"><span class="num">9</span> 執行檢查清單 Checklist</div>
-
-    <div class="checklist">
-      <div class="check-item">確認保險保障（醫療/意外/長照）</div>
-      <div class="check-item">設定券商定期定額與手續費優惠</div>
-      <div class="check-item">第 1 月投入 30% 建立核心部位</div>
-      <div class="check-item">第 2~6 月每月定期投入 10%</div>
-      <div class="check-item">10 萬戰術資金買進成長標的</div>
-      <div class="check-item">戰術獲利 15%~20% 紀律停利</div>
-      <div class="check-item">停利金依 SOP 轉買高股息 ETF</div>
-      <div class="check-item">閒置資金掛 00719B 享 4%+ 收益</div>
-      <div class="check-item">每次配息後記錄實領金額與填息天數</div>
-      <div class="check-item">每半年檢視比例偏離，執行再平衡</div>
-    </div>
-
-    <!-- 名詞解釋 -->
-    <div class="divider-text">關鍵名詞速查</div>
-
-    <div class="glossary-row">
-      <div class="glossary-chip">
-        <div class="term">殖利率</div>
-        <div class="def">年配息 ÷ 買入價，代表每年回收多少 % 現金</div>
-      </div>
-      <div class="glossary-chip">
-        <div class="term">填息</div>
-        <div class="def">除息後股價回到除息前，代表「真正賺到」配息</div>
-      </div>
-      <div class="glossary-chip">
-        <div class="term">收益平準金</div>
-        <div class="def">ETF 從本金提撥發放，本質是退還自己的錢</div>
-      </div>
-      <div class="glossary-chip">
-        <div class="term">月線 (20MA)</div>
-        <div class="def">過去 20 個交易日收盤價的平均值</div>
-      </div>
-      <div class="glossary-chip">
-        <div class="term">再平衡</div>
-        <div class="def">將持有比例調回目標，控制集中風險</div>
-      </div>
-      <div class="glossary-chip">
-        <div class="term">二代健保補充保費</div>
-        <div class="def">單筆配息 ≥2 萬元時扣繳 2.11%</div>
-      </div>
-    </div>
-
-    <!-- FOOTER -->
-    <div class="page-footer">
-      <div class="disclaimer">
-        ⚠️ 本 DM 僅為個人投資策略整理，不構成投資建議。投資一定有風險，ETF 配息率與報酬率均受市場波動影響。所有數據截至 2026 年 8 月，以各投信官方公告為準。
-      </div>
-      <div class="page-num">B</div>
-    </div>
-
   </div>
-</div>
 
 </body>
+
 </html>
